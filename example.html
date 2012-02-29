@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>DOMinate</title>
+	<script src="src/dominate.min.js"></script>
+</head>
+<body>
+
+<h1>DOMinate.js</h1>
+
+<script>
+
+	document.body.appendChild(DOMinate(
+			['div#demo', {style:'border:1px solid black'},
+
+				['h2#heading', 'test', {style:'color:green'}
+				],
+				['p', {},
+					['em', 'emphazised'],
+					['b', 'bold']
+				],
+				['p', 'test',
+					['em', 'emphazised'],
+					['b#important', 'bold', {
+						style:'color:red; font-size:20px',
+						"data-name":"hallo"}
+					]
+				],
+				['table#important', {id:'overwrite'},
+					['tr',
+						['td', 'test1'],
+						['td', 'test2']
+					],
+					['tr',
+						['td', 'test3'],
+						['td', 'test4']
+					]
+				]
+			]
+	));
+
+</script>
+</body>
+</html>
