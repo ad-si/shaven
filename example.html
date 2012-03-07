@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>DOMinate</title>
 	<script src="src/dominate.js"></script>
+	<script src="src/dominatesvg.js"></script>
 </head>
 <body>
 
@@ -34,6 +35,15 @@
 						['td', 'test3'],
 						['td', 'test4']
 					]
+				]
+			]
+	);
+
+	DOMinateSVG(
+			[document.body,
+				['svg', {height:100, width:100},
+					['circle', {cx:10, cy:10, r:5, style: 'fill:green'}],
+					['circle', {cx:20, cy:20, r:5, style: 'fill:red'}]
 				]
 			]
 	);
