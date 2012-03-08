@@ -5,7 +5,9 @@ function DOMinate(a, b, c) {
     function d(a, b) {
         a = a.split('#');
         b = document.createElement(a[0]);
-        b.id = a[1] || null;
+        a = a[1]? a[1].split('.') : '';
+        b.id = a[0] || null;
+        b.className = a[1] || null;
         return b
     }
 
