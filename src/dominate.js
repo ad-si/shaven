@@ -16,11 +16,13 @@ function DOMinate(a, b, c) {
         if (a[c].big)
             a[0].innerHTML = a[c]
 
-        else if (a[c].pop)
-            a[0].appendChild(a[c][0] = d(a[c][0])),
-            DOMinate(a[c])
+        else if (a[c].pop) {
+            if (a[c][0].big)
+                a[c][0] = d(a[c][0]);
+            a[0].appendChild(a[c][0]);
+                DOMinate(a[c])
 
-        else
+        } else
             for (b in a[c])
                 a[0].setAttribute(b, a[c][b])
     }
