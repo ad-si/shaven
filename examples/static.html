@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DOMinate</title>
+    <script src="../src/dominate.extended.js"></script>
+</head>
+<body>
+
+<h1>DOMinate.js</h1>
+
+<script>
+
+    DOMinate([document.body,
+        ['h2#heading', 'test', {style:'color:green'}],
+        ['p#first.info.about',
+            ['em', 'emphasised'],
+            ['br'],
+            ['b', 'bold']
+        ],
+        ['p#second',
+            ['b#important', 'bold', {
+                style:'color:red; font-size:20px',
+                "data-name":"hallo"}
+            ]
+        ],
+        ['table#important', {id:'overwrite'},
+            ['tr',
+                ['td', 'test1'],
+                ['td', 'test2']
+            ],
+            ['tr',
+                ['td', 'test3'],
+                ['td', 'test4']
+            ]
+        ]
+    ]);
+
+</script>
+</body>
+</html>

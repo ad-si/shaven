@@ -11,14 +11,19 @@ function DOMinate(a,                            // Array containing the DOMfragm
     ns = ns || 'http://www.w3.org/1999/xhtml';  // Set default namespace to XHTML namespace
 
     function e(a,                               // create DOM element from syntax sugar string
-               b                                // placeholder
-        ) {
-        a = a.split('#');                       // split string into element-name and id-class
-        b = d.createElementNS(ns, a[0]);        // create element
-        a = a[1]? a[1].split('.') : '';         // split string into id and class
-        b.id = a[0] || null;                    // assign id if is set
-        b.className = a[1] || null;             // assign class if is set
-        return b                                // return DOM element
+               b,                               // placeholder)
+               c
+              )
+    {
+        b = d.createElementNS(ns, a.match(/^\w+/)[0]);   // create element
+
+	    if(c = a.match(/#(\w+)/))
+	        b.id = c[1];                                 // assign id if is set
+
+	    if(c = a.match(/\.\w+/g))
+	        b.className += c.join(' ').replace(/\./g, ''); // assign class if is set
+
+        return b;                                        // return DOM element
     }
 
     if (a[0].big)                               // if is string create DOM element
