@@ -64,4 +64,4 @@ DOMinate is available in three versions, which are based on each other.
 
 ###Copyright and Licensing
 
-Copyright (c) 2012 Adrian Sieber, released under the MIT license.
+© 2012 Adrian Sieber, released under the MIT license
