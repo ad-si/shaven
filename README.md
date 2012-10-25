@@ -13,7 +13,7 @@ A **DOM building utility** and **Template engine** build upon **JsonML** with sy
 		[document.body,
 			['h1#logo', 'Static Example', {'style':'color:blue'}],
 			['p','some example text'],
-			['ul#list.bullets'},
+			['ul', {'id':'list', class:'bullets'},
 				['li', 'item1'],
                 ['li.active', 'item2'],
                 ['li',
