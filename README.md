@@ -11,13 +11,13 @@ A **DOM building utility** and **Template engine** build upon **JsonML** with sy
 ```javascript
 	DOMinate(
 		[document.body,
-			['h1#logo', 'Static Example', {'style':'color:blue'}],
+			['h1#logo', 'Static Example', {style:'color:blue'}],
 			['p','some example text'],
-			['ul', {'id':'list', class:'bullets'},
+			['ul', {id:'list', class:'bullets'},
 				['li', 'item1'],
                 ['li.active', 'item2'],
                 ['li',
-                    ['a', 'item3', {'href': '#'}]
+                    ['a', 'item3', {href: '#'}]
                 ]
 			]
 		]
