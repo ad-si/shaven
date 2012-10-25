@@ -1,6 +1,6 @@
-// DOMinate essential by Adrian Sieber
+/*@preserve DOMinate essential by Adrian Sieber*/
 
-function DOMinate(a, b, c) {
+DOMinate = function(a, b, c) {
 
     function d(a) {
         return document.createElement(a)
@@ -21,4 +21,4 @@ function DOMinate(a, b, c) {
             for (b in a[c])
                 a[0].setAttribute(b, a[c][b])
     }
-}
+};

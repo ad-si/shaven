@@ -1,11 +1,9 @@
 #! /bin/bash
 
-dir=../src/
+dir='../src/'
 
-for a in $(find $dir ! -name "*.min.js");
+for a in $(find $dir -name '*.js' ! -name "*.min.js");
 do
 	name=$(basename "$a")
-	uglifyjs -o $dir${name%.js}.min.js "$a";
+	uglifyjs2 --comments -v -o $dir${name%.js}.min.js "$a"
 done
-
-

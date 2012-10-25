@@ -1,4 +1,4 @@
-// DOMinate extended by Adrian Sieber
+/*@preserve DOMinate essential by Adrian Sieber*/
 
 function DOMinate(a,                            // Array containing the DOMfragment in JsonML
                   ns,                           // Namespace
@@ -17,11 +17,11 @@ function DOMinate(a,                            // Array containing the DOMfragm
     {
         b = d.createElementNS(ns, a.match(/^\w+/)[0]);   // create element
 
-	    if(c = a.match(/#(\w+)/))
-	        b.id = c[1];                                 // assign id if is set
+		if(c = a.match(/#(\w+)/))
+			b.id = c[1];                                 // assign id if is set
 
-	    if(c = a.match(/\.\w+/g))
-	        b.className += c.join(' ').replace(/\./g, ''); // assign class if is set
+		if(c = a.match(/\.\w+/g))
+			b.className += c.join(' ').replace(/\./g, ''); // assign class if is set
 
         return b;                                        // return DOM element
     }

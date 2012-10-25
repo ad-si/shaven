@@ -1,0 +1,7 @@
+load:
+  - ../src/dominate.extended.js
+
+test:
+  - ../test/essential_features.js
+  - ../test/standard_features.js
+  - ../test/extended_features.js

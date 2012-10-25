@@ -1,4 +1,4 @@
-// DOMinate by Adrian Sieber
+/*@preserve DOMinate essential by Adrian Sieber*/
 
 function DOMinate(a,                        // Array containing the DOMfragment in JsonML
                   b,                        // placeholder
@@ -10,7 +10,7 @@ function DOMinate(a,                        // Array containing the DOMfragment 
         ) {
         a = a.split('#');                   // split string into element-name and id
         b = document.createElement(a[0]);   // create element
-        b.id = a[1] || null;                // assign id if is set
+        if(a[1]) b.id = a[1];               // assign id if is set
         return b                            // return DOM element
     }
 

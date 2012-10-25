@@ -2,26 +2,27 @@
 <html>
 <head>
     <meta charset='UTF-8'>
-    <title>DOMinate Static Example</title>
-    <script src='../src/dominate.js'></script>
+    <title>DOMinate Extended Static Example</title>
+    <script src='../src/dominate.extended.js'></script>
 </head>
 <body>
 
 <h1>DOMinate</h1>
 
-<h2>Static Example</h2>
+<h2>Extended Static Example</h2>
 
 <script>
 
     DOMinate(
         [document.body,
             ['h3', 'Content Test'], // element with content
-            ['p', 'Id test sentence.', {id: 'first'}], // syntax-sugar id
-            ['p', {class: 'important'}, // syntax-sugar class
-                ['em', 'Class'],
+            ['p#first', 'Syntax-sugar id test sentence.'], // syntax-sugar id
+            ['p.important', // syntax-sugar class
+                ['em', 'Syntax-sugar class'],
                 ['br'],
                 ['b', 'test sentence.']
             ],
+            ['p#third.important', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
             ['p', 'Attributes test sentence.', {
                 class: 'test',
                 style: 'color:red; font-size:20px',
@@ -35,3 +36,4 @@
 
 </body>
 </html>
+
