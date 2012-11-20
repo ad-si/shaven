@@ -55,7 +55,7 @@ DOMinate is available in three versions, which are based on each other.
 - Syntax Sugar for ids
 
 ### DOMinate extended
-- 5k bytes
+- 0.5k bytes
 - Contains all the functionality
 - Syntax Sugar for ids and classes
 - Support for namespaces. (Lets you build SVGs)
