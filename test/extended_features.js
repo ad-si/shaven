@@ -1,33 +1,50 @@
 var reference, a, b, c,
-	bo = document.body;
+	bo = document.body
 
 TestCase('Extended', {
 	'test syntax-sugar class': function () {
 		/*:DOC ref = <div><a class="new"></a></div>*/
 		/*:DOC gen = <div></div>*/
 
-		DOMinate([this.gen, ['a.new']]);
+		DOMinate([this.gen, ['a.new']])
 
-		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
+		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref))
 	},
 
 	'test syntax-sugar class and id': function () {
 		/*:DOC ref = <div><a id="b" class="new"></a></div>*/
 		/*:DOC gen = <div></div>*/
 
-		DOMinate([this.gen, ['a#b.new']]);
+		DOMinate([this.gen, ['a#b.new']])
 
-		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
+		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref))
 	},
 
 	'test syntax-sugar class and id reversed': function () {
 		/*:DOC ref = <div><a id="c" class="new"></a></div>*/
 		/*:DOC gen = <div></div>*/
 
-		DOMinate([this.gen, ['a.new#c']]);
+		DOMinate([this.gen, ['a.new#c']])
 
-		console.log(this.gen, this.ref);
+		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref))
+	},
 
-		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
+	'test callback function': function () {
+		/*:DOC gen = <div></div>*/
+
+		var bar, element
+
+		function foo(el){
+			bar = true
+			element = el
+		}
+
+		DOMinate([this.gen, foo])
+
+		console.log(element)
+
+		assertTrue('Function was called', bar)
+		assertTrue('Element was passed to function', isElement_(element))
+		assertSame('Correct element was passed to function', this.gen, element)
 	}
-});
+})

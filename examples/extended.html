@@ -28,9 +28,16 @@
                 style: 'color:red; font-size:20px',
                 'data-name': 'hello' // attributes with dash need to be enclosed by quotation marks
             }],
-            ['p#last', {id: 'overwritten'}] //syntax-sugar can be overwritten
+            ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
+		    ['button', 'Callback Function', showInfo]
         ]
     );
+
+	function showInfo(element){
+		element.addEventListener('click', function(){
+			alert('You built an ' + element.type + ' button' )
+		})
+	}
 
 </script>
 
