@@ -1,13 +1,15 @@
 /*@preserve DOMinate by Adrian Sieber*/
 
 function DOMinate(array, //Array containing the DOM fragment in JsonML
-                  namespace) {
+                  namespace, //Namespace
+                  returnObject) { //Contains elements identified by their id
 
-	var returnObject = {}, //Contains elements identified by their id
-		doc = document,
+	var doc = document,
 		i,
-		b,
-		elementWithId;
+		b;
+
+	//Set on first iteration
+	returnObject = returnObject || {}
 
 	//Set default namespace to XHTML namespace
 	namespace = namespace || 'http://www.w3.org/1999/xhtml'
@@ -17,6 +19,7 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 
 		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]), //Create element
 			id,
+			ref,
 			classNames
 
 		//Assign id if is set
@@ -26,9 +29,12 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 
 			//Add element to the return object
 			returnObject[id[1]] = element
-
-			elementWithId = true
 		}
+
+		//Create reference to the element and add it to the return object
+		if (ref = sugarString.match(/\$([\w-]+)/))
+			returnObject[ref[1]] = element
+
 
 		//Assign class if is set
 		if (classNames = sugarString.match(/\.[\w-]+/g))
@@ -60,7 +66,7 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 			array[0].appendChild(array[i][0])
 
 			//Use DOMinate recursively for all child elements
-			DOMinate(array[i], namespace)
+			DOMinate(array[i], namespace, returnObject)
 		}
 
 		//If is function call with current element as first argument
@@ -78,6 +84,6 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 	//Return root element on index 0
 	returnObject[0] = array[0]
 
-	//returns object containing all elements with an id or the root element if no id is set
+	//returns object containing all elements with an id and the root element
 	return returnObject
 }

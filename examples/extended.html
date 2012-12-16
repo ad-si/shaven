@@ -25,11 +25,14 @@
         [document.body,
             ['h3', 'Content Test'], //element with content
 	        ['p#first', 'Syntax-sugar id test sentence.'], //syntax-sugar id
-	        ['p#with-dash', 'Id with dash test sentence.'], //id with dash
-            ['p.important', //syntax-sugar class
-                ['em', 'Syntax-sugar class'],
+	        ['p#with-dash', 'Hyphenated id test sentence.'], //id with dash
+	        ['p#foo', 'Return of elements with an id works NOT!'],
+	        ['p$ref', 'Reference works NOT!'],
+            ['p.important', 'Syntax-sugar class',
+	            ['br'],
+                ['em#nestedFoo', 'Nested id reference works NOT!'],
                 ['br'],
-                ['b', 'test sentence.']
+                ['b$nestedRef', 'Nested reference works NOT!']
             ],
             ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
             ['p', 'Attributes test sentence.', {
@@ -38,12 +41,16 @@
                 'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
             }],
             ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
-		    ['button', 'Callback Function', showInfo],
-		    ['p#foo', 'Return of elements with an id works NOT!']
+		    ['button', 'Callback Function', showInfo]
         ]
     );
+	console.log(test);
 
 	test.foo.innerHTML = 'Return of elements with an id works!'
+	test.ref.innerHTML = 'Reference works!'
+	test.nestedFoo.innerHTML = 'Return of nested elements with an id works!'
+	test.nestedRef.innerHTML = 'Nested reference works!'
+
 
 </script>
 
