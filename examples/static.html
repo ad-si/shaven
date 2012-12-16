@@ -3,7 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <title>DOMinate Static Example</title>
-    <script src='../src/dominate.js'></script>
+    <script src='../src/dominate.essential.js'></script>
 </head>
 <body>
 
@@ -24,10 +24,9 @@
             ],
             ['p', 'Attributes test sentence.', {
                 class: 'test',
-                style: 'color:red; font-size:20px',
+                style: 'color:#3d5; font-size:20px',
                 'data-name': 'hello' // attributes with dash need to be enclosed by quotation marks
-            }],
-            ['p#last', {id: 'overwritten'}] //syntax-sugar can be overwritten
+            }]
         ]
     );
 

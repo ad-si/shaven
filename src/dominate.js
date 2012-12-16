@@ -1,36 +1,89 @@
-/*@preserve DOMinate essential by Adrian Sieber*/
+/*@preserve DOMinate by Adrian Sieber*/
 
-function DOMinate(a,                        // Array containing the DOMfragment in JsonML
-                  b,                        // placeholder
-                  c                         // placeholder
-    ) {
+function DOMinate(array, //Array containing the DOM fragment in JsonML
+                  namespace) {
 
-    function d(a,                           // create DOM element from syntax sugar string
-               b                            // placeholder
-        ) {
-        a = a.split('#');                   // split string into element-name and id
-        b = document.createElement(a[0]);   // create element
-        if(a[1]) b.id = a[1];               // assign id if is set
-        return b                            // return DOM element
-    }
+	var returnObject = {}, //Contains elements identified by their id
+		doc = document,
+		i,
+		b,
+		elementWithId;
 
-    if (a[0].big)                           // if is string create DOM element
-        a[0] = d(a[0]);                     // else is already a DOM element
+	//Set default namespace to XHTML namespace
+	namespace = namespace || 'http://www.w3.org/1999/xhtml'
 
-    for (c = 1; c < a.length; c++) {        // for each in the element array (except the first)
-        if (a[c].big)                       // if is string has to be content
-            a[0].innerHTML = a[c];          // set content
+	//Create DOM element from syntax sugar string
+	function createElement(elementString) {
 
-        else if (a[c].pop) {                // if is array has to be child element
-            if (a[c][0].big)                // if is string create DOM element
-                a[c][0] = d(a[c][0]);       // else is already a DOM element
-            a[0].appendChild(a[c][0]);      // append the element to its parent element
-            DOMinate(a[c])                  // use DOMinate recursively for all child elements
+		var element = doc.createElementNS(namespace, elementString.match(/^\w+/)[0]), //Create element
+			id,
+			classNames
 
-        } else                                  // else must be object with attributes
-            for (b in a[c])                     // for each attribute
-                a[0].setAttribute(b, a[c][b])   // set attribute
-    }
+		//Assign id if is set
+		if (id = elementString.match(/#(\w+)/)) {
 
-    return a[0]                             // return DOM element
+			element.id = id[1]
+
+			//Add element to the return object
+			returnObject[id[1]] = element
+
+			elementWithId = true
+		}
+
+		//Assign class if is set
+		if (classNames = elementString.match(/\.\w+/g))
+			element.className += classNames.join(' ').replace(/\./g, '')
+
+		//Return DOM element
+		return element
+	}
+
+	//If is string create DOM element else is already a DOM element
+	if (array[0].big)
+		array[0] = createElement(array[0])
+
+	//For each in the element array (except the first)
+	for (i = 1; i < array.length; i++) {
+		/*
+		 if (array[i] == undefined)
+		 console.log(array[i].caller)
+
+		 else*/
+
+		//If is string has to be content so set it
+		if (array[i].big)
+			array[0].appendChild(doc.createTextNode(array[i]));
+
+		//If is array has to be child element
+		else if (array[i].pop) {
+
+			//If is string create DOM element else is already a DOM element
+			if (array[i][0].big)
+				array[i][0] = createElement(array[i][0])
+
+			//Append the element to its parent element
+			array[0].appendChild(array[i][0])
+
+			//Use DOMinate recursively for all child elements
+			DOMinate(array[i], namespace)
+
+		}
+
+		//If is function call with current element as first argument
+		else if (array[i].call)
+			array[i](array[0])
+
+		//Else must be object with attributes
+		else
+		//For each attribute
+			for (b in array[i])
+				array[0].setAttribute(b, array[i][b])
+
+	}
+
+	//Return root element on index 0
+	returnObject[0] = array[0]
+
+	//returns object containing all elements with an id or the root element if no id is set
+	return returnObject
 }

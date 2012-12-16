@@ -1,19 +1,13 @@
 # DOMinate
 A **DOM building utility** and **Template engine** build upon **JsonML** with syntax sugar.
 
-## Features
-- **Universal:** You can easily make JsonML in almost any programming language
-- **Tiny:** Only 0.3k minified and gzipped
-- **DOM-ready:** Builds and returns a DOM DocumentFragment
-- **Simple:** Build the JsonML Array, parse it.
-
 
 ```javascript
 	DOMinate(
 		[document.body,
 			['h1#logo', 'Static Example', {style:'color:blue'}],
 			['p','some example text'],
-			['ul', {id:'list', class:'bullets'},
+			['ul#list.bullets'},
 				['li', 'item1'],
                 ['li.active', 'item2'],
                 ['li',
@@ -40,24 +34,20 @@ compiles to
 
 
 ## Versions
-DOMinate is available in three versions, which are based on each other.
+DOMinate is available in two versions, which are based on each other.
 
-### DOMinate essential
+### Essential
 - 272 bytes
 - Contains the basic functionality
 - Attempt to build the shortest JsonML parser possible
 - For projects where every byte counts
 
-### DOMinate
-- 345 bytes
-- Standard version of DOMinate which keeps the balance between size and functionality
-- Returns a DOM Object
-- Syntax Sugar for ids
-
-### DOMinate extended
-- 0.5k bytes
+### Standard
+- 0.6k bytes
 - Contains all the functionality
 - Syntax Sugar for ids and classes
-- Support for namespaces. (Lets you build SVGs)
+- Support for namespaces. (Lets you build SVGs and other XML based languages)
+- Callback functions on elements
+- Returns a Object containing the root element and the elements with an id
 
 **Check out the examples folder for more in-depth examples**

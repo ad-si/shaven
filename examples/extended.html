@@ -3,9 +3,9 @@
 <head>
     <meta charset='UTF-8'>
     <title>DOMinate Extended Static Example</title>
-    <script src='../src/dominate.extended.js'></script>
+    <script src='../src/dominate.js'></script>
 </head>
-<body>
+<body id="adsf">
 
 <h1>DOMinate</h1>
 
@@ -13,7 +13,15 @@
 
 <script>
 
-    DOMinate(
+	var foo;
+
+	function showInfo(element){
+		element.addEventListener('click', function(){
+			alert('You built an ' + element.type + ' button' )
+		})
+	}
+
+    var test = DOMinate(
         [document.body,
             ['h3', 'Content Test'], // element with content
             ['p#first', 'Syntax-sugar id test sentence.'], // syntax-sugar id
@@ -22,22 +30,19 @@
                 ['br'],
                 ['b', 'test sentence.']
             ],
-            ['p#third.important', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
+            ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
             ['p', 'Attributes test sentence.', {
                 class: 'test',
-                style: 'color:red; font-size:20px',
+                style: 'color:#3d5; font-size:20px',
                 'data-name': 'hello' // attributes with dash need to be enclosed by quotation marks
             }],
             ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
-		    ['button', 'Callback Function', showInfo]
+		    ['button', 'Callback Function', showInfo],
+		    ['p#foo', 'Return of elements with an id works NOT!']
         ]
     );
 
-	function showInfo(element){
-		element.addEventListener('click', function(){
-			alert('You built an ' + element.type + ' button' )
-		})
-	}
+	test.foo.innerHTML = 'Return of elements with an id works!'
 
 </script>
 
