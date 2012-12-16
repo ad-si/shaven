@@ -23,18 +23,19 @@
 
     var test = DOMinate(
         [document.body,
-            ['h3', 'Content Test'], // element with content
-            ['p#first', 'Syntax-sugar id test sentence.'], // syntax-sugar id
-            ['p.important', // syntax-sugar class
+            ['h3', 'Content Test'], //element with content
+	        ['p#first', 'Syntax-sugar id test sentence.'], //syntax-sugar id
+	        ['p#with-dash', 'Id with dash test sentence.'], //id with dash
+            ['p.important', //syntax-sugar class
                 ['em', 'Syntax-sugar class'],
                 ['br'],
                 ['b', 'test sentence.']
             ],
-            ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
+            ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
             ['p', 'Attributes test sentence.', {
                 class: 'test',
                 style: 'color:#3d5; font-size:20px',
-                'data-name': 'hello' // attributes with dash need to be enclosed by quotation marks
+                'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
             }],
             ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
 		    ['button', 'Callback Function', showInfo],

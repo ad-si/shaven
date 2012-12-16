@@ -2,9 +2,9 @@ TestCase('Standard', {
 
 	'test syntax-sugar id': function () {
 		/*:DOC gen = <div></div>*/
-		/*:DOC ref = <div><div id="test"></div></div>*/
+		/*:DOC ref = <div><div id="test-1"></div></div>*/
 
-		DOMinate([this.gen, ['div#test']]);
+		DOMinate([this.gen, ['div#test-1']]);
 
 		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
 	},

@@ -13,14 +13,14 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 	namespace = namespace || 'http://www.w3.org/1999/xhtml'
 
 	//Create DOM element from syntax sugar string
-	function createElement(elementString) {
+	function createElement(sugarString) {
 
-		var element = doc.createElementNS(namespace, elementString.match(/^\w+/)[0]), //Create element
+		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]), //Create element
 			id,
 			classNames
 
 		//Assign id if is set
-		if (id = elementString.match(/#(\w+)/)) {
+		if (id = sugarString.match(/#([\w-]+)/)) {
 
 			element.id = id[1]
 
@@ -31,8 +31,8 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 		}
 
 		//Assign class if is set
-		if (classNames = elementString.match(/\.\w+/g))
-			element.className += classNames.join(' ').replace(/\./g, '')
+		if (classNames = sugarString.match(/\.[\w-]+/g))
+			element.setAttribute('class', classNames.join(' ').replace(/\./g, ''))
 
 		//Return DOM element
 		return element
@@ -44,11 +44,6 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 
 	//For each in the element array (except the first)
 	for (i = 1; i < array.length; i++) {
-		/*
-		 if (array[i] == undefined)
-		 console.log(array[i].caller)
-
-		 else*/
 
 		//If is string has to be content so set it
 		if (array[i].big)
@@ -66,7 +61,6 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 
 			//Use DOMinate recursively for all child elements
 			DOMinate(array[i], namespace)
-
 		}
 
 		//If is function call with current element as first argument
