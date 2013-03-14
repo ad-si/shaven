@@ -48,7 +48,8 @@ TestCase('Standard', {
 	'test callback function': function () {
 		/*:DOC gen = <div></div>*/
 
-		var bar, element
+		var bar = false,
+			element = false
 
 		function foo(el) {
 			bar = true
@@ -81,5 +82,14 @@ TestCase('Standard', {
 
 		assertEquals('Should return element', document.getElementById('foo'), fragment.foo)
 		assertEquals('Should return element', document.getElementById('bar'), fragment.bar)
+	},
+
+	'test return of marked elements ': function () {
+		/*:DOC += <div id="gen"></div>*/
+
+		var fragment = DOMinate([document.getElementById('gen'), ['a$foo'], ['p$bar']])
+
+		assertEquals('Should return element', document.getElementsByTagName('a')[0], fragment.foo)
+		assertEquals('Should return element', document.getElementsByTagName('p')[0], fragment.bar)
 	}
 })
