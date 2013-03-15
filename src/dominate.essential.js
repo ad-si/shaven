@@ -1,24 +1,27 @@
 /*@preserve DOMinate essential by Adrian Sieber*/
 
-DOMinate = function(a, b, c) {
+DOMinate = function(a, b, c, x) {
 
-    function d(a) {
-        return document.createElement(a)
-    }
+	function d(a) {
+		return document.createElement(a)
+	}
 
-    if (a[0].big)
-        a[0] = d(a[0]);
+	if (a[0].big)
+		a[0] = d(a[0]);
 
-    for (c = 1; c < a.length; c++) {
-        if (a[c].big)
-            a[0].innerHTML = a[c]
+	for (c = 1; c < a.length; c++) {
 
-        else if (a[c].pop)
-            a[0].appendChild(a[c][0] = d(a[c][0])),
-                DOMinate(a[c])
+		x = a[c]
 
-        else
-            for (b in a[c])
-                a[0].setAttribute(b, a[c][b])
-    }
-};
+		if (x.big)
+			a[0].innerHTML = x
+
+		else if (x.pop)
+			DOMinate(x),
+			a[0].appendChild(x[0])
+
+		else
+			for (b in x)
+				a[0].setAttribute(b, x[b])
+	}
+}

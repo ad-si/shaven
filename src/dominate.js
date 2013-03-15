@@ -58,15 +58,11 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 		//If is array has to be child element
 		else if (array[i].pop) {
 
-			//If is string create DOM element else is already a DOM element
-			if (array[i][0].big)
-				array[i][0] = createElement(array[i][0])
+			//Use DOMinate recursively for all child elements
+			DOMinate(array[i], namespace, returnObject)
 
 			//Append the element to its parent element
 			array[0].appendChild(array[i][0])
-
-			//Use DOMinate recursively for all child elements
-			DOMinate(array[i], namespace, returnObject)
 		}
 
 		//If is function call with current element as first argument
