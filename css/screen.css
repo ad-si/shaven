@@ -1,0 +1,92 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  box-sizing: border-box;
+}
+html {
+  width: 100%;
+  background-image: url("../img/noise.png"), -webkit-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+}
+body {
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 500;
+  font-family: Georgia;
+  color: #505050;
+}
+ul {
+  list-style-position: inside;
+  margin-bottom: 10px;
+}
+p {
+  margin-bottom: 10px;
+}
+h1,
+h2,
+h3 {
+  font-family: Arial;
+  font-weight: 900;
+}
+#wrapcontent {
+  width: 640px;
+  margin: auto;
+  padding-top: 60px;
+  background-image: url("../img/mustache.png");
+  background-repeat: no-repeat;
+  background-position: 320px 30px;
+  background-size: 35%;
+}
+header h1 {
+  font-size: 90px;
+  font-family: "Grand Hotel", sans-serif;
+  color: #fff;
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+}
+header h2 {
+  font-size: 20px;
+  font-family: "Trebuchet MS", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+  text-align: center;
+  margin-bottom: 40px;
+}
+section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+  padding-bottom: 40px;
+}
+section h1 {
+  color: #000;
+  font-size: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #c8c8c8;
+}
+section h2 {
+  color: #282828;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+section h1+h2 {
+  margin-top: -10px;
+}
+section > div:not(.code) {
+  padding: 20px 20px;
+}
+footer {
+  text-align: center;
+}
+.CodeMirror {
+  height: auto;
+}
+.CodeMirror-lines {
+  padding: 20px 40px;
+}
+.CodeMirror-scroll {
+  height: inherit;
+}
