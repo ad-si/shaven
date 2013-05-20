@@ -1,6 +1,6 @@
-/*@preserve DOMinate essential by Adrian Sieber*/
+/*DOMinate essential 1.0.1 by Adrian Sieber (adriansieber.com)*/
 
-DOMinate = function(a, b, c, x) {
+DOMinate = function dom(a, b, c, x) {
 
 	function d(a) {
 		return document.createElement(a)
@@ -17,7 +17,7 @@ DOMinate = function(a, b, c, x) {
 			a[0].innerHTML = x
 
 		else if (x.pop)
-			DOMinate(x),
+			dom(x),
 			a[0].appendChild(x[0])
 
 		else

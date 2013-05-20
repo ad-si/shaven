@@ -1,0 +1,75 @@
+var fs = require('fs'),
+	uglify = require('uglify-js')
+
+function buildMinifiedJs(string) {
+
+	var ast,
+		compressor = uglify.Compressor()
+
+	ast = uglify.parse(string)
+	ast.figure_out_scope()
+	ast.transform(compressor)
+	ast.figure_out_scope()
+	ast.compute_char_frequency()
+	ast.mangle_names()
+
+	return ast.print_to_string({"comments": /adrian sieber/i})
+}
+
+
+desc('Default build process')
+task('default', ['dominate.min.js', 'dominate.essential.min.js'], function() {
+})
+
+
+desc('Compile dominate.min.js')
+task('dominate.min.js', [], {async: true}, function() {
+
+	var jsString = fs.readFileSync('src/dominate.js').toString(),
+		file = fs.openSync('dominate.min.js', 'w+'),
+		version = JSON.parse(fs.readFileSync('package.json')).version
+
+	jsString = buildMinifiedJs(jsString.replace('{{ VERSION }}', version))
+
+	fs.write(file, jsString, undefined, undefined,  function() {
+		console.log('Building dominate.min.js succeeded')
+	})
+
+	complete()
+})
+
+
+desc('Compile dominate.essential.min.js')
+task('dominate.essential.min.js', [], {async: true}, function() {
+
+	var jsString = fs.readFileSync('src/dominate.essential.js').toString(),
+		file = fs.openSync('dominate.essential.min.js', 'w+')
+
+	fs.write(file, buildMinifiedJs(jsString), undefined, undefined, function() {
+		console.log('Building dominate.essential.min.js succeeded')
+	})
+
+	complete()
+})
+
+
+desc('Remove compiled files')
+task('clean', [], {async: true}, function() {
+
+	var files = [
+		'dominate.min.js',
+		'dominate.essential.min.js'
+	]
+
+	files.forEach(function(file) {
+		fs.exists(file, function(exists) {
+
+			if(exists)
+				fs.unlink(file, function(err) {
+					if(err) console.log(err)
+				})
+		})
+	})
+
+	complete()
+})

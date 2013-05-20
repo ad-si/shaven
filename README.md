@@ -37,7 +37,7 @@ compiles to
 DOMinate is available in two versions, which are based on each other.
 
 ### Essential
-- 247 bytes
+- 242 bytes
 - Contains the basic functionality
 - Attempt to build the shortest JsonML parser possible
 - For projects where every byte counts

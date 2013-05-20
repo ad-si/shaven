@@ -1,6 +1,6 @@
-/*@preserve DOMinate by Adrian Sieber (adriansieber.com)*/
+/*DOMinate {{ VERSION }} by Adrian Sieber (adriansieber.com)*/
 
-function DOMinate(array, //Array containing the DOM fragment in JsonML
+DOMinate = function dom(array, //Array containing the DOM fragment in JsonML
                   namespace, //Namespace
                   returnObject) { //Contains elements identified by their id
 
@@ -59,7 +59,7 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 		else if (array[i].pop) {
 
 			//Use DOMinate recursively for all child elements
-			DOMinate(array[i], namespace, returnObject)
+			dom(array[i], namespace, returnObject)
 
 			//Append the element to its parent element
 			array[0].appendChild(array[i][0])
