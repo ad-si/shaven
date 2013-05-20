@@ -63,6 +63,17 @@ TestCase('Standard', {
 		assertSame('Correct element was passed to function', this.gen, element)
 	},
 
+	'test appendance of elements': function(){
+		/*:DOC ref = <div><a></a></div>*/
+		/*:DOC gen = <div></div>*/
+
+		var element = DOMinate(['a'])[0]
+
+		DOMinate([this.gen, element])
+
+		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref))
+	},
+
 	'test return element object': function () {
 		/*:DOC gen = <div></div>*/
 

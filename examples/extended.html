@@ -13,7 +13,7 @@
 
 <script>
 
-	var foo;
+	var foo
 
 	function showInfo(element){
 		element.addEventListener('click', function(){
@@ -43,14 +43,15 @@
             ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
 		    ['button', 'Callback Function', showInfo]
         ]
-    );
-	console.log(test);
+    )
+
+
+	console.log(test[0] instanceof Element)
 
 	test.foo.innerHTML = 'Return of elements with an id works!'
 	test.ref.innerHTML = 'Reference works!'
 	test.nestedFoo.innerHTML = 'Return of nested elements with an id works!'
 	test.nestedRef.innerHTML = 'Nested reference works!'
-
 
 </script>
 

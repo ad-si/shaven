@@ -1,4 +1,4 @@
-/*@preserve DOMinate by Adrian Sieber*/
+/*@preserve DOMinate by Adrian Sieber (adriansieber.com)*/
 
 function DOMinate(array, //Array containing the DOM fragment in JsonML
                   namespace, //Namespace
@@ -68,6 +68,10 @@ function DOMinate(array, //Array containing the DOM fragment in JsonML
 		//If is function call with current element as first argument
 		else if (array[i].call)
 			array[i](array[0])
+
+		//If is element append it
+		else if (array[i] instanceof Element)
+			array[0].appendChild(array[i])
 
 		//Else must be object with attributes
 		else
