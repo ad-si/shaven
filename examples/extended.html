@@ -39,14 +39,17 @@
                 ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
                 ['p', 'Attributes test sentence.', {
                     class: 'test',
-                    style: 'color:#3d5; font-size:20px',
+                    style: 'color: limegreen; font-size: 20px',
                     'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
                 }],
                 ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
                 ['button', 'Callback Function', showInfo],
                 ['div', html],
                 ['div&', html],
-                //TODO: Config behaviour if variable value is falsy
+                ['div', {style: "width: 100px; height: 20px; background: red"}, false],
+                ['div', {style: "width: 100px; height: 20px; background: red"}, null],
+                ['div', {style: "width: 100px; height: 20px; background: red"}, undefined],
+                ['div', {style: "width: 100px; height: 20px; background: limegreen"}, ""]
             ]
     )
 

@@ -55,8 +55,12 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 	//For each in the element array (except the first)
 	for (i = 1; i < array.length; i++) {
 
+		if (array[i] === false || array[i] === null || array[i] === undefined){
+			array[0] = false
+		}
+
 		//If is string has to be content so set it
-		if (array[i].big)
+		else if (array[i].big)
 			if (unescaped)
 				array[0].innerHTML = array[i]
 			else
@@ -69,7 +73,8 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 			dom(array[i], namespace, returnObject)
 
 			//Append the element to its parent element
-			array[0].appendChild(array[i][0])
+			if(array[i][0])
+				array[0].appendChild(array[i][0])
 		}
 
 		//If is function call with current element as first argument
@@ -85,7 +90,6 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 		//For each attribute
 			for (b in array[i])
 				array[0].setAttribute(b, array[i][b])
-
 	}
 
 	//Return root element on index 0
