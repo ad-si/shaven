@@ -5,7 +5,7 @@
     <title>Shaven Extended Static Example</title>
     <script src='../shaven.min.js'></script>
 </head>
-<body id="adsf">
+<body>
 
 <h1>Shaven</h1>
 
@@ -13,45 +13,50 @@
 
 <script>
 
-	var foo
+    var foo,
+        html = "<p>Some <strong>HTML</strong></p>"
 
-	function showInfo(element){
-		element.addEventListener('click', function(){
-			alert('You built an ' + element.type + ' button' )
-		})
-	}
+    function showInfo(element) {
+        element.addEventListener('click', function () {
+            alert('You built an ' + element.type + ' button')
+        })
+    }
 
     var test = shaven(
-        [document.body,
-            ['h3', 'Content Test'], //element with content
-	        ['p#first', 'Syntax-sugar id test sentence.'], //syntax-sugar id
-	        ['p#with-dash', 'Hyphenated id test sentence.'], //id with dash
-	        ['p#foo', 'Return of elements with an id works NOT!'],
-	        ['p$ref', 'Reference works NOT!'],
-            ['p.important', 'Syntax-sugar class',
-	            ['br'],
-                ['em#nestedFoo', 'Nested id reference works NOT!'],
-                ['br'],
-                ['b$nestedRef', 'Nested reference works NOT!']
-            ],
-            ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
-            ['p', 'Attributes test sentence.', {
-                class: 'test',
-                style: 'color:#3d5; font-size:20px',
-                'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
-            }],
-            ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
-		    ['button', 'Callback Function', showInfo]
-        ]
+            [document.body,
+                ['h3', 'Content Test'], //element with content
+                ['p#first', 'Syntax-sugar id test sentence.'], //syntax-sugar id
+                ['p#with-dash', 'Hyphenated id test sentence.'], //id with dash
+                ['p#foo', 'Return of elements with an id works NOT!'],
+                ['p$ref', 'Reference works NOT!'],
+                ['p.important', 'Syntax-sugar class',
+                    ['br'],
+                    ['em#nestedFoo', 'Nested id reference works NOT!'],
+                    ['br'],
+                    ['b$nestedRef', 'Nested reference works NOT!'],
+                    ['div&', html],
+                ],
+                ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
+                ['p', 'Attributes test sentence.', {
+                    class: 'test',
+                    style: 'color:#3d5; font-size:20px',
+                    'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
+                }],
+                ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
+                ['button', 'Callback Function', showInfo],
+                ['div', html],
+                ['div&', html],
+                //TODO: Config behaviour if variable value is falsy
+            ]
     )
 
 
-	console.log(test[0] instanceof Element)
+    console.log(test[0] instanceof Element)
 
-	test.foo.innerHTML = 'Return of elements with an id works!'
-	test.ref.innerHTML = 'Reference works!'
-	test.nestedFoo.innerHTML = 'Return of nested elements with an id works!'
-	test.nestedRef.innerHTML = 'Nested reference works!'
+    test.foo.innerHTML = 'Return of elements with an id works!'
+    test.ref.innerHTML = 'Reference works!'
+    test.nestedFoo.innerHTML = 'Return of nested elements with an id works!'
+    test.nestedRef.innerHTML = 'Nested reference works!'
 
 </script>
 

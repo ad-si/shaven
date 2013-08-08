@@ -1,12 +1,13 @@
 /*Shaven {{ VERSION }} by Adrian Sieber (adriansieber.com)*/
 
 shaven = function dom(array, //Array containing the DOM fragment in JsonML
-                        namespace, //Namespace
-                        returnObject) { //Contains elements identified by their id
+                      namespace, //Namespace
+                      returnObject) { //Contains elements identified by their id
 
 	var doc = document,
 		i,
-		b;
+		b,
+		unescaped
 
 	//Set on first iteration
 	returnObject = returnObject || {}
@@ -40,6 +41,9 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 		if (classNames = sugarString.match(/\.[\w-]+/g))
 			element.setAttribute('class', classNames.join(' ').replace(/\./g, ''))
 
+		if (sugarString.match(/&$/g))
+			unescaped = true
+
 		//Return DOM element
 		return element
 	}
@@ -53,7 +57,10 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 
 		//If is string has to be content so set it
 		if (array[i].big)
-			array[0].appendChild(doc.createTextNode(array[i]));
+			if (unescaped)
+				array[0].innerHTML = array[i]
+			else
+				array[0].appendChild(doc.createTextNode(array[i]))
 
 		//If is array has to be child element
 		else if (array[i].pop) {
