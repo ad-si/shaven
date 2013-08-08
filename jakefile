@@ -18,7 +18,7 @@ function buildMinifiedJs(string) {
 
 
 desc('Default build process')
-task('default', ['dominate.min.js', 'dominate.essential.min.js'], function() {
+task('default', ['dominate.min.js'], function() {
 })
 
 
@@ -39,26 +39,11 @@ task('dominate.min.js', [], {async: true}, function() {
 })
 
 
-desc('Compile dominate.essential.min.js')
-task('dominate.essential.min.js', [], {async: true}, function() {
-
-	var jsString = fs.readFileSync('src/dominate.essential.js').toString(),
-		file = fs.openSync('dominate.essential.min.js', 'w+')
-
-	fs.write(file, buildMinifiedJs(jsString), undefined, undefined, function() {
-		console.log('Building dominate.essential.min.js succeeded')
-	})
-
-	complete()
-})
-
-
 desc('Remove compiled files')
 task('clean', [], {async: true}, function() {
 
 	var files = [
-		'dominate.min.js',
-		'dominate.essential.min.js'
+		'dominate.min.js'
 	]
 
 	files.forEach(function(file) {

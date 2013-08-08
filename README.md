@@ -32,19 +32,9 @@ compiles to
 	</body>
 ```
 
+## Features
 
-## Versions
-DOMinate is available in two versions, which are based on each other.
-
-### Essential
-- 242 bytes
-- Contains the basic functionality
-- Attempt to build the shortest JsonML parser possible
-- For projects where every byte counts
-
-### Standard
 - 0.6k bytes
-- Contains all the functionality
 - Syntax Sugar for ids and classes
 - Support for namespaces. (Lets you build SVGs and other XML based languages)
 - Callback functions on elements
