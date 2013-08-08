@@ -99,12 +99,12 @@
 	})
 
 	input2 = CodeMirror(document.getElementById("input2"), {
-		value: "DOMinate(\n\t[document.body,\n\t\t[\'div#demo\',\n\t\t\t…\n\t\t]\n\t]\n)"
+		value: "shaven(\n\t[document.body,\n\t\t[\'div#demo\',\n\t\t\t…\n\t\t]\n\t]\n)"
 	})
 
 
 	input3 = CodeMirror(document.getElementById("input3"), {
-		value: "var element = DOMinate(\n\t[\'div#demo\',\n\t\t…\n\t]\n)\n\ndocument.body.appendChild(element[0])"
+		value: "var element = shaven(\n\t[\'div#demo\',\n\t\t…\n\t]\n)\n\ndocument.body.appendChild(element[0])"
 	})
 	output3 = CodeMirror(document.getElementById("output3"), {
 		value: "<body>\n\t<div id=demo>\n\t\t…\n\t</div>\n</body>",

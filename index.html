@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset='UTF-8'>
-	<title>DOMinate</title>
+	<title>Shaven</title>
 	<link href='http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/codemirror.css"/>
 	<link rel="stylesheet" href="css/twilight.css"/>
@@ -15,18 +15,28 @@
 
 <div id="wrapcontent">
 	<header>
-		<h1>DOMinate</h1>
+		<h1>Shaven</h1>
 
-		<h2>Get rid of your old-fashioned face furniture and dominate the DOM!</h2>
+		<h2>Get rid of your old-fashioned face furniture and build sleek templates!</h2>
 	</header>
 	<section>
 		<div>
 			<h1>Getting Started</h1>
 
-			<p>DOMinate is a DOM building utility and template engine based upon JsonML,
+			<p>Shaven is a DOM building utility and template engine based upon JsonML,
 			   a simple way to represent XML with JSON.
 			   That means templates are simply Javascript arrays.</p>
 
+			<strong>All code examples are editable!</strong>
+		</div>
+
+		<div class="code editable" id=input1></div>
+
+		<div>compiles to</div>
+
+		<div class=code id=output1></div>
+
+		<div>
 			<p>The first element of the array is the root html element which
 			   is going to contain all the child-elements.
 			   Those are arrays themselves and are structured as follows:</p>
@@ -37,15 +47,7 @@
 				<li>One or more Javascript objects contain the attributes</li>
 				<li>Each sub-array is a child-element</li>
 			</ul>
-
-			<strong>All code examples can be edited!</strong>
 		</div>
-
-		<div class="code editable" id=input1></div>
-
-		<div>compiles to</div>
-
-		<div class=code id=output1></div>
 
 	</section>
 	<section>
@@ -63,9 +65,9 @@
 
 
 		<div>
-			<p>Secondly you can assign the DOMinate-Object to a variable and append the fragment later.</p>
+			<p>Secondly you can assign the Shaven-object to a variable and append the fragment later.</p>
 
-			<p>To get the HTML-fragment from the DOMinate Object reference it with a  <code>[0]</code>.</p>
+			<p>To get the HTML-fragment from the Shaven-object reference it with a <code>[0]</code>.</p>
 		</div>
 
 		<div class=code id=input3></div>
@@ -98,22 +100,25 @@
 	<footer>
 		<p>
 			<a href="http://adriansieber.com">By Adrian Sieber</a><span class="muted">•</span>
-			<a href="https://github.com/adius/educatopia">Github</a><span class="muted">•</span>
-			<a href="https://github.com/adius/educatopia/issues">Issues</a>
+			<a href="https://github.com/shaven/shaven">Github</a><span class="muted">•</span>
+			<a href="https://github.com/shaven/shaven/issues">Issues</a>
 		</p>
 	</footer>
 </div>
 
-<a href="https://github.com/adius/DOMinate">
+<a href="https://github.com/shaven/shaven">
 	<img style="position:absolute;top:0;right:0;border:0;"
 	     src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
 	     alt="Fork me on GitHub">
 </a>
 
-<script type="text/javascript" src="//raw.github.com/adius/DOMinate/v1.0.0/src/dominate.min.js"></script>
-<script type="text/javascript" src="//raw.github.com/marijnh/CodeMirror/v3.12/lib/codemirror.js"></script>
-<script type="text/javascript" src="//raw.github.com/marijnh/CodeMirror/v3.12/mode/javascript/javascript.js"></script>
-<script type="text/javascript" src="//raw.github.com/marijnh/CodeMirror/v3.12/mode/xml/xml.js"></script>
+<script type="text/javascript" src="//gitcdn.org/libs/dominate/1.1.0/index.min.js"></script>
+<!--
+TODO: Upload and link CodeMirror
+-->
+<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/lib/codemirror.js"></script>
+<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/mode/xml/xml.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 
 </body>
