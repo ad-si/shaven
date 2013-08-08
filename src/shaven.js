@@ -1,6 +1,6 @@
-/*DOMinate {{ VERSION }} by Adrian Sieber (adriansieber.com)*/
+/*Shaven {{ VERSION }} by Adrian Sieber (adriansieber.com)*/
 
-DOMinate = function dom(array, //Array containing the DOM fragment in JsonML
+shaven = function dom(array, //Array containing the DOM fragment in JsonML
                         namespace, //Namespace
                         returnObject) { //Contains elements identified by their id
 
@@ -58,7 +58,7 @@ DOMinate = function dom(array, //Array containing the DOM fragment in JsonML
 		//If is array has to be child element
 		else if (array[i].pop) {
 
-			//Use DOMinate recursively for all child elements
+			//Use shaven recursively for all child elements
 			dom(array[i], namespace, returnObject)
 
 			//Append the element to its parent element

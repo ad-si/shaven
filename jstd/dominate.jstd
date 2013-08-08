@@ -1,5 +1,5 @@
 load:
-  - ../src/dominate.js
+  - ../src/shaven.js
 
 test:
   - ../test/essential_features.js

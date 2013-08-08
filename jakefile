@@ -18,21 +18,21 @@ function buildMinifiedJs(string) {
 
 
 desc('Default build process')
-task('default', ['dominate.min.js'], function() {
+task('default', ['shaven.min.js'], function() {
 })
 
 
-desc('Compile dominate.min.js')
-task('dominate.min.js', [], {async: true}, function() {
+desc('Compile shaven.min.js')
+task('shaven.min.js', [], {async: true}, function() {
 
-	var jsString = fs.readFileSync('src/dominate.js').toString(),
-		file = fs.openSync('dominate.min.js', 'w+'),
+	var jsString = fs.readFileSync('src/shaven.js').toString(),
+		file = fs.openSync('shaven.min.js', 'w+'),
 		version = JSON.parse(fs.readFileSync('package.json')).version
 
 	jsString = buildMinifiedJs(jsString.replace('{{ VERSION }}', version))
 
 	fs.write(file, jsString, undefined, undefined,  function() {
-		console.log('Building dominate.min.js succeeded')
+		console.log('Building shaven.min.js succeeded')
 	})
 
 	complete()
@@ -43,7 +43,7 @@ desc('Remove compiled files')
 task('clean', [], {async: true}, function() {
 
 	var files = [
-		'dominate.min.js'
+		'shaven.min.js'
 	]
 
 	files.forEach(function(file) {

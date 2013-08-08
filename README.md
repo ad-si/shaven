@@ -1,9 +1,9 @@
-# DOMinate
+# Shaven
 A **DOM building utility** and **Template engine** build upon **JsonML** with syntax sugar.
 
 
 ```javascript
-	DOMinate(
+	shaven(
 		[document.body,
 			['h1#logo', 'Static Example', {style:'color:blue'}],
 			['p','some example text'],

@@ -4,7 +4,7 @@ TestCase('Essential', {
 		/*:DOC gen = <div></div>*/
 		/*:DOC ref = <div><div></div></div>*/
 
-		DOMinate([this.gen, ['div']]);
+		shaven([this.gen, ['div']]);
 
 		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
 	},
@@ -13,7 +13,7 @@ TestCase('Essential', {
 		/*:DOC gen = <div></div>*/
 		/*:DOC ref = <div><div><p>test<a>2</a></p></div></div>*/
 
-		DOMinate(
+		shaven(
 			[this.gen,
 				['div',
 					['p', 'test',
@@ -30,7 +30,7 @@ TestCase('Essential', {
 		/*:DOC gen = <div></div>*/
 		/*:DOC ref = <div><div id="important" class="test" data-info='none'></div></div>*/
 
-		DOMinate(
+		shaven(
 			[this.gen,
 				['div', {
 					id: 'important',
