@@ -57,6 +57,7 @@ shaven = function dom(array, //Array containing the DOM fragment in JsonML
 
 		if (array[i] === false || array[i] === null || array[i] === undefined){
 			array[0] = false
+			return
 		}
 
 		//If is string has to be content so set it
