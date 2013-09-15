@@ -42,4 +42,6 @@ TestCase('Essential', {
 
 		assertTrue(this.gen.outerHTML + ' == ' + this.ref.outerHTML, this.gen.isEqualNode(this.ref));
 	}
-});
+})
+
+// TODO: rewrite with mocha
