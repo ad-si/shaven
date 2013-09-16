@@ -3,7 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <title>Shaven Extended Static Example</title>
-    <script src='../shaven.min.js'></script>
+    <script src='../src/shaven.js'></script>
 </head>
 <body>
 
@@ -13,20 +13,19 @@
 
 <script>
 
-    var foo,
-        html = "<p>Some <strong>HTML</strong></p>"
+    var html = "<p>Some <strong>HTML</strong></p>", foo
 
     function showInfo(element) {
         element.addEventListener('click', function () {
-            alert('You built an ' + element.type + ' button')
+            alert('Callback works!')
         })
     }
 
     var test = shaven(
             [document.body,
-                ['h3', 'Content Test'], //element with content
-                ['p#first', 'Syntax-sugar id test sentence.'], //syntax-sugar id
-                ['p#with-dash', 'Hyphenated id test sentence.'], //id with dash
+                ['h3', 'Content Test'], // element with content
+                ['p#first', 'Syntax-sugar id test sentence.'], // syntax-sugar id
+                ['p#with-dash', 'Hyphenated id test sentence.'], // id with dash
                 ['p#foo', 'Return of elements with an id works NOT!'],
                 ['p$ref', 'Reference works NOT!'],
                 ['p.important', 'Syntax-sugar class',
@@ -34,27 +33,25 @@
                     ['em#nestedFoo', 'Nested id reference works NOT!'],
                     ['br'],
                     ['b$nestedRef', 'Nested reference works NOT!'],
-                    ['div&', html],
+                    ['div&', html]
                 ],
-                ['p#third.important.fasdf', 'Syntax-sugar id and class test sentence.'], //syntax-sugar id and class
+                ['p#third.important.bar', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
                 ['p', 'Attributes test sentence.', {
                     class: 'test',
                     style: 'color: limegreen; font-size: 20px',
-                    'data-name': 'hello' //attributes with dash need to be enclosed by quotation marks
+                    'data-name': 'hello' // attributes with dash need to be enclosed by quotation marks
                 }],
-                ['p#last', {id: 'overwritten'}], //syntax-sugar can be overwritten
+                ['p#last', {id: 'overwritten'}], // syntax-sugar can be overwritten
                 ['button', 'Callback Function', showInfo],
+                ['div', undefined],
                 ['div', html],
                 ['div&', html],
                 ['div', {style: "width: 100px; height: 20px; background: red"}, false],
                 ['div', {style: "width: 100px; height: 20px; background: red"}, null],
-                ['div', {style: "width: 100px; height: 20px; background: red"}, undefined],
-                ['div', {style: "width: 100px; height: 20px; background: limegreen"}, ""]
+                ['div', {style: "width: 100px; height: 20px; background: limegreen"}, undefined],
+                ['div', {style: "width: 100px; height: 20px; background: limegreen"}]
             ]
     )
-
-
-    console.log(test[0] instanceof Element)
 
     test.foo.innerHTML = 'Return of elements with an id works!'
     test.ref.innerHTML = 'Reference works!'

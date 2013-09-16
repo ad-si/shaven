@@ -5,9 +5,9 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
                       returnObject) { // Contains elements identified by their id
 
 	var doc = document,
+		unescaped,
 		i,
-		b,
-		unescaped
+		b
 
 	// Set on first iteration
 	returnObject = returnObject || {}
@@ -36,11 +36,11 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 		if (ref = sugarString.match(/\$([\w-]+)/))
 			returnObject[ref[1]] = element
 
-
 		// Assign class if is set
 		if (classNames = sugarString.match(/\.[\w-]+/g))
 			element.setAttribute('class', classNames.join(' ').replace(/\./g, ''))
 
+		// Don't escape HTML content
 		if (sugarString.match(/&$/g))
 			unescaped = true
 
@@ -55,26 +55,28 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 	// } else {
 
 	// If is string create DOM element else is already a DOM element
-	if (array[0].big)
+	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
 
 	// For each in the element array (except the first)
 	for (i = 1; i < array.length; i++) {
 
-		if (array[i] === false || array[i] === null || array[i] === undefined) {
+		// Don't render element if value is false or null
+		if (array[i] === false || array[i] === null)
 			array[0] = false
-			return
-		}
+
+		// Render element with empty body if value is undefined
+		else if (array[i] === undefined);
 
 		// If is string has to be content so set it
-		else if (array[i].big)
+		else if (typeof array[i] === 'string' || typeof array[i] === 'number')
 			if (unescaped)
 				array[0].innerHTML = array[i]
 			else
 				array[0].appendChild(doc.createTextNode(array[i]))
 
 		// If is array has to be child element
-		else if (array[i].pop) {
+		else if (Array.isArray(array[i])) {
 
 			// Use shaven recursively for all child elements
 			dom(array[i], namespace, returnObject)
@@ -84,19 +86,22 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 				array[0].appendChild(array[i][0])
 		}
 
-		// If is function call with current element as first argument
-		else if (array[i].call)
+		// If it is a function call it with current element as first argument
+		else if (typeof array[i] === "function")
 			array[i](array[0])
 
-		// If is element append it
+		// If it is an element append it
 		else if (array[i] instanceof Element)
 			array[0].appendChild(array[i])
 
-		// Else must be object with attributes
-		else
+		// Else must be an object with attributes
+		else if (typeof array[i] === "object")
 		// For each attribute
 			for (b in array[i])
 				array[0].setAttribute(b, array[i][b])
+
+		else
+			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
 	// }
 
