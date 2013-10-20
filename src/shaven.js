@@ -62,8 +62,10 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 	for (i = 1; i < array.length; i++) {
 
 		// Don't render element if value is false or null
-		if (array[i] === false || array[i] === null)
+		if (array[i] === false || array[i] === null){
 			array[0] = false
+			break
+		}
 
 		// Render element with empty body if value is undefined
 		else if (array[i] === undefined);
