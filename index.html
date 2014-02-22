@@ -1,124 +1,135 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset='UTF-8'>
-	<title>Shaven</title>
-	<link href='http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="css/codemirror.css"/>
-	<link rel="stylesheet" href="css/twilight.css"/>
-	<link rel="stylesheet" href="css/monokai.css"/>
-	<link rel="stylesheet" href="css/blackboard.css"/>
-	<link rel="stylesheet" href="css/screen.css"/>
-	<link rel="shortcut icon" href="img/favicon.png"/>
+    <meta charset='UTF-8'>
+    <title>Shaven</title>
+    <link href='http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
+    <link rel="stylesheet" href="bower_components/codemirror/theme/twilight.css"/>
+    <link rel="stylesheet" href="css/screen.css"/>
+    <link rel="shortcut icon" href="img/favicon.png?v=1"/>
 </head>
 <body>
 
 <div id="wrapcontent">
-	<header>
-		<h1>Shaven</h1>
 
-		<h2>Get rid of your old-fashioned face furniture and build sleek templates!</h2>
-	</header>
-	<section>
-		<div>
-			<h1>Getting Started</h1>
+    <header>
+        <h1>Shaven</h1>
 
-			<p>Shaven is a DOM building utility and template engine based upon JsonML,
-			   a simple way to represent XML with JSON.
-			   That means templates are simply Javascript arrays.</p>
+        <h2>Get rid of your old-fashioned face furniture and build sleek templates!</h2>
+    </header>
 
-			<strong>All code examples are editable!</strong>
-		</div>
+    <section>
 
-		<div class="code editable" id=input1></div>
+        <h1>What is Shaven?</h1>
 
-		<div>compiles to</div>
+        <p>Shaven is a DOM building utility and template engine based upon JsonML.
+            This simple markup language lets you easily represent XML with JSON.
+            Templates are therefore simply Javascript arrays.</p>
 
-		<div class=code id=output1></div>
-
-		<div>
-			<p>The first element of the array is the root html element which
-			   is going to contain all the child-elements.
-			   Those are arrays themselves and are structured as follows:</p>
-
-			<ul>
-				<li>The first array-element is a string which represents the html-tag (including syntax-sugar)</li>
-				<li>Another string is the content of the element</li>
-				<li>One or more Javascript objects contain the attributes</li>
-				<li>Each sub-array is a child-element</li>
-			</ul>
-		</div>
-
-	</section>
-	<section>
-		<div>
-			<h1>Insert Methods</h1>
-
-			<p>There are two different methods to insert a DOM-fragment into the DOM.</p>
-
-			<p>Firstly you can inject it straight into the DOM:</p>
-
-		</div>
+        <p><strong>All code examples with this icon are editable:</strong>
+            <img src="img/edit-black-s.png" alt="edit"/></p>
 
 
-		<div class=code id=input2></div>
+        <pre class="code editable" id=input0></pre>
+
+        <p>compiles to</p>
+
+        <pre class=code id=output0></pre>
+
+        <p>The first element of the array is the root html element which
+            is going to contain all the child-elements.
+            Those are arrays themselves and are structured as follows:</p>
+
+        <ul>
+            <li>The first array-element is a string which represents the html-tag (including syntax-sugar)</li>
+            <li>Another string is the content of the element</li>
+            <li>One or more Javascript objects contain the attributes</li>
+            <li>Each sub-array is a child-element</li>
+        </ul>
+    </section>
+
+    <section>
+
+        <h1>Installation</h1>
+
+        <p>On the server you can install Shaven with npm:</p>
+        <pre><code>$ npm install shaven</code></pre>
+
+        <p>Then require it in your scripts like this:</p>
+        <pre><code>var shaven = require('shaven')</code></pre>
+
+        <p>In the browser just load the bundled javascript file
+            (get it from <a href="https://github.com/adius/shaven">github</a>):</p>
+        <pre><code>&lt;script src="shaven.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p>Now you can simply pass a JsonML-array to Shaven:</p>
+        <pre><code>var shavenObject = shaven(['p', 'some text'])</code></pre>
+
+    </section>
+
+    <section>
+        <h1>Insert Methods</h1>
+
+        <p>There are two different methods to insert a DOM-fragment into the DOM.</p>
+
+        <p>Firstly you can inject it straight into the DOM:</p>
+
+        <pre class=code id=input1></pre>
+
+        <p>Secondly you can assign the Shaven-object to a variable and append the fragment later.</p>
+
+        <p>To get the HTML-fragment from the Shaven-object reference it with a <code>[0]</code>.</p>
+
+        <pre class=code id=input2></pre>
+
+        <p>Both compiles to:</p>
+
+        <div class=code id=output2></div>
+
+    </section>
+
+    <section>
+        <h1>Syntax Sugar</h1>
+
+        <h2>Id</h2>
+
+        <pre class="code editable" id=input3></pre>
+
+        <p>compiles to</p>
+
+        <div class=code id=output3></div>
 
 
-		<div>
-			<p>Secondly you can assign the Shaven-object to a variable and append the fragment later.</p>
+        <h2>Class</h2>
 
-			<p>To get the HTML-fragment from the Shaven-object reference it with a <code>[0]</code>.</p>
-		</div>
+        <pre class="code editable" id=input4></pre>
 
-		<div class=code id=input3></div>
+        <p>compiles to</p>
 
-		<div>Both compiles to:</div>
+        <pre class=code id=output4></pre>
 
-		<div class=code id=output3></div>
+    </section>
 
-	</section>
-	<section>
-		<div>
-			<h1>Syntax Sugar</h1>
-
-			<h2>Id</h2>
-		</div>
-
-		<div class=code id=input4></div>
-
-		<div>compiles to</div>
-
-		<div class=code id=output4></div>
-
-		<div>
-			<h2>Class</h2>
-		</div>
-
-
-		<div>By Adrian Sieber</div>
-	</section>
-	<footer>
-		<p>
-			<a href="http://adriansieber.com">By Adrian Sieber</a><span class="muted">•</span>
-			<a href="https://github.com/shaven/shaven">Github</a><span class="muted">•</span>
-			<a href="https://github.com/shaven/shaven/issues">Issues</a>
-		</p>
-	</footer>
+    <footer>
+        <p>
+            <a href="http://adriansieber.com">By Adrian Sieber</a>
+            <span class="muted">•</span>
+            <a href="https://github.com/shaven/shaven">Github</a>
+            <span class="muted">•</span>
+            <a href="https://github.com/shaven/shaven/issues">Issues</a>
+        </p>
+    </footer>
 </div>
 
-<a href="https://github.com/shaven/shaven">
-	<img style="position:absolute;top:0;right:0;border:0;"
-	     src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-	     alt="Fork me on GitHub">
-</a>
+<a id="forkMe" href="https://github.com/adius/shaven">Fork me on GitHub</a>
 
 <script type="text/javascript" src="//gitcdn.org/libs/dominate/1.1.0/index.min.js"></script>
-<!--
-TODO: Upload and link CodeMirror
--->
-<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/lib/codemirror.js"></script>
-<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/mode/javascript/javascript.js"></script>
-<script type="text/javascript" src="//rawgithub.com/marijnh/CodeMirror/v3.12/mode/xml/xml.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/xml/xml.js"></script>
+
 <script type="text/javascript" src="js/index.js"></script>
 
 </body>

@@ -1,0 +1,28 @@
+{
+  "name": "shaven",
+  "version": "0.1.0",
+  "homepage": "https://github.com/adius/shaven",
+  "authors": [
+    "adius <mail@adriansieber.com>"
+  ],
+  "description": "Simple DOM building utility and template engine based upon JsonML",
+  "main": "src/shaven.js",
+  "keywords": [
+    "template",
+    "DOM",
+    "building"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "codemirror": "~3.21.0"
+  }
+}
