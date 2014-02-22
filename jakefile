@@ -1,0 +1,60 @@
+var fs = require('fs'),
+	uglify = require('uglify-js')
+
+function buildMinifiedJs(string) {
+
+	var ast,
+		compressor = uglify.Compressor()
+
+	ast = uglify.parse(string)
+	ast.figure_out_scope()
+	ast.transform(compressor)
+	ast.figure_out_scope()
+	ast.compute_char_frequency()
+	ast.mangle_names()
+
+	return ast.print_to_string({"comments": /adrian sieber/i})
+}
+
+
+desc('Default build process')
+task('default', ['shaven.min.js'], function() {
+})
+
+
+desc('Compile shaven.min.js')
+task('shaven.min.js', [], {async: true}, function() {
+
+	var jsString = fs.readFileSync('src/shaven.js').toString(),
+		file = fs.openSync('shaven.min.js', 'w+'),
+		version = JSON.parse(fs.readFileSync('package.json')).version
+
+	jsString = buildMinifiedJs(jsString.replace('{{ VERSION }}', version))
+
+	fs.write(file, jsString, undefined, undefined,  function() {
+		console.log('Building shaven.min.js succeeded')
+	})
+
+	complete()
+})
+
+
+desc('Remove compiled files')
+task('clean', [], {async: true}, function() {
+
+	var files = [
+		'shaven.min.js'
+	]
+
+	files.forEach(function(file) {
+		fs.exists(file, function(exists) {
+
+			if(exists)
+				fs.unlink(file, function(err) {
+					if(err) console.log(err)
+				})
+		})
+	})
+
+	complete()
+})
