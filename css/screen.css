@@ -102,8 +102,9 @@ strong {
   margin-bottom: 2em;
 }
 footer {
-  text-align: center;
-  color: #fff;
+  width: 640px;
+  color: #c8c8c8;
+  margin-bottom: 5em;
 }
 footer a {
   color: #fff;
@@ -111,6 +112,9 @@ footer a {
 }
 footer span {
   margin: 0 0.5em;
+}
+footer #version {
+  float: right;
 }
 .code {
   max-height: 0;

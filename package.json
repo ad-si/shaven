@@ -3,10 +3,9 @@
 	"version": "0.2.0",
 	"description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
 	"main": "src/shaven.js",
-	"dependencies": {
-		"uglify-js": "~2.3.5"
+	"devDependencies": {
+		"uglify-js": "~2.4.12"
 	},
-	"devDependencies": {},
 	"scripts": {
 		"test": "mocha"
 	},

@@ -1,4 +1,4 @@
-/* Shaven {{ VERSION }} by Adrian Sieber (adriansieber.com) */
+// Shaven {{ VERSION }} by Adrian Sieber (adriansieber.com)
 
 shaven = function dom(array, // Array containing the DOM fragment in JsonML
                       namespace, // Namespace
