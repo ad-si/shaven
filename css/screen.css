@@ -92,8 +92,11 @@ section h2 {
 section h1+h2 {
   margin-top: 1em;
 }
-section .code {
+section textarea {
+  background-color: #141414;
+  color: #fff;
   width: 640px;
+  height: 100%;
   position: relative;
   right: 2em;
   margin-bottom: 1em;
@@ -105,6 +108,7 @@ footer {
   width: 640px;
   color: #c8c8c8;
   margin-bottom: 5em;
+  padding: 0 2em;
 }
 footer a {
   color: #fff;
@@ -116,11 +120,12 @@ footer span {
 footer #version {
   float: right;
 }
-.code {
-  max-height: 0;
-  transition: max-height 1.5s;
-  overflow: hidden;
+.CodeMirror {
+  width: 640px;
+  height: auto;
   position: relative;
+  right: 2em;
+  margin-bottom: 1em;
 }
 .editable:after {
   content: " ";
@@ -131,9 +136,6 @@ footer #version {
   position: absolute;
   top: 10px;
   right: 10px;
-}
-.CodeMirror {
-  height: auto;
 }
 .CodeMirror-lines {
   padding: 20px 40px;

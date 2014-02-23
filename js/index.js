@@ -1,26 +1,47 @@
 !function () {
 
-	var input1,
-		output1,
-		input2,
-		input3,
-		output3,
-		input4,
-		output4,
-		inputs = [],
-		outputs = [],
-		inputValues = [
-			"[\'div#demo\',\n\t[\'h1#logo\', \'Static Example\', {style: \'color:blue\'}],\n\t[\'p\', \'some example text\'],\n\t[\'ul#list.bullets\',\n\t\t[\'li\', \'item1\'],\n\t\t[\'li.active\', \'item2\'],\n\t\t[\'li\',\n\t\t\t[\'a\', \'item3\', {href: \'#\'}]\n\t\t]\n\t]\n]",
-			"shaven(\n\t[document.body,\n\t\t[\'div#demo\',\n\t\t\t…\n\t\t]\n\t]\n)",
-			"var shavenObject = shaven(\n\t[\'div#demo\',\n\t\t…\n\t]\n)\n\ndocument.body.appendChild(shavenObject[0])",
-			"['p#example', 'example text']",
-			"['p.info', 'example text']"
-		],
-		outputValues = [
-			null,
-			null,
-			"<body>\n\t<div id=\"demo\">\n\t\t…\n\t</div>\n</body>"
-		]
+	var editors = []
+
+
+	function fixIndentation(string) {
+
+		// Remove leading tabs and last newline character
+
+		var numberOfTabs,
+			matches,
+			sortedString
+
+		sortedString = string.split('\n').sort()
+		matches = sortedString[sortedString.length - 1].match(/^\s*/)
+		numberOfTabs = matches ? matches[0].length : 0
+
+		return string
+			.split('\n')
+			.map(function (line) {
+				return line.substr(numberOfTabs)
+			})
+			.join('\n')
+			.slice(0, -1)
+	}
+
+	function getById(id) {
+		return document.getElementById(id)
+	}
+
+	function getFromArrayById(array, id) {
+
+		var soughtElement = null
+
+		array.some(function (element) {
+
+			if (element.id == id) {
+				soughtElement = element
+				return true
+			}
+		})
+
+		return soughtElement
+	}
 
 	CodeMirror.defaults.theme = "twilight"
 	CodeMirror.defaults.indentWithTabs = true
@@ -91,64 +112,43 @@
 		})
 	})
 
-	inputs[0] = CodeMirror(document.getElementById("input0"), {
-		value: inputValues[0]
+
+	var textareas = document.querySelectorAll('textarea')
+
+	Array.prototype.forEach.call(textareas, function (element, index) {
+
+		// Fix indentation
+		element.innerHTML = fixIndentation(element.innerHTML)
+
+		var isReadOnly = element.getAttribute('readonly') !== null,
+			editor = {
+				id: element.getAttribute('id'),
+				inputId: element.dataset.input,
+				isReadOnly: isReadOnly,
+				cm: CodeMirror.fromTextArea(element, {
+					readOnly: isReadOnly,
+					mode: element.dataset.lang || 'text'
+				})
+			}
+
+		editors.push(editor)
+
+		if (!isReadOnly)
+			editor.cm
+				.getWrapperElement()
+				.classList
+				.add('editable')
+
+		if (editor.inputId)
+			getFromArrayById(editors, editor.inputId).cm.on('change', function (instance) {
+
+				try {
+					editor.cm.setValue(shaven(eval(instance.getValue()))[0].outerHTML.replace(/></g, '>\n<'))
+					editor.cm.autoFormat()
+				}
+				catch (error) {
+					editor.cm.setValue(error.message)
+				}
+			})
 	})
-
-	inputs[0].on('change', function (instance) {
-
-		try {
-			outputs[0].setValue(DOMinate(eval(instance.getValue()))[0].outerHTML.replace(/></g, '>\n<'))
-			outputs[0].autoFormat()
-		}
-		catch (error) {
-			outputs[0].setValue(error.message)
-		}
-	})
-
-
-	outputs[0] = CodeMirror(document.getElementById("output0"), {
-		value: DOMinate(eval(inputValues[0]))[0].outerHTML.replace(/></g, '>\n<'),
-		mode: "text/html",
-		readOnly: true
-	})
-	outputs[0].autoFormat()
-
-
-	inputs[1] = CodeMirror(document.getElementById("input1"), {
-		value: inputValues[1],
-		readOnly: true
-	})
-	inputs[2] = CodeMirror(document.getElementById("input2"), {
-		value: inputValues[2],
-		readOnly: true
-	})
-	outputs[2] = CodeMirror(document.getElementById("output2"), {
-		value: outputValues[2],
-		mode: "text/html",
-		readOnly: true
-	})
-
-
-	inputs[3] = CodeMirror(document.getElementById("input3"), {
-		value: inputValues[3]
-	})
-	outputs[3] = CodeMirror(document.getElementById("output3"), {
-		value: DOMinate(eval(inputValues[3]))[0].outerHTML.replace(/></g, '>\n<'),
-		mode: "text/html"
-	})
-
-
-	inputs[4] = CodeMirror(document.getElementById("input4"), {
-		value: inputValues[4]
-	})
-	outputs[4] = CodeMirror(document.getElementById("output4"), {
-		value: DOMinate(eval(inputValues[4]))[0].outerHTML.replace(/></g, '>\n<'),
-		mode: "text/html"
-	})
-
-
-	$('.code').css('max-height', '500px')
-
 }()
-

@@ -95,8 +95,11 @@ section
 		margin-top 2.5em
 	h1+h2
 		margin-top: 1em
-	.code
+	textarea
+		background-color rgb(20,20,20)
+		color: white
 		width width
+		height 100%
 		position: relative
 		right: 2em
 		margin-bottom: 1em
@@ -109,6 +112,7 @@ footer
 	width width
 	color rgb(200,200,200)
 	margin-bottom 5em
+	padding 0 2em
 	a
 		color white
 		text-decoration none
@@ -120,11 +124,12 @@ footer
 
 //Codemirror
 
-.code
-	max-height: 0
-	transition: max-height 1.5s
-	overflow: hidden
-	position relative
+.CodeMirror
+	width width
+	height auto
+	position: relative
+	right: 2em
+	margin-bottom: 1em
 
 .editable:after
 	content: " "
@@ -135,10 +140,6 @@ footer
 	position: absolute
 	top: 10px
 	right: 10px
-
-
-.CodeMirror
-	height auto
 
 .CodeMirror-lines
 	padding 20px 40px
