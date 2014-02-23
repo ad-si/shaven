@@ -1,27 +1,29 @@
 {
-	"name": "shaven",
-	"version": "0.2.0",
-	"description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
-	"main": "src/shaven.js",
-	"devDependencies": {
-		"uglify-js": "~2.4.12"
-	},
-	"scripts": {
-		"test": "mocha"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/adius/shaven.git"
-	},
-	"keywords": [
-		"template",
-		"DOM",
-		"building"
-	],
-	"author": "adius",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/adius/shaven/issues"
-	},
-	"homepage": "https://github.com/adius/shaven"
+  "name": "shaven",
+  "version": "0.2.0",
+  "description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
+  "main": "src/shaven.js",
+  "devDependencies": {
+    "uglify-js": "~2.4.12",
+    "mocha": "~1.17.1",
+    "jsdom": "~0.10.1"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha -b --inline-diffs -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adius/shaven.git"
+  },
+  "keywords": [
+    "template",
+    "DOM",
+    "building"
+  ],
+  "author": "adius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adius/shaven/issues"
+  },
+  "homepage": "https://github.com/adius/shaven"
 }

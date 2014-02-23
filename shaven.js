@@ -1,0 +1,115 @@
+// Shaven 0.2.0 by Adrian Sieber (adriansieber.com)
+
+shaven = function dom(array, // Array containing the DOM fragment in JsonML
+                      namespace, // Namespace
+                      returnObject) { // Contains elements identified by their id
+
+	var doc = document,
+		unescaped,
+		i,
+		b
+
+	// Set on first iteration
+	returnObject = returnObject || {}
+
+	// Set default namespace to XHTML namespace
+	namespace = namespace || 'http://www.w3.org/1999/xhtml'
+
+	// Create DOM element from syntax sugar string
+	function createElement(sugarString) {
+
+		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]), //Create element
+			id,
+			ref,
+			classNames
+
+		// Assign id if is set
+		if (id = sugarString.match(/#([\w-]+)/)) {
+
+			element.id = id[1]
+
+			// Add element to the return object
+			returnObject[id[1]] = element
+		}
+
+		// Create reference to the element and add it to the return object
+		if (ref = sugarString.match(/\$([\w-]+)/))
+			returnObject[ref[1]] = element
+
+		// Assign class if is set
+		if (classNames = sugarString.match(/\.[\w-]+/g))
+			element.setAttribute('class', classNames.join(' ').replace(/\./g, ''))
+
+		// Don't escape HTML content
+		if (sugarString.match(/&$/g))
+			unescaped = true
+
+		// Return DOM element
+		return element
+	}
+
+	// TODO: Create customised renderer
+	// If is object
+	// if (array === Object(array)) {
+
+	// } else {
+
+	// If is string create DOM element else is already a DOM element
+	if (typeof array[0] === 'string')
+		array[0] = createElement(array[0])
+
+	// For each in the element array (except the first)
+	for (i = 1; i < array.length; i++) {
+
+		// Don't render element if value is false or null
+		if (array[i] === false || array[i] === null){
+			array[0] = false
+			break
+		}
+
+		// Render element with empty body if value is undefined
+		else if (array[i] === undefined);
+
+		// If is string has to be content so set it
+		else if (typeof array[i] === 'string' || typeof array[i] === 'number')
+			if (unescaped)
+				array[0].innerHTML = array[i]
+			else
+				array[0].appendChild(doc.createTextNode(array[i]))
+
+		// If is array has to be child element
+		else if (Array.isArray(array[i])) {
+
+			// Use shaven recursively for all child elements
+			dom(array[i], namespace, returnObject)
+
+			// Append the element to its parent element
+			if (array[i][0])
+				array[0].appendChild(array[i][0])
+		}
+
+		// If it is a function call it with current element as first argument
+		else if (typeof array[i] === "function")
+			array[i](array[0])
+
+		// If it is an element append it
+		else if (array[i] instanceof Element)
+			array[0].appendChild(array[i])
+
+		// Else must be an object with attributes
+		else if (typeof array[i] === "object")
+		// For each attribute
+			for (b in array[i])
+				array[0].setAttribute(b, array[i][b])
+
+		else
+			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
+	}
+	// }
+
+	// Return root element on index 0
+	returnObject[0] = array[0]
+
+	// returns object containing all elements with an id and the root element
+	return returnObject
+}

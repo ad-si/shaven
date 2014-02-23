@@ -19,7 +19,7 @@
 		outputValues = [
 			null,
 			null,
-			"<body>\n    <div id=\"demo\">\n        …\n    </div>\n</body>"
+			"<body>\n\t<div id=\"demo\">\n\t\t…\n\t</div>\n</body>"
 		]
 
 	CodeMirror.defaults.theme = "twilight"
