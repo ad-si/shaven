@@ -16,7 +16,7 @@ function testInDom(html, callback) {
 }
 
 
-describe('Standard', function () {
+describe('Shaven', function () {
 
 	it('should be attachable to elements', function (done) {
 
@@ -27,7 +27,7 @@ describe('Standard', function () {
 			var expected = '<div id="test"><p></p></div>',
 				actual = window.shaven([getById('test', window), ['p']])[0].outerHTML
 
-			assert.equal(actual, expected)
+			assert.strictEqual(actual, expected)
 
 			done()
 		})
@@ -51,7 +51,7 @@ describe('Standard', function () {
 					]
 				)[0].outerHTML
 
-			assert.equal(actual, expected)
+			assert.strictEqual(actual, expected)
 			done()
 		})
 	})
@@ -74,83 +74,86 @@ describe('Standard', function () {
 					]
 				)[0].outerHTML
 
-			assert.equal(actual, expected)
+			assert.strictEqual(actual, expected)
 			done()
 		})
 	})
 
 
-	it('should set the id from the syntax-sugar id string', function (done) {
+	describe('Syntax-sugar string', function(){
 
-		testInDom('<div id="test"></div>', function (error, window) {
+		it('should set the id', function (done) {
 
-			assert.ifError(error)
+			testInDom('<div id="test"></div>', function (error, window) {
 
-			var expected = '<div id="test"><div id="foo-1"></div></div>',
-				actual = window.shaven([getById('test', window), ['div#foo-1']])[0].outerHTML
+				assert.ifError(error)
 
-			assert.equal(actual, expected)
-			done()
+				var expected = '<div id="test"><div id="foo-1"></div></div>',
+					actual = window.shaven([getById('test', window), ['div#foo-1']])[0].outerHTML
+
+				assert.strictEqual(actual, expected)
+				done()
+			})
 		})
-	})
 
 
-	it('should set the class from the syntax-sugar class string', function (done) {
+		it('should set the class', function (done) {
 
-		testInDom('<div id="test"></div>', function (error, window) {
+			testInDom('<div id="test"></div>', function (error, window) {
 
-			assert.ifError(error)
+				assert.ifError(error)
 
-			var expected = '<div id="test"><p class="foo"></p></div>',
-				actual = window.shaven([getById('test', window), ['p.foo']])[0].outerHTML
+				var expected = '<div id="test"><p class="foo"></p></div>',
+					actual = window.shaven([getById('test', window), ['p.foo']])[0].outerHTML
 
-			assert.equal(actual, expected)
-			done()
+				assert.strictEqual(actual, expected)
+				done()
+			})
 		})
-	})
 
 
-	it('should work with both class and id in the syntax-sugar string', function (done) {
+		it('should work with both class and id', function (done) {
 
-		testInDom('<div id="test"></div>', function (error, window) {
+			testInDom('<div id="test"></div>', function (error, window) {
 
-			assert.ifError(error)
+				assert.ifError(error)
 
-			var expected = '<div id="test"><a id="b" class="new"></a></div>',
-				actual = window.shaven([getById('test', window), ['a#b.new']])[0].outerHTML
+				var expected = '<div id="test"><a id="b" class="new"></a></div>',
+					actual = window.shaven([getById('test', window), ['a#b.new']])[0].outerHTML
 
-			assert.equal(actual, expected)
-			done()
+				assert.strictEqual(actual, expected)
+				done()
+			})
 		})
-	})
 
 
-	it('should work with class and id reversed', function (done) {
+		it('should work with class and id reversed', function (done) {
 
-		testInDom('<div id="test"></div>', function (error, window) {
+			testInDom('<div id="test"></div>', function (error, window) {
 
-			assert.ifError(error)
+				assert.ifError(error)
 
-			var expected = '<div id="test"><a id="c" class="new"></a></div>',
-				actual = window.shaven([getById('test', window), ['a.new#c']])[0].outerHTML
+				var expected = '<div id="test"><a id="c" class="new"></a></div>',
+					actual = window.shaven([getById('test', window), ['a.new#c']])[0].outerHTML
 
-			assert.equal(actual, expected)
-			done()
+				assert.strictEqual(actual, expected)
+				done()
+			})
 		})
-	})
 
 
-	it('should understand multiple syntax-sugar classes and ids', function (done) {
+		it('should understand multiple classes and ids', function (done) {
 
-		testInDom('<div id="test"></div>', function (error, window) {
+			testInDom('<div id="test"></div>', function (error, window) {
 
-			assert.ifError(error)
+				assert.ifError(error)
 
-			var expected = '<div id="test"><a id="foo" class="bar baz"></a></div>',
-				actual = window.shaven([getById('test', window), ['a.bar#foo.baz']])[0].outerHTML
+				var expected = '<div id="test"><a id="foo" class="bar baz"></a></div>',
+					actual = window.shaven([getById('test', window), ['a.bar#foo.baz']])[0].outerHTML
 
-			assert.equal(actual, expected)
-			done()
+				assert.strictEqual(actual, expected)
+				done()
+			})
 		})
 	})
 
@@ -172,7 +175,7 @@ describe('Standard', function () {
 			window.shaven([getById('test', window), ['p#bar', foo]])
 
 			assert(called)
-			assert.equal(element, getById('bar', window))
+			assert.strictEqual(element, getById('bar', window))
 			done()
 		})
 	})
@@ -188,7 +191,7 @@ describe('Standard', function () {
 				element = window.shaven(['p', 'foo'])[0],
 				actual = window.shaven([getById('test', window), element])[0].outerHTML
 
-			assert.equal(actual, expected)
+			assert.strictEqual(actual, expected)
 			done()
 		})
 	})
@@ -212,7 +215,7 @@ describe('Standard', function () {
 
 			assert.ifError(error)
 
-			assert.equal(window.shaven([getById('test', window), ['p']])[0].nodeType, 1)
+			assert.strictEqual(window.shaven([getById('test', window), ['p']])[0].nodeType, 1)
 			done()
 		})
 	})
@@ -226,8 +229,8 @@ describe('Standard', function () {
 
 			var shavenObject = window.shaven([getById('test', window), ['p#foo'], ['p#bar']])
 
-			assert.equal(shavenObject.foo, getById('foo', window))
-			assert.equal(shavenObject.bar, getById('bar', window))
+			assert.strictEqual(shavenObject.foo, getById('foo', window))
+			assert.strictEqual(shavenObject.bar, getById('bar', window))
 			done()
 		})
 	})
@@ -241,9 +244,97 @@ describe('Standard', function () {
 
 			var shavenObject = window.shaven([getById('test', window), ['a$foo'], ['p$bar']])
 
-			assert.equal(shavenObject.foo, window.document.getElementsByTagName('a')[0])
-			assert.equal(shavenObject.bar, window.document.getElementsByTagName('p')[0])
+			assert.strictEqual(shavenObject.foo, window.document.getElementsByTagName('a')[0])
+			assert.strictEqual(shavenObject.bar, window.document.getElementsByTagName('p')[0])
 			done()
+		})
+	})
+
+
+	it('should escape html string', function(done){
+
+		testInDom('<div id="test"></div>', function (error, window) {
+
+			assert.ifError(error)
+
+			var html = '<p>Some <strong>HTML</strong></p>',
+				actual = window.shaven([getById('test', window), ['div', html]])[0].textContent
+
+			assert.strictEqual(actual, html)
+			done()
+		})
+	})
+
+
+	it('should not escape html string', function(done){
+
+		testInDom('<div id="test"></div>', function (error, window) {
+
+			assert.ifError(error)
+
+			var html = '<p>Some <strong>HTML</strong></p>',
+				actual = window.shaven([getById('test', window), ['div&', html]])[0].innerHTML
+
+			assert.strictEqual(actual, '<div>'+ html +'</div>')
+			done()
+		})
+	})
+
+	describe('Falsy values', function(){
+
+		it('should return an empty element for missing content value', function(done){
+
+			testInDom('<div id="test"></div>', function (error, window) {
+
+				assert.ifError(error)
+
+				var actual = window.shaven([getById('test', window), ['div']])[0].innerHTML
+
+				assert.strictEqual(actual, '<div></div>')
+				done()
+			})
+		})
+
+
+		it('should return an empty element for undefined content value', function(done){
+
+			testInDom('<div id="test"></div>', function (error, window) {
+
+				assert.ifError(error)
+
+				var actual = window.shaven([getById('test', window), ['div', undefined]])[0].innerHTML
+
+				assert.strictEqual(actual, '<div></div>')
+				done()
+			})
+		})
+
+
+		it('should return no element if content value is "false"', function(done){
+
+			testInDom('<div id="test"></div>', function (error, window) {
+
+				assert.ifError(error)
+
+				var actual = window.shaven([getById('test', window), ['div', false]])[0].outerHTML
+
+				assert.strictEqual(actual, '<div id="test"></div>')
+				done()
+			})
+		})
+
+
+		it('should return no element if content value is "null"', function(done){
+
+			testInDom('<div id="test"></div>', function (error, window) {
+
+				assert.ifError(error)
+
+				var actual = window.shaven([getById('test', window), ['div', null]])[0].outerHTML
+
+				assert.strictEqual(actual, '<div id="test"></div>')
+				done()
+			})
 		})
 	})
 })

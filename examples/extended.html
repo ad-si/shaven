@@ -13,7 +13,8 @@
 
 <script>
 
-    var html = "<p>Some <strong>HTML</strong></p>", foo
+    var html = "<p>Some <strong>HTML</strong></p>",
+		foo
 
     function showInfo(element) {
         element.addEventListener('click', function () {
@@ -32,10 +33,9 @@
                     ['br'],
                     ['em#nestedFoo', 'Nested id reference works NOT!'],
                     ['br'],
-                    ['b$nestedRef', 'Nested reference works NOT!'],
-                    ['div&', html]
+                    ['b$nestedRef', 'Nested reference works NOT!']
                 ],
-                ['p#third.important.bar', 'Syntax-sugar id and class test sentence.'], // syntax-sugar id and class
+                ['p#third.important.bar', 'Syntax-sugar id and class test sentence.'],
                 ['p', 'Attributes test sentence.', {
                     class: 'test',
                     style: 'color: limegreen; font-size: 20px',
