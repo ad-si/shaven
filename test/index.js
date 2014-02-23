@@ -80,7 +80,7 @@ describe('Shaven', function () {
 	})
 
 
-	describe('Syntax-sugar string', function(){
+	describe('Syntax-sugar string', function () {
 
 		it('should set the id', function (done) {
 
@@ -251,7 +251,7 @@ describe('Shaven', function () {
 	})
 
 
-	it('should escape html string', function(done){
+	it('should escape html string', function (done) {
 
 		testInDom('<div id="test"></div>', function (error, window) {
 
@@ -266,7 +266,7 @@ describe('Shaven', function () {
 	})
 
 
-	it('should not escape html string', function(done){
+	it('should not escape html string', function (done) {
 
 		testInDom('<div id="test"></div>', function (error, window) {
 
@@ -275,14 +275,41 @@ describe('Shaven', function () {
 			var html = '<p>Some <strong>HTML</strong></p>',
 				actual = window.shaven([getById('test', window), ['div&', html]])[0].innerHTML
 
-			assert.strictEqual(actual, '<div>'+ html +'</div>')
+			assert.strictEqual(actual, '<div>' + html + '</div>')
 			done()
 		})
 	})
 
-	describe('Falsy values', function(){
 
-		it('should return an empty element for missing content value', function(done){
+	it.skip('should work with SVGs (but only with the correct namespace)', function (done) {
+
+		testInDom('<div id="test"></div>', function (error, window) {
+
+
+			// TODO: Make it fail with the wrong namespace
+
+			assert.ifError(error)
+
+			var expected = '<svg height="100" width="100">' +
+					'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle></svg>',
+				actual = window.shaven(
+					[getById('test', window),
+						['svg#svg', {height: 100, width: 100},
+							['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
+						]
+					],
+					'http://www.w3.org/2000/svg'
+				)[0].innerHTML
+
+			assert.strictEqual(actual, expected)
+			done()
+		})
+	})
+
+
+	describe('Falsy values', function () {
+
+		it('should return an empty element for missing content value', function (done) {
 
 			testInDom('<div id="test"></div>', function (error, window) {
 
@@ -296,7 +323,7 @@ describe('Shaven', function () {
 		})
 
 
-		it('should return an empty element for undefined content value', function(done){
+		it('should return an empty element for undefined content value', function (done) {
 
 			testInDom('<div id="test"></div>', function (error, window) {
 
@@ -310,7 +337,7 @@ describe('Shaven', function () {
 		})
 
 
-		it('should return no element if content value is "false"', function(done){
+		it('should return no element if content value is "false"', function (done) {
 
 			testInDom('<div id="test"></div>', function (error, window) {
 
@@ -324,7 +351,7 @@ describe('Shaven', function () {
 		})
 
 
-		it('should return no element if content value is "null"', function(done){
+		it('should return no element if content value is "null"', function (done) {
 
 			testInDom('<div id="test"></div>', function (error, window) {
 
