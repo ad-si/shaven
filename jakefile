@@ -81,6 +81,7 @@ desc('Remove compiled files')
 task('clean', [], {async: true}, function () {
 
 	var files = [
+		'shaven.js',
 		'shaven.min.js'
 	]
 

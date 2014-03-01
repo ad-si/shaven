@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "codemirror": "~3.21.0"
+    "codemirror": "~3.21.0",
+    "assert": "~0.0.2"
   }
 }
