@@ -35,6 +35,13 @@ h3 {
   font-family: Arial;
   font-weight: 900;
 }
+code {
+  background-color: #f0f0f0;
+  border: 1px solid #dcdcdc;
+  padding: 0 0.3em;
+  border-radius: 2px;
+  color: #646464;
+}
 #forkMe {
   display: block;
   background-image: url("https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png");

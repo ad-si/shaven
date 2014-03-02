@@ -65,8 +65,8 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var expected = '<div id="test"><p>foo</p></div>',
-						element = window.shaven(['p', 'foo'])[0],
+					var expected = '<div id="test"><p></p></div>',
+						element = window.shaven(['p'])[0],
 						actual = window.shaven([getById('test', window), element])[0].outerHTML
 
 					assert.strictEqual(actual, expected, actual)
@@ -105,6 +105,44 @@ function runTestSuite(environment) {
 				})
 			})
 		}
+
+
+		it('should set string as textContent', function (done) {
+
+			testInEnv(null, function (error, scope) {
+
+				assert.ifError(error)
+
+				var expected = '<p>test</p>',
+					element = scope.shaven(['p', 'test'])[0]
+
+				if (environment === 'nodejs')
+					assert.strictEqual(element, expected)
+				else
+					assert.strictEqual(element.outerHTML, expected)
+
+				done()
+			})
+		})
+
+
+		it('should set number as textContent', function (done) {
+
+			testInEnv(null, function (error, scope) {
+
+				assert.ifError(error)
+
+				var expected = '<p>1234</p>',
+					element = scope.shaven(['p', 1234])[0]
+
+				if (environment === 'nodejs')
+					assert.strictEqual(element, expected)
+				else
+					assert.strictEqual(element.outerHTML, expected)
+
+				done()
+			})
+		})
 
 
 		it('should build elements recursively', function (done) {

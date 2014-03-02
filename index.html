@@ -8,11 +8,11 @@
 	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css />
 	<link rel=stylesheet href=bower_components/codemirror/theme/twilight.css />
 	<link rel=stylesheet href=css/screen.css />
-	<link rel="shortcut icon" href="img/favicon.png?v=1"/>
+	<link rel="shortcut icon" href=img/favicon.png/>
 </head>
 <body>
 
-<div id="wrapcontent">
+<div id=wrapcontent>
 
 	<header>
 		<h1>Shaven</h1>
@@ -29,9 +29,9 @@
 			Templates are therefore simply Javascript arrays.</p>
 
 		<p><strong>All code examples with this icon are editable:</strong>
-			<img src="img/edit-black-s.png" alt="edit"/></p>
+			<img src=img/edit-black-s.png alt=edit/></p>
 
-		<textarea id=codeOverview class=code rows=12 data-lang=js>
+		<textarea id=codeOverview class=code rows=11 data-lang=js>
 			['div#demo',
 				['h1#logo', 'Static Example', {style: 'color:blue'}],
 				['p', 'some example text'],
@@ -93,7 +93,7 @@
 		</textarea>
 
 		<p>In the browser load the browser version of shaven
-			(get it from <a href="https://github.com/adius/shaven">github</a>):</p>
+			(get it from <a href=https://github.com/adius/shaven>github</a>):</p>
 
 		<textarea id=codeLoad class=code data-lang=xml readonly>
 			<script src="shaven.js"></script>
@@ -102,7 +102,7 @@
 
 		<p>Now you can start using it by passing a JsonML-array to Shaven:</p>
 
-		<textarea id="codeUse" data-lang="javascript" readonly>
+		<textarea id=codeUse data-lang=js readonly>
 			var shavenObject = shaven(['p', 'some text'])
 		</textarea>
 
@@ -188,7 +188,7 @@
 		into the return-object of the shaven function call.
 		Therefore it can get easily referenced later on.</p>
 
-		<textarea id="codeIdReference" rows="7" data-lang=js  readonly>
+		<textarea id=codeIdReference rows=7 data-lang=js  readonly>
 			var shavenObject = shaven(
 				[document.body,
 					['div#test', 'some text']
@@ -201,7 +201,7 @@
 		<p>Reference an element without an id by using the <code>$</code> keyword
 			to assign it a reference-name.</p>
 
-		<textarea id="codeDollarReference" rows="7" data-lang=js  readonly>
+		<textarea id=codeDollarReference rows=7 data-lang=js  readonly>
 			var shavenObject = shaven(
 				[document.body,
 					['div$test', 'some text']
@@ -215,7 +215,7 @@
 	<section>
 		<h1>Properties</h1>
 
-		<textarea id="codeProperties" rows="4" data-lang=js>
+		<textarea id=codeProperties rows=4 data-lang=js>
 			['p', {
 				class: 'first new focus',
 				style: 'color:red',
@@ -225,7 +225,7 @@
 
 		<p>compiles to</p>
 
-		<textarea id="codePropertiesOut" rows="1" data-input=codeProperties data-lang=xml readonly>
+		<textarea id=codePropertiesOut rows=1 data-input=codeProperties data-lang=xml readonly>
 			<p class="first new focus" style="color:red" data-lang="de">Hi</p>
 		</textarea>
 
@@ -236,13 +236,13 @@
 
 		<p>HTML-strings are escaped by default.</p>
 
-		<textarea id="codeEscape" rows="1" data-lang=js>
+		<textarea id=codeEscape rows=1 data-lang=js>
 			['div', '<p>This is <em>HTML</em></p>']
 		</textarea>
 
 		<p>compiles to</p>
 
-		<textarea id="codeEscapeOut" rows="1" data-input=codeEscape data-lang=xml readonly>
+		<textarea id=codeEscapeOut rows=1 data-input=codeEscape data-lang=xml readonly>
 			<div>&amp;lt;p&amp;gt;This is &amp;lt;em&amp;gt;HTML&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;</div>
 		</textarea>
 
@@ -250,13 +250,13 @@
 
 		<p>To disable escaping add a <code>&</code> at the end of the element-tag string.</p>
 
-		<textarea id="codeNoEscape" rows="1" data-lang=js>
+		<textarea id=codeNoEscape rows=1 data-lang=js>
 			['div&', '<p>This is <em>HTML</em></p>']
 		</textarea>
 
 		<p>compiles to</p>
 
-		<textarea id="codeNoEscapeOut" rows="1" data-input=codeNoEscape data-lang=xml readonly>
+		<textarea id=codeNoEscapeOut rows=1 data-input=codeNoEscape data-lang=xml readonly>
 			<div><p>This is <em>HTML</em></p></div>
 		</textarea>
 
@@ -268,7 +268,7 @@
 		<p>Shaven supports different namespaces and makes it therefore possible to
 			create SVGs, MathML and various other XML-based languages.</p>
 
-		<textarea id="codeSvg" rows="1" data-lang=js readonly>
+		<textarea id=codeSvg rows=6 data-lang=js readonly>
 			shaven(
 				['svg', {height: 10, width: 10},
 					['circle', {cx: 5, cy: 5, r: 5, style: 'fill:green'}]
@@ -279,10 +279,54 @@
 
 		<p>compiles to</p>
 
-		<textarea id="codeSvgOut" rows="1" data-lang=xml readonly>
+		<textarea id="codeSvgOut" rows="3" data-lang=xml readonly>
 			<svg height="10" width="10">
 				<circle cx="5" cy="5" r="5" style="fill:green"></circle>
 			</svg>
+		</textarea>
+
+	</section>
+
+	<section>
+		<h1>Falsy values</h1>
+
+		<p>When an element array contains an <code>undefined</code> content-value
+			or no content-value at all, the element will get compiled with an empty body.</p>
+
+		<p>When an element contains a <code>null</code> or a <code>false</code> value,
+			the element won't get compiled at all. This is handy for disabling parts
+			of templates or ensuring that no empty container-elements get rendered.
+		</p>
+
+	</section>
+
+	<section>
+		<h1>Templates</h1>
+
+		<p>In order to create reusable templates it's best practice to create a function
+			which accepts a data object, inserts the data into the JsonML array and
+			returns it.<br/>
+			Finally iterate over the contacts and use one of the two insertion methods
+			to build the DOM with the contacts.</p>
+
+		<textarea id=codeTemplate rows=17 data-lang=js readonly>
+			function contactTemplate(data) {
+				return ['div.contact',
+					['h1', data.name],
+					['dl',
+						['dt', 'Age:'],
+						['dd', data.age],
+						['dt', 'Mobile:'],
+						['dd', data.mobile],
+						['dt', 'Email:'],
+						['dd', data.email]
+					]
+				]
+			}
+
+			contacts.forEach(function(contact){
+				shaven([document.body, contactTemplate(contact)])
+			})
 		</textarea>
 
 	</section>
@@ -295,7 +339,7 @@
 			with the element as the only argument.
 			This functionality is especially suited to add event-listeners.</p>
 
-		<textarea id=codeCallback data-lang=js readonly>
+		<textarea id=codeCallback rows=9 data-lang=js readonly>
 			function doSomething(element) {
 				alert(element + ' was created')
 			}
@@ -309,23 +353,23 @@
 	</section>
 
 	<footer>
-		<a href="http://adriansieber.com">By Adrian Sieber</a>
-		<span class="muted">•</span>
-		<a href="https://github.com/adius/shaven">GitHub</a>
-		<span class="muted">•</span>
-		<a href="https://github.com/adius/shaven/issues">Issues</a>
-		<span id="version">Version 0.3.0</span>
+		<a href=http://adriansieber.com>By Adrian Sieber</a>
+		<span class=muted>•</span>
+		<a href=https://github.com/adius/shaven>GitHub</a>
+		<span class=muted>•</span>
+		<a href=https://github.com/adius/shaven/issues>Issues</a>
+		<span id=version>Version 0.3.0</span>
 	</footer>
 </div>
 
-<a id="forkMe" href="https://github.com/adius/shaven">Fork me on GitHub</a>
+<a id=forkMe href=https://github.com/adius/shaven>Fork me on GitHub</a>
 
-<script type="text/javascript" src="shaven.min.js"></script>
-<script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
-<script type="text/javascript" src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-<script type="text/javascript" src="bower_components/codemirror/mode/xml/xml.js"></script>
+<script src=shaven.min.js></script>
+<script src=bower_components/codemirror/lib/codemirror.js></script>
+<script src=bower_components/codemirror/mode/javascript/javascript.js></script>
+<script src=bower_components/codemirror/mode/xml/xml.js></script>
 
-<script type="text/javascript" src="js/index.js"></script>
+<script src="js/index.js"></script>
 
 </body>
 </html>
