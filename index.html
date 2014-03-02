@@ -225,11 +225,9 @@
 
 		<p>compiles to</p>
 
-		<textarea id="codePropertiesOut" rows="1" data-input=codeProperties data-lang=js readonly>
+		<textarea id="codePropertiesOut" rows="1" data-input=codeProperties data-lang=xml readonly>
 			<p class="first new focus" style="color:red" data-lang="de">Hi</p>
-
 		</textarea>
-
 
 	</section>
 
@@ -244,7 +242,7 @@
 
 		<p>compiles to</p>
 
-		<textarea id="codeEscapeOut" rows="1" data-input=codeEscape data-lang=js  readonly>
+		<textarea id="codeEscapeOut" rows="1" data-input=codeEscape data-lang=xml readonly>
 			<div>&amp;lt;p&amp;gt;This is &amp;lt;em&amp;gt;HTML&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;</div>
 		</textarea>
 
@@ -258,8 +256,33 @@
 
 		<p>compiles to</p>
 
-		<textarea id="codeNoEscapeOut" rows="1" data-input=codeNoEscape data-lang=js readonly>
+		<textarea id="codeNoEscapeOut" rows="1" data-input=codeNoEscape data-lang=xml readonly>
 			<div><p>This is <em>HTML</em></p></div>
+		</textarea>
+
+	</section>
+
+	<section>
+		<h1>Namespaces</h1>
+
+		<p>Shaven supports different namespaces and makes it therefore possible to
+			create SVGs, MathML and various other XML-based languages.</p>
+
+		<textarea id="codeSvg" rows="1" data-lang=js readonly>
+			shaven(
+				['svg', {height: 10, width: 10},
+					['circle', {cx: 5, cy: 5, r: 5, style: 'fill:green'}]
+				],
+				'http://www.w3.org/2000/svg'
+			)
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id="codeSvgOut" rows="1" data-lang=xml readonly>
+			<svg height="10" width="10">
+				<circle cx="5" cy="5" r="5" style="fill:green"></circle>
+			</svg>
 		</textarea>
 
 	</section>
@@ -273,13 +296,13 @@
 			This functionality is especially suited to add event-listeners.</p>
 
 		<textarea id=codeCallback data-lang=js readonly>
-			function test(element){
+			function doSomething(element) {
 				alert(element + ' was created')
 			}
 
 			shaven(
 				[document.body,
-					['div', 'test']
+					['div', doSomething]
 				]
 			)
 		</textarea>
