@@ -28,6 +28,19 @@
 			This simple markup language lets you easily represent XML/HTML with JSON.
 			Templates are therefore simply Javascript arrays.</p>
 
+		<div id=buttons>
+			<iframe class=github
+			        src=http://ghbtns.com/github-btn.html?user=adius&repo=shaven&type=watch&count=true&size=small>
+			</iframe>
+			<a href="https://twitter.com/share"
+			   class="twitter-share-button"
+			   data-via="AdrianSieber"
+			   data-text="Shaven - Get rid of your old-fashioned face furniture and build sleek templates!"
+			   style=display:none>
+				Tweet
+			</a>
+		</div>
+
 		<p><strong>All code examples with this icon are editable:</strong>
 			<img src=img/edit-black-s.png alt=edit/></p>
 
@@ -370,6 +383,26 @@
 <script src=bower_components/codemirror/mode/xml/xml.js></script>
 
 <script src="js/index.js"></script>
+
+
+<script>
+	// Twitter share button
+	!function (d, s, id) {
+
+		var fjs = d.getElementsByTagName(s)[0],
+				p = /^http:/.test(d.location) ? 'http' : 'https',
+				js
+
+		if (!d.getElementById(id)) {
+			js = d.createElement(s)
+			js.id = id
+			js.src = p + '://platform.twitter.com/widgets.js'
+			fjs.parentNode.insertBefore(js, fjs)
+		}
+	}(document, 'script', 'twitter-wjs')
+
+	document.querySelector('.twitter-share-button').style.display = 'block !important'
+</script>
 
 </body>
 </html>
