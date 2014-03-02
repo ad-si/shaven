@@ -1,3 +1,10 @@
+var isBrowser,
+	assert,
+	shaven,
+	jsdom,
+	scope = {}
+
+
 function getById(id, window) {
 	return window.document.getElementById(id)
 }
@@ -17,7 +24,8 @@ function runTestSuite(environment) {
 			})
 
 		else if (environment === 'nodejs') {
-			//TODO
+			scope.shaven = shaven
+			callback(null, scope)
 		}
 
 	}
@@ -29,7 +37,7 @@ function runTestSuite(environment) {
 	})
 
 
-	describe('Shaven in environment: ' + environment, function () {
+	describe('Shaven in ' + environment + ' environment', function () {
 
 		if (environment === 'browser' || environment === 'jsdom') {
 
@@ -111,9 +119,13 @@ function runTestSuite(environment) {
 								['em', 'bar']
 							]
 						]
-					)[0].outerHTML
+					)[0]
 
-				assert.strictEqual(actual, expected)
+				if (environment === 'nodejs')
+					assert.strictEqual(actual, expected)
+				else
+					assert.strictEqual(actual.outerHTML, expected)
+
 				done()
 			})
 		})
@@ -132,9 +144,12 @@ function runTestSuite(environment) {
 							class: 'bar',  // class is restricted word
 							'data-info': 'baz' // attribute with dash
 						}]
-					)[0].outerHTML
+					)[0]
 
-				assert.strictEqual(actual, expected)
+				if (environment === 'nodejs')
+					assert.strictEqual(actual, expected)
+				else
+					assert.strictEqual(actual.outerHTML, expected)
 				done()
 			})
 		})
@@ -149,9 +164,13 @@ function runTestSuite(environment) {
 					assert.ifError(error)
 
 					var expected = '<p id="foo-1"></p>',
-						actual = window.shaven(['p#foo-1'])[0].outerHTML
+						element = window.shaven(['p#foo-1'])[0]
 
-					assert.strictEqual(actual, expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
 					done()
 				})
 			})
@@ -164,9 +183,13 @@ function runTestSuite(environment) {
 					assert.ifError(error)
 
 					var expected = '<p class="foo"></p>',
-						actual = window.shaven(['p.foo'])[0].outerHTML
+						element = window.shaven(['p.foo'])[0]
 
-					assert.strictEqual(actual, expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
 					done()
 				})
 			})
@@ -179,9 +202,13 @@ function runTestSuite(environment) {
 					assert.ifError(error)
 
 					var expected = '<p id="b" class="new"></p>',
-						actual = window.shaven(['p#b.new'])[0].outerHTML
+						element = window.shaven(['p#b.new'])[0]
 
-					assert.strictEqual(actual, expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
 					done()
 				})
 			})
@@ -194,9 +221,13 @@ function runTestSuite(environment) {
 					assert.ifError(error)
 
 					var expected = '<p id="c" class="new"></p>',
-						actual = window.shaven(['p.new#c'])[0].outerHTML
+						element = window.shaven(['p.new#c'])[0]
 
-					assert.strictEqual(actual, expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
 					done()
 				})
 			})
@@ -209,9 +240,13 @@ function runTestSuite(environment) {
 					assert.ifError(error)
 
 					var expected = '<p id="foo" class="bar baz"></p>',
-						actual = window.shaven(['p.bar#foo.baz'])[0].outerHTML
+						element = window.shaven(['p.bar#foo.baz'])[0]
 
-					assert.strictEqual(actual, expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
 					done()
 				})
 			})
@@ -257,7 +292,7 @@ function runTestSuite(environment) {
 		})
 
 
-		it('should return the root html element', function (done) {
+		it('should return the root html element by referencing [0]', function (done) {
 
 			testInEnv(null, function (error, window) {
 
@@ -265,7 +300,11 @@ function runTestSuite(environment) {
 
 				var shavenObject = window.shaven(['p'])
 
-				assert.strictEqual(shavenObject[0].nodeType, 1)
+				if (environment !== 'nodejs')
+					assert.strictEqual(shavenObject[0].nodeType, 1)
+				else
+					assert.strictEqual('<p></p>', shavenObject[0])
+
 				done()
 			})
 		})
@@ -278,13 +317,12 @@ function runTestSuite(environment) {
 				assert.ifError(error)
 
 				var html = '<p>Some <strong>HTML</strong></p>',
-					actualInBrowser = window.shaven(['div', html])[0].textContent,
-					actualInServer = window.shaven(['div', html])[0]
+					element = window.shaven(['div', html])[0]
 
 				if (environment === 'nodejs')
-					assert.strictEqual(actualInServer, html)
+					assert.strictEqual(element, '<div>' + html + '</div>')
 				else
-					assert.strictEqual(actualInBrowser, html)
+					assert.strictEqual(element.textContent, html)
 
 				done()
 			})
@@ -298,38 +336,42 @@ function runTestSuite(environment) {
 				assert.ifError(error)
 
 				var html = '<p>Some <strong>HTML</strong></p>',
-					actual = window.shaven(['div&', html])[0].innerHTML
+					element = window.shaven(['div&', html])[0]
 
-				assert.strictEqual(actual, html)
+				if (environment === 'nodejs')
+					assert.strictEqual(element, '<div>' + html + '</div>')
+				else
+					assert.strictEqual(element.innerHTML, html)
+
 				done()
 			})
 		})
 
 
-		it.skip('should work with SVGs (but only with the correct namespace)', function (done) {
+		if (environment === 'nodejs')
+			it('should work with SVGs', function (done) {
 
-			testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, window) {
 
+					assert.ifError(error)
 
-				// TODO: Make it fail with the wrong namespace
-
-				assert.ifError(error)
-
-				var expected = '<svg height="100" width="100">' +
-						'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle></svg>',
-					actual = window.shaven(
-						[getById('test', window),
+					var expected = '<svg id="svg" height="100" width="100">' +
+							'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle>' +
+							'</svg>',
+						svgElement = window.shaven(
 							['svg#svg', {height: 100, width: 100},
 								['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
 							]
-						],
-						'http://www.w3.org/2000/svg'
-					)[0].innerHTML
+						)[0]
 
-				assert.strictEqual(actual, expected)
-				done()
+					assert.strictEqual(svgElement, expected)
+
+					done()
+				})
 			})
-		})
+		else
+		// TODO (Must fail with the wrong namespace)
+			it('should work with SVGs (but only with the correct namespace)')
 
 
 		describe('Falsy values', function () {
@@ -340,9 +382,13 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var actual = window.shaven(['div'])[0].outerHTML
+					var element = window.shaven(['div'])[0]
 
-					assert.strictEqual(actual, '<div></div>')
+					if (environment === 'nodejs')
+						assert.strictEqual(element, '<div></div>')
+					else
+						assert.strictEqual(element.outerHTML, '<div></div>')
+
 					done()
 				})
 			})
@@ -354,9 +400,12 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var actual = window.shaven(['div', undefined])[0].outerHTML
+					var element = window.shaven(['div', undefined])[0]
 
-					assert.strictEqual(actual, '<div></div>')
+					if (environment === 'nodejs')
+						assert.strictEqual(element, '<div></div>')
+					else
+						assert.strictEqual(element.outerHTML, '<div></div>')
 					done()
 				})
 			})
@@ -368,9 +417,13 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var actual = window.shaven(['div', ['p', false]])[0].outerHTML
+					var element = window.shaven(['div', ['p', false]])[0]
 
-					assert.strictEqual(actual, '<div></div>')
+					if (environment === 'nodejs')
+						assert.strictEqual(element, '<div></div>')
+					else
+						assert.strictEqual(element.outerHTML, '<div></div>')
+
 					done()
 				})
 			})
@@ -382,9 +435,13 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var actual = window.shaven(['div', ['p', null]])[0].outerHTML
+					var element = window.shaven(['div', ['p', null]])[0]
 
-					assert.strictEqual(actual, '<div></div>')
+					if (environment === 'nodejs')
+						assert.strictEqual(element, '<div></div>')
+					else
+						assert.strictEqual(element.outerHTML, '<div></div>')
+
 					done()
 				})
 			})
@@ -393,7 +450,7 @@ function runTestSuite(environment) {
 }
 
 
-var isBrowser = (typeof window !== 'undefined')
+isBrowser = (typeof window !== 'undefined')
 
 
 if (isBrowser)
@@ -401,10 +458,10 @@ if (isBrowser)
 
 else {
 
-	var assert = require('assert'),
-		shaven = require('../src/index.js'),
-		jsdom = require('jsdom')
+	assert = require('assert')
+	shaven = require('../src/index.js')
+	jsdom = require('jsdom')
 
-	//runTestSuite('nodejs')
 	runTestSuite('jsdom')
+	runTestSuite('nodejs')
 }

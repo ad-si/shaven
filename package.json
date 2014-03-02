@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/adius/shaven/issues"
   },
-  "homepage": "https://github.com/adius/shaven"
+  "homepage": "https://github.com/adius/shaven",
+  "dependencies": {
+    "escape-html": "~1.0.1"
+  }
 }

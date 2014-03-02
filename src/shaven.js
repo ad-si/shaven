@@ -6,6 +6,7 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 
 	var doc = document,
 		unescaped,
+		callback,
 		i,
 		b
 
@@ -62,7 +63,7 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 	for (i = 1; i < array.length; i++) {
 
 		// Don't render element if value is false or null
-		if (array[i] === false || array[i] === null){
+		if (array[i] === false || array[i] === null) {
 			array[0] = false
 			break
 		}
@@ -88,9 +89,8 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 				array[0].appendChild(array[i][0])
 		}
 
-		// If it is a function call it with current element as first argument
 		else if (typeof array[i] === "function")
-			array[i](array[0])
+			callback = array[i]
 
 		// If it is an element append it
 		else if (array[i] instanceof Element)
@@ -109,6 +109,8 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
+
+	if(callback) callback(array[0])
 
 	// returns object containing all elements with an id and the root element
 	return returnObject
