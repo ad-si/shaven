@@ -21,8 +21,11 @@
     "src",
     "styl",
     "img",
+    "css",
     "js",
-    "index.html"
+    "index.html",
+    "jakefile",
+    "package.json"
   ],
   "main": "src/shaven.js",
   "devDependencies": {
