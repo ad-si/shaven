@@ -2,6 +2,8 @@
 
 A **DOM building utility** and **Template engine** build upon **JsonML** with syntax sugar.
 
+Checkout [adriansieber.com/shaven](http://adriansieber.com/shaven) for an extensive documentation.
+
 
 ```javascript
 	shaven(
@@ -39,5 +41,3 @@ compiles to
 - Support for namespaces. (Lets you build SVGs and other XML based languages)
 - Callback functions on elements
 - Returns a Object containing the root element and the elements with an id
-
-**Check out the examples folder for more in-depth examples**
