@@ -30,6 +30,7 @@ function runTestSuite(environment) {
 
 	}
 
+
 	afterEach(function () {
 
 		if (environment === 'browser')
@@ -355,27 +356,32 @@ function runTestSuite(environment) {
 
 					assert.ifError(error)
 
-					var expected = '<svg id="svg" height="100" width="100">' +
-							'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle>' +
+					var expected = '<svg id="svg" height="10" width="10">' +
+							'<circle class="top" cx="5" cy="5" r="5" style="fill:green"></circle>' +
 							'</svg>',
-						array = ['svg#svg', {height: 100, width: 100},
-							['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
+						array = ['svg#svg', {height: 10, width: 10},
+							['circle.top', {cx: 5, cy: 5, r: 5, style: 'fill:green'}]
 						],
-						browserSvgElement
+						browserSvgElement,
+						svg
 
-					if (environment === 'nodejs') {
 
+					if (environment === 'nodejs')
 						assert.strictEqual(scope.shaven(array)[0], expected)
-					}
 
 					else if (environment === 'browser') {
 
 						browserSvgElement = scope.shaven(
-							[getById('test', window), array],
+							[getById('test', scope), array],
 							'http://www.w3.org/2000/svg'
 						)[0]
 
+						svg = getById('svg', scope)
+
+						assert(svg.offsetWidth === 10 && svg.offsetHeight === 10)
 						assert.strictEqual(browserSvgElement.innerHTML, expected)
+
+						svg.parentNode.removeChild(svg)
 					}
 
 					done()
