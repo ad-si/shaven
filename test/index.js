@@ -348,7 +348,7 @@ function runTestSuite(environment) {
 		})
 
 
-		if (environment === 'nodejs')
+		if (environment !== 'jsdom')
 			it('should work with SVGs', function (done) {
 
 				testInEnv(null, function (error, scope) {
@@ -358,17 +358,30 @@ function runTestSuite(environment) {
 					var expected = '<svg id="svg" height="100" width="100">' +
 							'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle>' +
 							'</svg>',
-						svgElement = scope.shaven(
-							['svg#svg', {height: 100, width: 100},
-								['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
-							]
+						array = ['svg#svg', {height: 100, width: 100},
+							['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
+						],
+						browserSvgElement
+
+					if (environment === 'nodejs') {
+
+						assert.strictEqual(scope.shaven(array)[0], expected)
+					}
+
+					else if (environment === 'browser') {
+
+						browserSvgElement = scope.shaven(
+							[getById('test', window), array],
+							'http://www.w3.org/2000/svg'
 						)[0]
 
-					assert.strictEqual(svgElement, expected)
+						assert.strictEqual(browserSvgElement.innerHTML, expected)
+					}
 
 					done()
 				})
 			})
+
 		else
 		// TODO (Must fail with the wrong namespace)
 			it('should work with SVGs (but only with the correct namespace)')
