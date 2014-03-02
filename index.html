@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset='UTF-8'>
+	<meta charset=UTF-8>
 	<title>Shaven</title>
-	<link href='http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
-	<link rel="stylesheet" href="bower_components/codemirror/theme/twilight.css"/>
-	<link rel="stylesheet" href="css/screen.css"/>
+	<link href=http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel
+	      rel=stylesheet type=text/css />
+	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css />
+	<link rel=stylesheet href=bower_components/codemirror/theme/twilight.css />
+	<link rel=stylesheet href=css/screen.css />
 	<link rel="shortcut icon" href="img/favicon.png?v=1"/>
 </head>
 <body>
@@ -30,7 +31,7 @@
 		<p><strong>All code examples with this icon are editable:</strong>
 			<img src="img/edit-black-s.png" alt="edit"/></p>
 
-		<textarea id=codeOverview class=code rows=12 data-lang=javascript>
+		<textarea id=codeOverview class=code rows=12 data-lang=js>
 			['div#demo',
 				['h1#logo', 'Static Example', {style: 'color:blue'}],
 				['p', 'some example text'],
@@ -46,7 +47,7 @@
 
 		<p>compiles to</p>
 
-		<textarea id=codeOverviewOutput class=code rows=12
+		<textarea id=codeOverviewOut class=code rows=12
 		          data-lang=xml data-input=codeOverview readonly>
 			<div id="demo">
 				<h1 id="logo" style="color:blue">Static Example</h1>
@@ -66,7 +67,8 @@
 			Those are arrays themselves and are structured as follows:</p>
 
 		<ul>
-			<li>The first array-element is a string which represents the html-tag (including syntax-sugar)</li>
+			<li>The first array-element is a string which represents
+				the html-tag (including syntax-sugar)</li>
 			<li>Other strings are the text-content of the element</li>
 			<li>One or more Javascript objects contain the attributes</li>
 			<li>Each sub-array or html-element is a child-element</li>
@@ -86,7 +88,7 @@
 
 		<p>Then require it in your scripts like this:</p>
 
-		<textarea id=codeRequire class=code data-lang=javascript readonly>
+		<textarea id=codeRequire class=code data-lang=js readonly>
 			var shaven = require('shaven')
 		</textarea>
 
@@ -113,7 +115,7 @@
 
 		<p>Firstly you can inject it straight into the DOM:</p>
 
-		<textarea class=code id=codeStraightInsert data-lang=javascript readonly>
+		<textarea class=code id=codeStraightInsert data-lang=js readonly>
 			shaven(
 				[document.body,
 					['div#demo',
@@ -127,7 +129,7 @@
 
 		<p>To get the HTML-fragment from the Shaven-object reference it with a <code>[0]</code>.</p>
 
-		<textarea class=code id=codeAppend data-lang=javascript readonly>
+		<textarea class=code id=codeAppend data-lang=js readonly>
 			var shavenObject = shaven(
 				['div#demo',
 					…
@@ -139,7 +141,7 @@
 
 		<p>Both compiles to:</p>
 
-		<textarea class=code id=codeInsertOutput data-lang=xml readonly>
+		<textarea class=code id=codeInsertOut data-lang=xml readonly>
 			<body>
 				<div id="demo">
 					…
@@ -154,27 +156,110 @@
 
 		<h2>Id</h2>
 
-		<textarea id=codeId data-lang=javascript>
+		<textarea id=codeId data-lang=js>
 			['p#example', 'example text']
 		</textarea>
 
 		<p>compiles to</p>
 
-		<textarea id=codeIdOutput data-input=codeId data-lang=xml readonly>
+		<textarea id=codeIdOut data-input=codeId data-lang=xml readonly>
 			<p id="example">example text</p>
 		</textarea>
 
 
 		<h2>Class</h2>
 
-		<textarea id=codeClass data-lang=javascript>
+		<textarea id=codeClass data-lang=js>
 			['p.info', 'example text']
 		</textarea>
 
 		<p>compiles to</p>
 
-		<textarea id=codeClassOutput data-input=codeClass data-lang=xml readonly>
+		<textarea id=codeClassOut data-input=codeClass data-lang=xml readonly>
 			<p class="info">example text</p>
+		</textarea>
+
+	</section>
+
+	<section>
+		<h1>References</h1>
+
+		<p>When an element with an id is created it automatically gets inserted
+		into the return-object of the shaven function call.
+		Therefore it can get easily referenced later on.</p>
+
+		<textarea id="codeIdReference" rows="7" data-lang=js  readonly>
+			var shavenObject = shaven(
+				[document.body,
+					['div#test', 'some text']
+				]
+			)
+
+			doSomething(shavenObject.test)
+		</textarea>
+
+		<p>Reference an element without an id by using the <code>$</code> keyword
+			to assign it a reference-name.</p>
+
+		<textarea id="codeDollarReference" rows="7" data-lang=js  readonly>
+			var shavenObject = shaven(
+				[document.body,
+					['div$test', 'some text']
+				]
+			)
+
+			doSomething(shavenObject.test)
+		</textarea>
+	</section>
+
+	<section>
+		<h1>Properties</h1>
+
+		<textarea id="codeProperties" rows="4" data-lang=js>
+			['p', {
+				class: 'first new focus',
+				style: 'color:red',
+				'data-lang': 'de'
+			}, 'Hi']
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id="codePropertiesOut" rows="1" data-input=codeProperties data-lang=js readonly>
+			<p class="first new focus" style="color:red" data-lang="de">Hi</p>
+
+		</textarea>
+
+
+	</section>
+
+	<section>
+		<h1>Escaping</h1>
+
+		<p>HTML-strings are escaped by default.</p>
+
+		<textarea id="codeEscape" rows="1" data-lang=js>
+			['div', '<p>This is <em>HTML</em></p>']
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id="codeEscapeOut" rows="1" data-input=codeEscape data-lang=js  readonly>
+			<div>&amp;lt;p&amp;gt;This is &amp;lt;em&amp;gt;HTML&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;</div>
+		</textarea>
+
+		<br/>
+
+		<p>To disable escaping add a <code>&</code> at the end of the element-tag string.</p>
+
+		<textarea id="codeNoEscape" rows="1" data-lang=js>
+			['div&', '<p>This is <em>HTML</em></p>']
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id="codeNoEscapeOut" rows="1" data-input=codeNoEscape data-lang=js readonly>
+			<div><p>This is <em>HTML</em></p></div>
 		</textarea>
 
 	</section>
@@ -183,17 +268,18 @@
 		<h1>Callback Functions</h1>
 
 		<p>You can provide a callback function,
-			which will be called when the element is created with the element as the argument.
+			which will be called after the element has been created,
+			with the element as the only argument.
 			This functionality is especially suited to add event-listeners.</p>
 
-		<textarea id=codeCallback data-lang=javascript readonly>
+		<textarea id=codeCallback data-lang=js readonly>
 			function test(element){
 				alert(element + ' was created')
 			}
 
 			shaven(
 				[document.body,
-					['div', test]
+					['div', 'test']
 				]
 			)
 		</textarea>
@@ -205,7 +291,7 @@
 		<a href="https://github.com/adius/shaven">GitHub</a>
 		<span class="muted">•</span>
 		<a href="https://github.com/adius/shaven/issues">Issues</a>
-		<span id="version">Version 0.2.0</span>
+		<span id="version">Version 0.3.0</span>
 	</footer>
 </div>
 

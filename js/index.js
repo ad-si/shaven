@@ -120,6 +120,9 @@
 		// Fix indentation
 		element.innerHTML = fixIndentation(element.innerHTML)
 
+		if(element.dataset.lang === 'js')
+			element.dataset.lang = 'javascript'
+
 		var isReadOnly = element.getAttribute('readonly') !== null,
 			editor = {
 				id: element.getAttribute('id'),

@@ -9,7 +9,8 @@
     "jsdom": "~0.10.1"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha -b --inline-diffs -R spec"
+    "test": "node_modules/.bin/mocha -b --inline-diffs -R spec",
+    "prepublish": "jake -B && npm test"
   },
   "repository": {
     "type": "git",

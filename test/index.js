@@ -108,12 +108,12 @@ function runTestSuite(environment) {
 
 		it('should build elements recursively', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
 				var expected = '<div><p>foo<em>bar</em></p></div>',
-					actual = window.shaven(
+					actual = scope.shaven(
 						['div',
 							['p', 'foo',
 								['em', 'bar']
@@ -133,12 +133,12 @@ function runTestSuite(environment) {
 
 		it('should be possible to set properties', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
 				var expected = '<p id="foo" class="bar" data-info="baz"></p>',
-					actual = window.shaven(
+					actual = scope.shaven(
 						['p', {
 							id: 'foo',
 							class: 'bar',  // class is restricted word
@@ -159,12 +159,12 @@ function runTestSuite(environment) {
 
 			it('should set the id', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<p id="foo-1"></p>',
-						element = window.shaven(['p#foo-1'])[0]
+						element = scope.shaven(['p#foo-1'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -178,12 +178,12 @@ function runTestSuite(environment) {
 
 			it('should set the class', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<p class="foo"></p>',
-						element = window.shaven(['p.foo'])[0]
+						element = scope.shaven(['p.foo'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -197,12 +197,12 @@ function runTestSuite(environment) {
 
 			it('should work with both class and id', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<p id="b" class="new"></p>',
-						element = window.shaven(['p#b.new'])[0]
+						element = scope.shaven(['p#b.new'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -216,12 +216,12 @@ function runTestSuite(environment) {
 
 			it('should work with class and id reversed', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<p id="c" class="new"></p>',
-						element = window.shaven(['p.new#c'])[0]
+						element = scope.shaven(['p.new#c'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -235,12 +235,12 @@ function runTestSuite(environment) {
 
 			it('should understand multiple classes and ids', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<p id="foo" class="bar baz"></p>',
-						element = window.shaven(['p.bar#foo.baz'])[0]
+						element = scope.shaven(['p.bar#foo.baz'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -255,7 +255,7 @@ function runTestSuite(environment) {
 
 		it('should call the provided callback function', function (done) {
 
-			testInEnv('<div id="test"></div> ', function (error, window) {
+			testInEnv('<div id="test"></div> ', function (error, scope) {
 
 				assert.ifError(error)
 
@@ -268,7 +268,7 @@ function runTestSuite(environment) {
 					element = el
 				}
 
-				shavenObject = window.shaven(['p#bar', foo])
+				shavenObject = scope.shaven(['p#bar', foo])
 
 				assert(called)
 				assert.strictEqual(element, shavenObject[0])
@@ -279,11 +279,11 @@ function runTestSuite(environment) {
 
 		it('should return a shaven object and not an html element or string', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
-				var shavenObject = window.shaven(['p'])
+				var shavenObject = scope.shaven(['p'])
 
 				assert(typeof shavenObject === 'object')
 				assert.notStrictEqual(shavenObject.nodeType, 1)
@@ -294,11 +294,11 @@ function runTestSuite(environment) {
 
 		it('should return the root html element by referencing [0]', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
-				var shavenObject = window.shaven(['p'])
+				var shavenObject = scope.shaven(['p'])
 
 				if (environment !== 'nodejs')
 					assert.strictEqual(shavenObject[0].nodeType, 1)
@@ -312,12 +312,12 @@ function runTestSuite(environment) {
 
 		it('should escape html string', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
 				var html = '<p>Some <strong>HTML</strong></p>',
-					element = window.shaven(['div', html])[0]
+					element = scope.shaven(['div', html])[0]
 
 				if (environment === 'nodejs')
 					assert.strictEqual(element, '<div>' + html + '</div>')
@@ -331,12 +331,12 @@ function runTestSuite(environment) {
 
 		it('should build html from string', function (done) {
 
-			testInEnv(null, function (error, window) {
+			testInEnv(null, function (error, scope) {
 
 				assert.ifError(error)
 
 				var html = '<p>Some <strong>HTML</strong></p>',
-					element = window.shaven(['div&', html])[0]
+					element = scope.shaven(['div&', html])[0]
 
 				if (environment === 'nodejs')
 					assert.strictEqual(element, '<div>' + html + '</div>')
@@ -351,14 +351,14 @@ function runTestSuite(environment) {
 		if (environment === 'nodejs')
 			it('should work with SVGs', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var expected = '<svg id="svg" height="100" width="100">' +
 							'<circle class="top" cx="10" cy="10" r="5" style="fill:green"></circle>' +
 							'</svg>',
-						svgElement = window.shaven(
+						svgElement = scope.shaven(
 							['svg#svg', {height: 100, width: 100},
 								['circle.top', {cx: 10, cy: 10, r: 5, style: 'fill:green'}]
 							]
@@ -378,11 +378,11 @@ function runTestSuite(environment) {
 
 			it('should return an empty element for missing content value', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
-					var element = window.shaven(['div'])[0]
+					var element = scope.shaven(['div'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, '<div></div>')
@@ -396,11 +396,11 @@ function runTestSuite(environment) {
 
 			it('should return an empty element for undefined content value', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
-					var element = window.shaven(['div', undefined])[0]
+					var element = scope.shaven(['div', undefined])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, '<div></div>')
@@ -413,11 +413,11 @@ function runTestSuite(environment) {
 
 			it('should return no element if content value is "false"', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
-					var element = window.shaven(['div', ['p', false]])[0]
+					var element = scope.shaven(['div', ['p', false]])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, '<div></div>')
@@ -431,11 +431,11 @@ function runTestSuite(environment) {
 
 			it('should return no element if content value is "null"', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
-					var element = window.shaven(['div', ['p', null]])[0]
+					var element = scope.shaven(['div', ['p', null]])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, '<div></div>')
