@@ -22,15 +22,18 @@
 		"url": "https://github.com/adius/shaven.git"
 	},
 	"scripts": {
-		"test": "node_modules/.bin/mocha -b --inline-diffs -R spec",
+		"test": "./node_modules/.bin/mocha -b --inline-diffs -R spec",
 		"prepublish": "jake -B && npm test"
 	},
 	"dependencies": {
 		"escape-html": "~1.0.1"
 	},
 	"devDependencies": {
-		"uglify-js": "~2.4.12",
-		"mocha": "~1.17.1",
-		"jsdom": "~0.10.1"
+		"uglify-js": "~2.4.13",
+		"mocha": "~1.18.2",
+		"jsdom": "~0.10.5"
+	},
+	"engines":{
+		"node": "~0.10.26"
 	}
 }
