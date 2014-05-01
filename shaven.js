@@ -110,7 +110,7 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 	// Return root element on index 0
 	returnObject[0] = array[0]
 
-	if(callback) callback(array[0])
+	if (callback) callback(array[0])
 
 	// returns object containing all elements with an id and the root element
 	return returnObject
