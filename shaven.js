@@ -1,14 +1,18 @@
 // Shaven 0.3.3 by Adrian Sieber (adriansieber.com)
 
-shaven = function dom(array, // Array containing the DOM fragment in JsonML
-                      namespace, // Namespace
-                      returnObject) { // Contains elements identified by their id
+
+// array: Array containing the DOM fragment in JsonML
+// returnObject: Contains elements identified by their id
+
+shaven = function dom (array, namespace, returnObject) {
+
+	'use strict'
 
 	var doc = document,
-		unescaped,
-		callback,
-		i,
-		b
+	    unescaped,
+	    callback,
+	    attribute,
+	    i
 
 	// Set on first iteration
 	returnObject = returnObject || {}
@@ -17,15 +21,15 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 	namespace = namespace || 'http://www.w3.org/1999/xhtml'
 
 	// Create DOM element from syntax sugar string
-	function createElement(sugarString) {
+	function createElement (sugarString) {
 
-		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]), //Create element
-			id,
-			ref,
-			classNames
+		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]),
+		    id = sugarString.match(/#([\w-]+)/),
+		    ref = sugarString.match(/\$([\w-]+)/),
+		    classNames = sugarString.match(/\.[\w-]+/g)
 
 		// Assign id if is set
-		if (id = sugarString.match(/#([\w-]+)/)) {
+		if (id) {
 
 			element.id = id[1]
 
@@ -34,11 +38,11 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 		}
 
 		// Create reference to the element and add it to the return object
-		if (ref = sugarString.match(/\$([\w-]+)/))
+		if (ref)
 			returnObject[ref[1]] = element
 
 		// Assign class if is set
-		if (classNames = sugarString.match(/\.[\w-]+/g))
+		if (classNames)
 			element.setAttribute('class', classNames.join(' ').replace(/\./g, ''))
 
 		// Don't escape HTML content
@@ -75,6 +79,7 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 		else if (typeof array[i] === 'string' || typeof array[i] === 'number')
 			if (unescaped)
 				array[0].innerHTML = array[i]
+
 			else
 				array[0].appendChild(doc.createTextNode(array[i]))
 
@@ -89,7 +94,7 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 				array[0].appendChild(array[i][0])
 		}
 
-		else if (typeof array[i] === "function")
+		else if (typeof array[i] === 'function')
 			callback = array[i]
 
 		// If it is an element append it
@@ -97,13 +102,14 @@ shaven = function dom(array, // Array containing the DOM fragment in JsonML
 			array[0].appendChild(array[i])
 
 		// Else must be an object with attributes
-		else if (typeof array[i] === "object")
+		else if (typeof array[i] === 'object')
 		// For each attribute
-			for (b in array[i])
-				array[0].setAttribute(b, array[i][b])
+			for (attribute in array[i])
+				if (array[i].hasOwnProperty(attribute))
+					array[0].setAttribute(attribute, array[i][attribute])
 
-		else
-			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
+				else
+					throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
 	// }
 

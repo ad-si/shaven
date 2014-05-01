@@ -23,7 +23,7 @@
 	},
 	"scripts": {
 		"test": "./node_modules/.bin/mocha -b --inline-diffs -R spec",
-		"prepublish": "jake -B && npm test"
+		"prepublish": "jake -B && npm test && ./node_modules/.bin/jscs ."
 	},
 	"dependencies": {
 		"escape-html": "~1.0.1"
@@ -61,7 +61,7 @@
 		"strict": true,
 		"trailing": true,
 		"maxparams": 3,
-		"maxdepth": 3,
+		"maxdepth": 4,
 		"maxstatements": 10,
 		"maxlen": 100,
 		"asi": true
@@ -75,7 +75,6 @@
 		"requireCurlyBraces": [],
 		"requireSpaceAfterKeywords": [
 			"if",
-			"else",
 			"for",
 			"while",
 			"do",
@@ -85,14 +84,12 @@
 			"catch"
 		],
 		"requireSpaceBeforeBlockStatements": true,
-		"requireParenthesesAroundIIFE": true,
 		"requireSpacesInFunctionExpression": {
 			"beforeOpeningRoundBrace": true,
 			"beforeOpeningCurlyBrace": true
 		},
 		"requireMultipleVarDecl": "onevar",
 		"requireBlocksOnNewline": true,
-		"disallowPaddingNewlinesInBlocks": true,
 		"disallowEmptyBlocks": true,
 		"disallowSpacesInsideArrayBrackets": true,
 		"disallowSpacesInsideObjectBrackets": true,
@@ -204,7 +201,6 @@
 		"disallowMultipleLineStrings": true,
 		"validateLineBreaks": "LF",
 		"validateQuoteMarks": "'",
-		"validateIndentation": "\t",
 		"disallowMixedSpacesAndTabs": "smart",
 		"disallowTrailingWhitespace": true,
 		"disallowTrailingComma": true,
@@ -214,10 +210,6 @@
 		"requireLineFeedAtFileEnd": true,
 		"maximumLineLength": 100,
 		"requireCapitalizedConstructors": true,
-		"safeContextKeyword": [
-			"that",
-			"self"
-		],
 		"requireDotNotation": true,
 		"disallowYodaConditions": true
 	}

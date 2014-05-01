@@ -1,15 +1,18 @@
-!function () {
+!function (window, document) {
 
-	var editors = []
+	'use strict'
+
+	var textareas,
+	    editors = []
 
 
-	function fixIndentation(string) {
+	function fixIndentation (string) {
 
 		// Remove leading tabs and last newline character
 
 		var numberOfTabs,
-			matches,
-			sortedString
+		    matches,
+		    sortedString
 
 		sortedString = string.split('\n').sort()
 		matches = sortedString[sortedString.length - 1].match(/^\s*/)
@@ -24,17 +27,14 @@
 			.slice(0, -1)
 	}
 
-	function getById(id) {
-		return document.getElementById(id)
-	}
 
-	function getFromArrayById(array, id) {
+	function getFromArrayById (array, id) {
 
 		var soughtElement = null
 
 		array.some(function (element) {
 
-			if (element.id == id) {
+			if (element.id === id) {
 				soughtElement = element
 				return true
 			}
@@ -43,34 +43,34 @@
 		return soughtElement
 	}
 
-	CodeMirror.defaults.theme = "twilight"
+	CodeMirror.defaults.theme = 'twilight'
 	CodeMirror.defaults.indentWithTabs = true
 	CodeMirror.defaults.indentUnit = 4
 
-	CodeMirror.defineExtension("autoFormat", function () {
+	CodeMirror.defineExtension('autoFormat', function () {
 
 		var cm = this,
-			totalLines = cm.lineCount(),
-			totalChars = cm.getValue().length,
-			from = {line: 0, ch: 0},
-			to = {line: totalLines, ch: totalChars},
-			outer = cm.getMode(),
-			text = cm.getRange(from, to).split("\n"),
-			state = CodeMirror.copyState(outer, cm.getTokenAt(from).state),
-			tabSize = cm.getOption("tabSize"),
-			out = "",
-			lines = 0,
-			atSol = from.ch == 0,
-			i,
-			stream,
-			inner,
-			style,
-			cur
+		    totalLines = cm.lineCount(),
+		    totalChars = cm.getValue().length,
+		    from = {line: 0, ch: 0},
+		    to = {line: totalLines, ch: totalChars},
+		    outer = cm.getMode(),
+		    text = cm.getRange(from, to).split('\n'),
+		    state = CodeMirror.copyState(outer, cm.getTokenAt(from).state),
+		    tabSize = cm.getOption('tabSize'),
+		    out = '',
+		    lines = 0,
+		    atSol = from.ch === 0,
+		    i,
+		    stream,
+		    inner,
+		    style,
+		    cur
 
-		function newline() {
-			out += "\n"
+		function newline () {
+			out += '\n'
 			atSol = true
-			++lines
+			lines++
 		}
 
 		for (i = 0; i < text.length; ++i) {
@@ -91,7 +91,10 @@
 				}
 
 				if (!atSol && inner.mode.newlineAfterToken &&
-					inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) || text[i + 1] || "", inner.state))
+				    inner.mode.newlineAfterToken(style, cur,
+						    stream.string.slice(stream.pos) ||
+						    text[i + 1] || '', inner.state)
+					)
 					newline()
 			}
 
@@ -106,33 +109,33 @@
 			cm.replaceRange(out, from, to)
 
 			for (var cur = from.line + 1, end = from.line + lines; cur <= end; ++cur)
-				cm.indentLine(cur, "smart")
+				cm.indentLine(cur, 'smart')
 
 			//cm.setSelection(from, cm.getCursor(false))
 		})
 	})
 
 
-	var textareas = document.querySelectorAll('textarea')
+	textareas = document.querySelectorAll('textarea')
 
-	Array.prototype.forEach.call(textareas, function (element, index) {
+	Array.prototype.forEach.call(textareas, function (element) {
 
 		// Fix indentation
 		element.innerHTML = fixIndentation(element.innerHTML)
 
-		if(element.dataset.lang === 'js')
+		if (element.dataset.lang === 'js')
 			element.dataset.lang = 'javascript'
 
 		var isReadOnly = element.getAttribute('readonly') !== null,
-			editor = {
-				id: element.getAttribute('id'),
-				inputId: element.dataset.input,
-				isReadOnly: isReadOnly,
-				cm: CodeMirror.fromTextArea(element, {
-					readOnly: isReadOnly,
-					mode: element.dataset.lang || 'text'
-				})
-			}
+		    editor = {
+			    id: element.getAttribute('id'),
+			    inputId: element.dataset.input,
+			    isReadOnly: isReadOnly,
+			    cm: CodeMirror.fromTextArea(element, {
+				    readOnly: isReadOnly,
+				    mode: element.dataset.lang || 'text'
+			    })
+		    }
 
 		editors.push(editor)
 
@@ -146,12 +149,18 @@
 			getFromArrayById(editors, editor.inputId).cm.on('change', function (instance) {
 
 				try {
-					editor.cm.setValue(shaven(eval(instance.getValue()))[0].outerHTML.replace(/></g, '>\n<'))
-					editor.cm.autoFormat()
+					editor
+						.cm
+						.setValue(shaven(eval(instance.getValue()))[0]
+							.outerHTML
+							.replace(/></g, '>\n<'))
+					editor
+						.cm
+						.autoFormat()
 				}
 				catch (error) {
 					editor.cm.setValue(error.message)
 				}
 			})
 	})
-}()
+}(window, document)

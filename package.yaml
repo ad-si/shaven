@@ -25,7 +25,7 @@ repository:
 
 scripts:
   test: ./node_modules/.bin/mocha -b --inline-diffs -R spec
-  prepublish: jake -B && npm test
+  prepublish: jake -B && npm test && ./node_modules/.bin/jscs .
 
 dependencies:
   escape-html: ~1.0.1
@@ -63,25 +63,26 @@ jshintConfig:
   strict: true
   trailing: true
   maxparams: 3
-  maxdepth: 3
+  maxdepth: 4
   maxstatements: 10
   maxlen: 100
 
   asi: true
 
+# Escaped rules should be applied but don't work properly yet
 jscsConfig:
   excludeFiles: [node_modules/**, bower_components/**, "*.min.js"]
   requireCurlyBraces: []
   requireSpaceAfterKeywords:
-    [if, else, for, while, do, switch, return, try, catch]
+    #[if, else, for, while, do, switch, return, try, catch]
+    [if, for, while, do, switch, return, try, catch]
   requireSpaceBeforeBlockStatements: true
-  requireParenthesesAroundIIFE: true
+  #requireParenthesesAroundIIFE: true
   requireSpacesInFunctionExpression:
     beforeOpeningRoundBrace: true
     beforeOpeningCurlyBrace: true
   requireMultipleVarDecl: onevar
   requireBlocksOnNewline: true
-  disallowPaddingNewlinesInBlocks: true
   disallowEmptyBlocks: true
   disallowSpacesInsideArrayBrackets: true
   disallowSpacesInsideObjectBrackets: true
@@ -107,7 +108,7 @@ jscsConfig:
   disallowMultipleLineStrings: true
   validateLineBreaks: LF
   validateQuoteMarks: "'"
-  validateIndentation: "\t"
+  #validateIndentation: "\t"
   disallowMixedSpacesAndTabs: smart
   disallowTrailingWhitespace: true
   disallowTrailingComma: true
@@ -115,7 +116,7 @@ jscsConfig:
   requireLineFeedAtFileEnd: true
   maximumLineLength: 100
   requireCapitalizedConstructors: true
-  safeContextKeyword: [that, self]
+  #safeContextKeyword: [that, self]
   requireDotNotation: true
   disallowYodaConditions: true
 

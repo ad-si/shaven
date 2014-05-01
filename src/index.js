@@ -2,27 +2,30 @@ var escape = require('escape-html')
 
 // TODO: remove namespace
 
-module.exports = function shaven(array, namespace, returnObject) {
+module.exports = function shaven (array, namespace, returnObject) {
+
+	'use strict'
 
 	var HTMLString,
-		doesEscape,
-		i,
-		attributeKey,
-		callback
+	    doesEscape,
+	    i,
+	    attributeKey,
+	    callback,
+	    key
 
 	returnObject = returnObject || {}
 
 
-	function createElement(sugarString) {
+	function createElement (sugarString) {
 
 		var element = {
-				tag: sugarString.match(/^\w+/)[0],
-				attr: {},
-				children: []
-			},
-			id = sugarString.match(/#([\w-]+)/),
-			reference = sugarString.match(/\$([\w-]+)/),
-			classNames = sugarString.match(/\.[\w-]+/g)
+			    tag: sugarString.match(/^\w+/)[0],
+			    attr: {},
+			    children: []
+		    },
+		    id = sugarString.match(/#([\w-]+)/),
+		    reference = sugarString.match(/\$([\w-]+)/),
+		    classNames = sugarString.match(/\.[\w-]+/g)
 
 		// Assign id if is set
 		if (id) {
@@ -63,8 +66,7 @@ module.exports = function shaven(array, namespace, returnObject) {
 			break
 		}
 
-		else if (array[i] === undefined) {
-		}
+		else if (array[i] === undefined);
 
 
 		else if (typeof array[i] === 'string' || typeof array[i] === 'number') {
@@ -82,11 +84,11 @@ module.exports = function shaven(array, namespace, returnObject) {
 				array[0].children.push(array[i][0])
 		}
 
-		else if (typeof array[i] === "function")
+		else if (typeof array[i] === 'function')
 			callback = array[i]
 
 
-		else if (typeof array[i] === "object") {
+		else if (typeof array[i] === 'object') {
 			for (attributeKey in array[i])
 				if (array[i].hasOwnProperty(attributeKey))
 					array[0].attr[attributeKey] = array[i][attributeKey]
@@ -101,7 +103,7 @@ module.exports = function shaven(array, namespace, returnObject) {
 
 		HTMLString = ['<', array[0].tag]
 
-		for (var key in array[0].attr)
+		for (key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
 				HTMLString.push(' ', key, '="', array[0].attr[key], '"')
 
