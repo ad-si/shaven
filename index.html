@@ -45,7 +45,7 @@
 			<img src=img/edit-black-s.png alt=edit/></p>
 
 		<textarea id=codeOverview class=code rows=11 data-lang=js>
-			['div#demo',
+			['#demo',
 				['h1#logo', 'Static Example', {style: 'color:blue'}],
 				['p', 'some example text'],
 				['ul#list.bullets',
@@ -146,7 +146,7 @@
 
 		<textarea class=code id=codeAppend data-lang=js readonly>
 			var shavenObject = shaven(
-				['div#demo',
+				['#demo',
 					…
 				]
 			)
@@ -168,6 +168,11 @@
 
 	<section>
 		<h1>Syntax Sugar</h1>
+
+		<h2>Tag</h2>
+
+		<p>When you omit the html-tag it uses the default <code>div</code> tag.
+			So <code>div#test</code> ist the same as <code>#test</code></p>
 
 		<h2>Id</h2>
 

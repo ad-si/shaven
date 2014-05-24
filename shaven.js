@@ -23,7 +23,9 @@ shaven = function dom (array, namespace, returnObject) {
 	// Create DOM element from syntax sugar string
 	function createElement (sugarString) {
 
-		var element = doc.createElementNS(namespace, sugarString.match(/^\w+/)[0]),
+		var tags = sugarString.match(/^\w+/),
+		    tag = tags ? tags[0] : 'div',
+		    element = doc.createElementNS(namespace, tag),
 		    id = sugarString.match(/#([\w-]+)/),
 		    ref = sugarString.match(/\$([\w-]+)/),
 		    classNames = sugarString.match(/\.[\w-]+/g)
@@ -73,7 +75,9 @@ shaven = function dom (array, namespace, returnObject) {
 		}
 
 		// Render element with empty body if value is undefined
-		else if (array[i] === undefined);
+		else if (array[i] === undefined) {
+			continue
+		}
 
 		// If is string has to be content so set it
 		else if (typeof array[i] === 'string' || typeof array[i] === 'number')

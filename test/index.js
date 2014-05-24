@@ -4,7 +4,7 @@
 
 	var assert,
 	    scope = {},
-	    isBrowser,
+	    isBrowser = (typeof window !== 'undefined'),
 	    shaven,
 	    jsdom
 
@@ -54,7 +54,9 @@
 						assert.ifError(error)
 
 						var expected = '<div id="test"><p></p></div>',
-						    actual = window.shaven([getById('test', window), ['p']])[0].outerHTML
+						    actual = window.shaven(
+							    [getById('test', window), ['p']]
+						    )[0].outerHTML
 
 						assert.strictEqual(actual, expected, actual)
 
@@ -71,7 +73,9 @@
 
 						var expected = '<div id="test"><p></p></div>',
 						    element = window.shaven(['p'])[0],
-						    actual = window.shaven([getById('test', window), element])[0].outerHTML
+						    actual = window.shaven(
+							    [getById('test', window), element]
+						    )[0].outerHTML
 
 						assert.strictEqual(actual, expected, actual)
 
@@ -86,7 +90,9 @@
 
 						assert.ifError(error)
 
-						var shavenObject = window.shaven([getById('test', window), ['p#foo'], ['p#bar']])
+						var shavenObject = window.shaven(
+							[getById('test', window), ['p#foo'], ['p#bar']]
+						)
 
 						assert.strictEqual(shavenObject.foo, getById('foo', window))
 						assert.strictEqual(shavenObject.bar, getById('bar', window))
@@ -101,10 +107,18 @@
 
 						assert.ifError(error)
 
-						var shavenObject = window.shaven([getById('test', window), ['a$foo'], ['p$bar']])
+						var shavenObject = window.shaven(
+							[getById('test', window), ['a$foo'], ['p$bar']]
+						)
 
-						assert.strictEqual(shavenObject.foo, window.document.getElementsByTagName('a')[0])
-						assert.strictEqual(shavenObject.bar, window.document.getElementsByTagName('p')[0])
+						assert.strictEqual(
+							shavenObject.foo,
+							window.document.getElementsByTagName('a')[0]
+						)
+						assert.strictEqual(
+							shavenObject.bar,
+							window.document.getElementsByTagName('p')[0]
+						)
 						done()
 					})
 				})
@@ -199,6 +213,26 @@
 
 
 			describe('Syntax-sugar string', function () {
+
+
+				it('should use div as default tag', function (done) {
+
+					testInEnv(null, function (error, scope) {
+
+						assert.ifError(error)
+
+						var expected = '<div id="foo"></div>',
+						    element = scope.shaven(['#foo'])[0]
+
+						if (environment === 'nodejs')
+							assert.strictEqual(element, expected)
+						else
+							assert.strictEqual(element.outerHTML, expected)
+
+						done()
+					})
+				})
+
 
 				it('should set the id', function (done) {
 
@@ -510,7 +544,6 @@
 		})
 	}
 
-	isBrowser = (typeof window !== 'undefined')
 
 	if (isBrowser) {
 
