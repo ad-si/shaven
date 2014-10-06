@@ -96,7 +96,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 		else if (typeof array[i] === 'object') {
 			for (attributeKey in array[i])
 				if (array[i].hasOwnProperty(attributeKey))
-					array[0].attr[attributeKey] = array[i][attributeKey]
+					if (array[i][attributeKey] !== null &&
+					    array[i][attributeKey] !== false)
+						array[0].attr[attributeKey] = array[i][attributeKey]
 		}
 
 		else

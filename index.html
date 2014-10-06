@@ -235,18 +235,24 @@
 	<section>
 		<h1>Properties</h1>
 
+		<p>All entries of an object will become the attributes.
+		If an object entry is <code>undefined</code> the attribute will be an empty string.
+		If an entry is <code>null</code> or <code>false</code> the attribute will not
+		be created at all.</p>
+
 		<textarea id=codeProperties rows=4 data-lang=js>
 			['p', {
 				class: 'first new focus',
 				style: 'color:red',
-				'data-lang': 'de'
-			}, 'Hi']
+				'data-lang': 'de',
+				title: false
+			}, 'Hello']
 		</textarea>
 
 		<p>compiles to</p>
 
 		<textarea id=codePropertiesOut rows=1 data-input=codeProperties data-lang=xml readonly>
-			<p class="first new focus" style="color:red" data-lang="de">Hi</p>
+			<p class="first new focus" style="color:red" data-lang="de">Hello</p>
 		</textarea>
 
 	</section>

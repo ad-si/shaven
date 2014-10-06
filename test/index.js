@@ -212,6 +212,35 @@
 			})
 
 
+			it('should not set falsy properties', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var expected = '<p title="foo" tabindex="3" data-info=""></p>',
+					    actual = scope.shaven(
+						    ['p', {
+							    title: 'foo',
+							    tabindex: 3,
+							    lang: false,
+							    'data-test': null,
+							    'data-info': undefined
+						    }]
+					    )[0]
+
+
+					if (environment === 'nodejs')
+						assert.strictEqual(actual, expected)
+
+					else
+						assert.strictEqual(actual.outerHTML, expected)
+
+					done()
+				})
+			})
+
+
 			describe('Syntax-sugar string', function () {
 
 

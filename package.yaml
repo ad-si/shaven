@@ -25,7 +25,8 @@ repository:
 
 scripts:
   test: ./node_modules/.bin/mocha -b --inline-diffs -R spec
-  prepublish: ./node_modules/.bin/jake -f ./jakefile -B && npm test && ./node_modules/.bin/jscs .
+  build: ./node_modules/.bin/jake -f ./jakefile -B
+  prepublish: npm run-script build && npm test && ./node_modules/.bin/jscs .
 
 dependencies:
   escape-html: ~1.0.1

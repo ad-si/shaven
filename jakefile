@@ -24,7 +24,7 @@ function buildMinifiedJs(string) {
 
 
 desc('Default build process')
-task('default', ['shaven.js', 'shaven.min.js', 'index.html', 'bower.json'], function () {
+task('default', ['shaven.js', 'shaven.min.js', 'index.html', 'package.json', 'bower.json'], function () {
 })
 
 
