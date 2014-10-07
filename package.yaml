@@ -1,5 +1,5 @@
 name: shaven
-version: 0.5.0
+version: 0.6.0
 description: Shaven is a simple DOM building utility and template engine based upon JsonML
 homepage: http://adriansieber.com/shaven
 
