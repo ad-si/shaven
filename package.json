@@ -30,13 +30,13 @@
 		"escape-html": "~1.0.1"
 	},
 	"devDependencies": {
-		"jake": "~0.7.12",
+		"jake": "~8.0.10",
 		"uglify-js": "~2.4.13",
-		"mocha": "~1.18.2",
-		"jsdom": "~0.10.5",
+		"mocha": "~1.21.4",
+		"jsdom": "~1.0.1",
 		"jshint": "~2.5.0",
-		"jscs": "~1.4.0",
-		"js-yaml": "~3.0.2"
+		"jscs": "~1.6.2",
+		"js-yaml": "~3.2.2"
 	},
 	"engines": {
 		"node": "~0.10.26"
@@ -78,6 +78,7 @@
 		"requireCurlyBraces": [],
 		"requireSpaceAfterKeywords": [
 			"if",
+			"else",
 			"for",
 			"while",
 			"do",
@@ -119,44 +120,11 @@
 			"<",
 			"<="
 		],
-		"disallowLeftStickedOperators": [
-			"?",
-			"+",
-			"/",
-			"*",
-			{
-				"null": null
-			},
-			"=",
-			"==",
-			"===",
-			"!=",
-			"!==",
-			">",
-			">=",
-			"<",
-			"<="
+		"disallowSpaceAfterBinaryOperators": [
+			"!"
 		],
-		"disallowRightStickedOperators": [
-			"?",
-			"+",
-			"/",
-			"*",
-			{
-				"null": null
-			},
-			"=",
-			"==",
-			"===",
-			"!=",
-			"!==",
-			">",
-			">=",
-			"<",
-			"<="
-		],
-		"requireLeftStickedOperators": [
-			null
+		"disallowSpaceBeforeBinaryOperators": [
+			","
 		],
 		"disallowSpaceAfterPrefixUnaryOperators": [
 			"++",
@@ -171,6 +139,7 @@
 			"--"
 		],
 		"requireSpaceBeforeBinaryOperators": [
+			"?",
 			"+",
 			"-",
 			"/",
@@ -179,9 +148,16 @@
 			"==",
 			"===",
 			"!=",
-			"!=="
+			"!==",
+			">",
+			">=",
+			"<",
+			"<="
 		],
 		"requireSpaceAfterBinaryOperators": [
+			",",
+			":",
+			"?",
 			"+",
 			"-",
 			"/",
@@ -190,7 +166,11 @@
 			"==",
 			"===",
 			"!=",
-			"!=="
+			"!==",
+			">",
+			">=",
+			"<",
+			"<="
 		],
 		"disallowImplicitTypeConversion": [
 			"numeric",
