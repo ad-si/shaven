@@ -72,3 +72,7 @@ All code changes must be made in the server and browser version of shaven (`src/
 
 - Tests: `$ npm test`
 - Build: `$ npm run-script build`
+- Run `$ npm prepublish` before each commit
+- Make extra commits for version bumps
+- Tag new versions like `vx.y.z`
+- Publish to npm `$ npm publish` and bower `$ bower register`

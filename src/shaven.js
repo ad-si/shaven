@@ -60,6 +60,13 @@ shaven = function dom (array, namespace, returnObject) {
 		return element
 	}
 
+	function replacer (key, value) {
+		if (typeof value !== 'string' && typeof value !== 'object')
+			return String(value)
+		else
+			return value
+	}
+
 	// TODO: Create customised renderer
 	// If is object
 	// if (array === Object(array)) {
@@ -115,15 +122,30 @@ shaven = function dom (array, namespace, returnObject) {
 			// For each attribute
 			for (attributeKey in array[i])
 				if (array[i].hasOwnProperty(attributeKey)) {
+
 					if (array[i][attributeKey] !== null &&
 					    array[i][attributeKey] !== false)
 						if (array[i][attributeKey] === undefined)
 							array[0].setAttribute(attributeKey, '')
-						else
-							array[0].setAttribute(
-								attributeKey,
-								array[i][attributeKey]
-							)
+
+						else {
+							if (attributeKey === 'style' &&
+							    typeof array[i][attributeKey] === 'object')
+								array[0].setAttribute(
+									attributeKey,
+									JSON
+										.stringify(array[i][attributeKey], replacer)
+										.slice(2, -2)
+										.replace(/","/g, ';')
+										.replace(/":"/g, ':')
+										.replace(/\\"/g, '\'')
+								)
+							else
+								array[0].setAttribute(
+									attributeKey,
+									array[i][attributeKey]
+								)
+						}
 				}
 		}
 		else

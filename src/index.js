@@ -51,6 +51,13 @@ module.exports = function shaven (array, namespace, returnObject) {
 		return element
 	}
 
+	function replacer (key, value) {
+		if (typeof value !== 'string' && typeof value !== 'object')
+			return String(value)
+		else
+			return value
+	}
+
 	// TODO: Create customised renderer
 	// If is object
 	// if (array === Object(array)) {
@@ -98,7 +105,17 @@ module.exports = function shaven (array, namespace, returnObject) {
 				if (array[i].hasOwnProperty(attributeKey))
 					if (array[i][attributeKey] !== null &&
 					    array[i][attributeKey] !== false)
-						array[0].attr[attributeKey] = array[i][attributeKey]
+						if (attributeKey === 'style' &&
+						    typeof array[i][attributeKey] === 'object')
+							array[0].attr[attributeKey] = JSON
+								.stringify(array[i][attributeKey], replacer)
+								.slice(2, -2)
+								.replace(/","/g, ';')
+								.replace(/":"/g, ':')
+								.replace(/\\"/g, '\'')
+
+						else
+							array[0].attr[attributeKey] = array[i][attributeKey]
 		}
 
 		else

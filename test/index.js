@@ -241,6 +241,38 @@
 			})
 
 
+			it('should build a string from a style object', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var expected = '<p style="color:rgb(255,0,0);font-size:10;' +
+					               'font-family:Arial, \'Helvetica Neue\', sans-serif;' +
+					               'border:false"></p>',
+					    actual = scope.shaven(
+						    ['p', {
+							    style: {
+								    color: 'rgb(255,0,0)',
+								    'font-size': 10,
+								    'font-family': 'Arial, "Helvetica Neue", sans-serif',
+								    border: false
+							    }
+						    }]
+					    )[0]
+
+
+					if (environment === 'nodejs')
+						assert.strictEqual(actual, expected)
+
+					else
+						assert.strictEqual(actual.outerHTML, expected)
+
+					done()
+				})
+			})
+
+
 			describe('Syntax-sugar string', function () {
 
 
