@@ -1,4 +1,4 @@
-// Shaven 0.6.0 by Adrian Sieber (adriansieber.com)
+// Shaven 0.6.1 by Adrian Sieber (adriansieber.com)
 
 
 // array: Array containing the DOM fragment in JsonML
