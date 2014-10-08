@@ -61,10 +61,14 @@ shaven = function dom (array, namespace, returnObject) {
 	}
 
 	function replacer (key, value) {
+
+		if (value === null || value === false || value === undefined)
+			return
+
 		if (typeof value !== 'string' && typeof value !== 'object')
 			return String(value)
-		else
-			return value
+
+		return value
 	}
 
 	// TODO: Create customised renderer
@@ -131,6 +135,7 @@ shaven = function dom (array, namespace, returnObject) {
 						else {
 							if (attributeKey === 'style' &&
 							    typeof array[i][attributeKey] === 'object')
+
 								array[0].setAttribute(
 									attributeKey,
 									JSON
@@ -140,6 +145,7 @@ shaven = function dom (array, namespace, returnObject) {
 										.replace(/":"/g, ':')
 										.replace(/\\"/g, '\'')
 								)
+
 							else
 								array[0].setAttribute(
 									attributeKey,

@@ -248,15 +248,43 @@
 					assert.ifError(error)
 
 					var expected = '<p style="color:rgb(255,0,0);font-size:10;' +
-					               'font-family:Arial, \'Helvetica Neue\', sans-serif;' +
-					               'border:false"></p>',
+					               'font-family:Arial, \'Helvetica Neue\', ' +
+					               'sans-serif"></p>',
 					    actual = scope.shaven(
 						    ['p', {
 							    style: {
 								    color: 'rgb(255,0,0)',
 								    'font-size': 10,
-								    'font-family': 'Arial, "Helvetica Neue", sans-serif',
-								    border: false
+								    'font-family': 'Arial, "Helvetica Neue", sans-serif'
+							    }
+						    }]
+					    )[0]
+
+
+					if (environment === 'nodejs')
+						assert.strictEqual(actual, expected)
+
+					else
+						assert.strictEqual(actual.outerHTML, expected)
+
+					done()
+				})
+			})
+
+			it('should not include falsy values in style string', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var expected = '<p style="color:red"></p>',
+					    actual = scope.shaven(
+						    ['p', {
+							    style: {
+								    color: 'red',
+								    border: false,
+								    'background-color': null,
+								    visibility: undefined
 							    }
 						    }]
 					    )[0]
