@@ -240,19 +240,28 @@
 		If an entry is <code>null</code> or <code>false</code> the attribute will not
 		be created at all.</p>
 
+		<p>If the style entry is an object it will automatically get compiled
+			to a string. This is especially useful for working with svgs, where
+			inline styles are still frequently used.
+			Values which are <code>false</code>, <code>null</code> or
+			<code>undefined</code> are deleted from the final style-string.</p>
+
 		<textarea id=codeProperties rows=4 data-lang=js>
 			['p', {
-				class: 'first new focus',
-				style: 'color:red',
+				class: 'new focus',
 				'data-lang': 'de',
-				title: false
-			}, 'Hello']
+				title: false,
+				style: {
+					color: 'red',
+					display: 'block',
+					font: null}},
+			'Hello']
 		</textarea>
 
 		<p>compiles to</p>
 
 		<textarea id=codePropertiesOut rows=1 data-input=codeProperties data-lang=xml readonly>
-			<p class="first new focus" style="color:red" data-lang="de">Hello</p>
+			<p class="new focus" data-lang="de" style="color:red;display:block">Hello</p>
 		</textarea>
 
 	</section>
