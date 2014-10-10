@@ -80,10 +80,10 @@ module.exports = function shaven (array, namespace, returnObject) {
 			break
 		}
 
-		else if (array[i] === undefined) {
+		// Continue with next array value if current value is undefined or true
+		else if (array[i] === undefined || array[i] === true) {
 			continue
 		}
-
 
 		else if (typeof array[i] === 'string' || typeof array[i] === 'number') {
 			if (doesEscape)

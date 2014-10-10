@@ -90,8 +90,8 @@ shaven = function dom (array, namespace, returnObject) {
 			break
 		}
 
-		// Render element with empty body if value is undefined
-		else if (array[i] === undefined) {
+		// Continue with next array value if current value is undefined or true
+		else if (array[i] === undefined || array[i] === true) {
 			continue
 		}
 

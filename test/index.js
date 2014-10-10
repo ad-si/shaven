@@ -271,6 +271,7 @@
 				})
 			})
 
+
 			it('should not include falsy values in style string', function (done) {
 
 				testInEnv(null, function (error, scope) {
@@ -299,6 +300,26 @@
 					done()
 				})
 			})
+
+
+			it('should ignore "true" values', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var expected = '<p>test</p>',
+					    element = scope.shaven(['p', 'test', true])[0]
+
+					if (environment === 'nodejs')
+						assert.strictEqual(element, expected)
+					else
+						assert.strictEqual(element.outerHTML, expected)
+
+					done()
+				})
+			})
+
 
 
 			describe('Syntax-sugar string', function () {
