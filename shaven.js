@@ -4,6 +4,13 @@
 // array: Array containing the DOM fragment in JsonML
 // returnObject: Contains elements identified by their id
 
+//IE7 isArray Prototype Method
+if(typeof Array.isArray==='undefined')
+{
+	Array.isArray=(function(obj) {
+		return Object.prototype.toString.call(obj) === '[object Array]';
+	});
+}
 shaven = function dom (array, namespace, returnObject) {
 
 	'use strict'
@@ -26,11 +33,10 @@ shaven = function dom (array, namespace, returnObject) {
 
 		var tags = sugarString.match(/^\w+/),
 		    tag = tags ? tags[0] : 'div',
-		    element = doc.createElementNS(namespace, tag),
-		    id = sugarString.match(/#([\w-]+)/),
+			id = sugarString.match(/#([\w-]+)/),
 		    ref = sugarString.match(/\$([\w-]+)/),
-		    classNames = sugarString.match(/\.[\w-]+/g)
-
+		    classNames = sugarString.match(/\.[\w-]+/g),
+		    element = typeof doc.createElementNS == 'undefined'?doc.createElement(tag):doc.createElementNS(namespace, tag);
 
 		// Assign id if is set
 		if (id) {
@@ -47,10 +53,13 @@ shaven = function dom (array, namespace, returnObject) {
 
 		// Assign class if is set
 		if (classNames)
+		{
 			element.setAttribute(
 				'class',
 				classNames.join(' ').replace(/\./g, '')
 			)
+			element.className=classNames.join(' ').replace(/\./g, '');
+		}
 
 		// Don't escape HTML content
 		if (sugarString.match(/&$/g))
@@ -118,7 +127,7 @@ shaven = function dom (array, namespace, returnObject) {
 			callback = array[i]
 
 		// If it is an element append it
-		else if (array[i] instanceof Element)
+		else if (array[i].nodeType==3)
 			array[0].appendChild(array[i])
 
 		// Else must be an object with attributes
@@ -145,7 +154,10 @@ shaven = function dom (array, namespace, returnObject) {
 										.replace(/":"/g, ':')
 										.replace(/\\"/g, '\'')
 								)
-
+							else if(attributeKey==='class')
+							{
+								array[0].className=array[i][attributeKey];
+							}
 							else
 								array[0].setAttribute(
 									attributeKey,
