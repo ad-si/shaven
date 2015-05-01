@@ -1,9 +1,7 @@
 var fs = require('fs'),
 	uglify = require('uglify-js'),
-	yaml = require('js-yaml'),
 
-	packageData = yaml.safeLoad(fs.readFileSync('./package.yaml', 'utf-8')),
-	bowerJson = require('./bower.json')
+	packageData = require('./package.json')
 
 
 function buildMinifiedJs (string) {
@@ -29,9 +27,7 @@ task(
 	[
 		'shaven.js',
 		'shaven.min.js',
-		'index.html',
-		'package.json',
-		'bower.json'
+		'index.html'
 	],
 	function () {
 	}
@@ -71,7 +67,7 @@ file('shaven.min.js', ['src/shaven.js', 'package.json'], {async: true}, function
 
 
 desc('Compile index.html')
-file('index.html', ['package.yaml'], {async: true}, function () {
+file('index.html', ['package.json'], {async: true}, function () {
 
 	var fileName = this.name,
 		data
@@ -83,41 +79,6 @@ file('index.html', ['package.yaml'], {async: true}, function () {
 	fs.writeFileSync(fileName, data)
 
 	console.log('Building ' + fileName + ' succeeded')
-
-	complete()
-})
-
-
-desc('Sync package.yaml to package.json')
-file('package.json', ['package.yaml'], {async: true}, function () {
-
-	fs.writeFileSync('package.json', JSON.stringify(packageData, null, '\t'))
-
-	console.log('Building package.json succeeded')
-
-	complete()
-})
-
-
-desc('Sync package.yaml to bower.json')
-file('bower.json', ['package.yaml'], {async: true}, function () {
-
-	var syncAttributes = [
-		'name',
-		'version',
-		'description',
-		'homepage',
-		'keywords',
-		'author'
-	]
-
-	syncAttributes.forEach(function (attribute) {
-		bowerJson[attribute] = packageData[attribute]
-	})
-
-	fs.writeFileSync('bower.json', JSON.stringify(bowerJson, null, '\t'))
-
-	console.log('Building bower.json succeeded')
 
 	complete()
 })
