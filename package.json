@@ -1,199 +1,202 @@
 {
-	"name": "shaven",
-	"version": "0.6.2",
-	"description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
-	"homepage": "http://adriansieber.com/shaven",
-	"keywords": [
-		"template",
-		"DOM building"
-	],
-	"bugs": {
-		"url": "https://github.com/adius/shaven/issues"
-	},
-	"license": "MIT",
-	"author": {
-		"name": "adius",
-		"email": "mail@adriansieber.com",
-		"url": "http://adriansieber.com"
-	},
-	"main": "src/index.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/adius/shaven.git"
-	},
-	"scripts": {
-		"test": "./node_modules/.bin/mocha -b --inline-diffs -R spec",
-		"build": "./node_modules/.bin/jake -f ./jakefile -B",
-		"prepublish": "npm run-script build && npm test && ./node_modules/.bin/jscs ."
-	},
-	"dependencies": {
-		"escape-html": "~1.0.1"
-	},
-	"devDependencies": {
-		"jake": "~8.0.10",
-		"uglify-js": "~2.4.13",
-		"mocha": "~1.21.4",
-		"jsdom": "~1.0.1",
-		"jshint": "~2.5.0",
-		"jscs": "~1.6.2",
-		"js-yaml": "~3.2.2"
-	},
-	"engines": {
-		"node": "~0.10.26"
-	},
-	"jshintConfig": {
-		"bitwise": true,
-		"camelcase": true,
-		"curly": false,
-		"eqeqeq": true,
-		"es3": false,
-		"forin": true,
-		"freeze": true,
-		"immed": true,
-		"indent": 4,
-		"latedef": true,
-		"newcap": true,
-		"noarg": true,
-		"noempty": true,
-		"nonbsp": true,
-		"nonew": true,
-		"plusplus": false,
-		"quotmark": "single",
-		"undef": true,
-		"unused": true,
-		"strict": true,
-		"trailing": true,
-		"maxparams": 3,
-		"maxdepth": 4,
-		"maxstatements": 10,
-		"maxlen": 100,
-		"asi": true
-	},
-	"jscsConfig": {
-		"excludeFiles": [
-			"node_modules/**",
-			"bower_components/**",
-			"*.min.js"
-		],
-		"requireCurlyBraces": [],
-		"requireSpaceAfterKeywords": [
-			"if",
-			"else",
-			"for",
-			"while",
-			"do",
-			"switch",
-			"return",
-			"try",
-			"catch"
-		],
-		"requireSpaceBeforeBlockStatements": true,
-		"requireSpacesInFunctionExpression": {
-			"beforeOpeningRoundBrace": true,
-			"beforeOpeningCurlyBrace": true
-		},
-		"requireMultipleVarDecl": "onevar",
-		"requireBlocksOnNewline": true,
-		"disallowEmptyBlocks": true,
-		"disallowSpacesInsideArrayBrackets": true,
-		"disallowSpacesInsideObjectBrackets": true,
-		"disallowSpacesInsideParentheses": true,
-		"disallowQuotedKeysInObjects": true,
-		"disallowDanglingUnderscores": true,
-		"disallowSpaceAfterObjectKeys": true,
-		"requireCommaBeforeLineBreak": true,
-		"requireOperatorBeforeLineBreak": [
-			"?",
-			"+",
-			"/",
-			"*",
-			{
-				"null": null
-			},
-			"=",
-			"==",
-			"===",
-			"!=",
-			"!==",
-			">",
-			">=",
-			"<",
-			"<="
-		],
-		"disallowSpaceAfterBinaryOperators": [
-			"!"
-		],
-		"disallowSpaceBeforeBinaryOperators": [
-			","
-		],
-		"disallowSpaceAfterPrefixUnaryOperators": [
-			"++",
-			"--",
-			"+",
-			"-",
-			null,
-			"!"
-		],
-		"disallowSpaceBeforePostfixUnaryOperators": [
-			"++",
-			"--"
-		],
-		"requireSpaceBeforeBinaryOperators": [
-			"?",
-			"+",
-			"-",
-			"/",
-			"*",
-			"=",
-			"==",
-			"===",
-			"!=",
-			"!==",
-			">",
-			">=",
-			"<",
-			"<="
-		],
-		"requireSpaceAfterBinaryOperators": [
-			",",
-			":",
-			"?",
-			"+",
-			"-",
-			"/",
-			"*",
-			"=",
-			"==",
-			"===",
-			"!=",
-			"!==",
-			">",
-			">=",
-			"<",
-			"<="
-		],
-		"disallowImplicitTypeConversion": [
-			"numeric",
-			"boolean",
-			"binary"
-		],
-		"requireCamelCaseOrUpperCaseIdentifiers": true,
-		"disallowKeywords": [
-			"with"
-		],
-		"disallowMultipleLineStrings": true,
-		"validateLineBreaks": "LF",
-		"validateQuoteMarks": "'",
-		"disallowMixedSpacesAndTabs": "smart",
-		"disallowTrailingWhitespace": true,
-		"disallowTrailingComma": true,
-		"requireKeywordsOnNewLine": [
-			"else"
-		],
-		"requireLineFeedAtFileEnd": true,
-		"maximumLineLength": 100,
-		"requireCapitalizedConstructors": true,
-		"requireDotNotation": true,
-		"disallowYodaConditions": true
-	}
+  "name": "shaven",
+  "version": "0.6.2",
+  "description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
+  "homepage": "http://adriansieber.com/shaven",
+  "keywords": [
+    "template",
+    "DOM building"
+  ],
+  "bugs": {
+    "url": "https://github.com/adius/shaven/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "adius",
+    "email": "mail@adriansieber.com",
+    "url": "http://adriansieber.com"
+  },
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adius/shaven.git"
+  },
+  "scripts": {
+    "start": "stylus -u nib --watch --out ./css styl & jekyll serve --trace --drafts",
+    "test": "mocha -b --inline-diffs -R spec",
+    "build": "jake -f ./jakefile -B",
+    "prepublish": "npm run-script build && npm test && jscs ."
+  },
+  "dependencies": {
+    "escape-html": "~1.0.1"
+  },
+  "devDependencies": {
+    "jake": "~8.0.10",
+    "js-yaml": "~3.2.2",
+    "jscs": "~1.6.2",
+    "jsdom": "~1.0.1",
+    "jshint": "~2.5.0",
+    "mocha": "~1.21.4",
+    "nib": "^1.1.0",
+    "stylus": "^0.51.1",
+    "uglify-js": "~2.4.13"
+  },
+  "engines": {
+    "node": "~0.10.26"
+  },
+  "jshintConfig": {
+    "bitwise": true,
+    "camelcase": true,
+    "curly": false,
+    "eqeqeq": true,
+    "es3": false,
+    "forin": true,
+    "freeze": true,
+    "immed": true,
+    "indent": 4,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "nonew": true,
+    "plusplus": false,
+    "quotmark": "single",
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "trailing": true,
+    "maxparams": 3,
+    "maxdepth": 4,
+    "maxstatements": 10,
+    "maxlen": 100,
+    "asi": true
+  },
+  "jscsConfig": {
+    "excludeFiles": [
+      "node_modules/**",
+      "bower_components/**",
+      "*.min.js"
+    ],
+    "requireCurlyBraces": [],
+    "requireSpaceAfterKeywords": [
+      "if",
+      "else",
+      "for",
+      "while",
+      "do",
+      "switch",
+      "return",
+      "try",
+      "catch"
+    ],
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpacesInFunctionExpression": {
+      "beforeOpeningRoundBrace": true,
+      "beforeOpeningCurlyBrace": true
+    },
+    "requireMultipleVarDecl": "onevar",
+    "requireBlocksOnNewline": true,
+    "disallowEmptyBlocks": true,
+    "disallowSpacesInsideArrayBrackets": true,
+    "disallowSpacesInsideObjectBrackets": true,
+    "disallowSpacesInsideParentheses": true,
+    "disallowQuotedKeysInObjects": true,
+    "disallowDanglingUnderscores": true,
+    "disallowSpaceAfterObjectKeys": true,
+    "requireCommaBeforeLineBreak": true,
+    "requireOperatorBeforeLineBreak": [
+      "?",
+      "+",
+      "/",
+      "*",
+      {
+        "null": null
+      },
+      "=",
+      "==",
+      "===",
+      "!=",
+      "!==",
+      ">",
+      ">=",
+      "<",
+      "<="
+    ],
+    "disallowSpaceAfterBinaryOperators": [
+      "!"
+    ],
+    "disallowSpaceBeforeBinaryOperators": [
+      ","
+    ],
+    "disallowSpaceAfterPrefixUnaryOperators": [
+      "++",
+      "--",
+      "+",
+      "-",
+      null,
+      "!"
+    ],
+    "disallowSpaceBeforePostfixUnaryOperators": [
+      "++",
+      "--"
+    ],
+    "requireSpaceBeforeBinaryOperators": [
+      "?",
+      "+",
+      "-",
+      "/",
+      "*",
+      "=",
+      "==",
+      "===",
+      "!=",
+      "!==",
+      ">",
+      ">=",
+      "<",
+      "<="
+    ],
+    "requireSpaceAfterBinaryOperators": [
+      ",",
+      ":",
+      "?",
+      "+",
+      "-",
+      "/",
+      "*",
+      "=",
+      "==",
+      "===",
+      "!=",
+      "!==",
+      ">",
+      ">=",
+      "<",
+      "<="
+    ],
+    "disallowImplicitTypeConversion": [
+      "numeric",
+      "boolean",
+      "binary"
+    ],
+    "requireCamelCaseOrUpperCaseIdentifiers": true,
+    "disallowKeywords": [
+      "with"
+    ],
+    "disallowMultipleLineStrings": true,
+    "validateLineBreaks": "LF",
+    "validateQuoteMarks": "'",
+    "disallowMixedSpacesAndTabs": "smart",
+    "disallowTrailingWhitespace": true,
+    "disallowTrailingComma": true,
+    "requireKeywordsOnNewLine": [
+      "else"
+    ],
+    "requireLineFeedAtFileEnd": true,
+    "maximumLineLength": 100,
+    "requireCapitalizedConstructors": true,
+    "requireDotNotation": true,
+    "disallowYodaConditions": true
+  }
 }
