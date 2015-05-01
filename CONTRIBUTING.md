@@ -16,12 +16,6 @@ To run the tests in a client side environment simply open [./test/index.html](./
 In order to build the final production-ready files from the source files run `$ jake -B`.
 
 
-## Package
-
-All package information is contained in `package.yaml` and will get synchronized to `package.json` and `bower.json` during the build process.
-So make sure to only alter the `package.yaml` file directly.
-
-
 ## Style Guidelines
 
 Checkout `package.yaml` for the JSHint and Jscs configurations.
