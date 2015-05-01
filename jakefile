@@ -6,7 +6,7 @@ var fs = require('fs'),
 	bowerJson = require('./bower.json')
 
 
-function buildMinifiedJs(string) {
+function buildMinifiedJs (string) {
 
 	var ast,
 		compressor = uglify.Compressor()
@@ -24,8 +24,18 @@ function buildMinifiedJs(string) {
 
 
 desc('Default build process')
-task('default', ['shaven.js', 'shaven.min.js', 'index.html', 'package.json', 'bower.json'], function () {
-})
+task(
+	'default',
+	[
+		'shaven.js',
+		'shaven.min.js',
+		'index.html',
+		'package.json',
+		'bower.json'
+	],
+	function () {
+	}
+)
 
 
 desc('Compile shaven.js')
@@ -101,7 +111,7 @@ file('bower.json', ['package.yaml'], {async: true}, function () {
 		'author'
 	]
 
-	syncAttributes.forEach(function(attribute){
+	syncAttributes.forEach(function (attribute) {
 		bowerJson[attribute] = packageData[attribute]
 	})
 
