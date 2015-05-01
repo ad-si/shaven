@@ -4,11 +4,11 @@
 	<meta charset=UTF-8>
 	<title>Shaven</title>
 	<link href=http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel
-	      rel=stylesheet type=text/css />
-	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css />
-	<link rel=stylesheet href=bower_components/codemirror/theme/twilight.css />
-	<link rel=stylesheet href=css/screen.css />
-	<link rel="shortcut icon" href=img/favicon.png />
+	      rel=stylesheet type=text/css/>
+	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css/>
+	<link rel=stylesheet href=bower_components/codemirror/theme/twilight.css/>
+	<link rel=stylesheet href=css/screen.css/>
+	<link rel="shortcut icon" href=img/favicon.png/>
 </head>
 <body>
 
@@ -17,15 +17,18 @@
 	<header>
 		<h1>Shaven</h1>
 
-		<h2>Get rid of your old-fashioned face furniture and build sleek templates!</h2>
+		<h2>Get rid of your old-fashioned face furniture and build sleek
+			templates!</h2>
 	</header>
 
 	<section>
 
 		<h1>What is Shaven?</h1>
 
-		<p>Shaven is a DOM building utility and template engine based upon JsonML.
-			This simple markup language lets you easily represent XML/HTML with JSON.
+		<p>Shaven is a DOM building utility and template engine based upon
+			JsonML.
+			This simple markup language lets you easily represent XML/HTML with
+			JSON.
 			Templates are therefore simply Javascript arrays.</p>
 
 		<div id=buttons>
@@ -64,6 +67,7 @@
 		          data-lang=xml data-input=codeOverview readonly>
 			<div id="demo">
 				<h1 id="logo" style="color:blue">Static Example</h1>
+
 				<p>some example text</p>
 				<ul id="list" class="bullets">
 					<li>item1</li>
@@ -81,7 +85,8 @@
 
 		<ul>
 			<li>The first array-element is a string which represents
-				the html-tag (including syntax-sugar)</li>
+				the html-tag (including syntax-sugar)
+			</li>
 			<li>Other strings are the text-content of the element</li>
 			<li>One or more Javascript objects contain the attributes</li>
 			<li>Each sub-array or html-element is a child-element</li>
@@ -106,7 +111,8 @@
 		</textarea>
 
 		<p>In the browser load the browser version of shaven.
-			Get it either from <a href=https://github.com/adius/shaven>Github</a>
+			Get it either from <a
+					href=https://github.com/adius/shaven>Github</a>
 			or install it with the frontend package manager
 			<a href=http://bower.io/>Bower</a>.</p>
 
@@ -126,7 +132,8 @@
 	<section>
 		<h1>Insert Methods</h1>
 
-		<p>There are two different methods to insert a DOM-fragment into the DOM.</p>
+		<p>There are two different methods to insert a DOM-fragment into the
+			DOM.</p>
 
 		<p>Firstly you can inject it straight into the DOM:</p>
 
@@ -140,9 +147,11 @@
 			)
 		</textarea>
 
-		<p>Secondly you can assign the Shaven-object to a variable and append the fragment later.</p>
+		<p>Secondly you can assign the Shaven-object to a variable and append
+			the fragment later.</p>
 
-		<p>To get the HTML-fragment from the Shaven-object reference it with a <code>[0]</code>.</p>
+		<p>To get the HTML-fragment from the Shaven-object reference it with a
+			<code>[0]</code>.</p>
 
 		<textarea class=code id=codeAppend data-lang=js readonly>
 			var shavenObject = shaven(
@@ -158,9 +167,9 @@
 
 		<textarea class=code id=codeInsertOut data-lang=xml readonly>
 			<body>
-				<div id="demo">
-					…
-				</div>
+			<div id="demo">
+				…
+			</div>
 			</body>
 		</textarea>
 
@@ -205,10 +214,10 @@
 		<h1>References</h1>
 
 		<p>When an element with an id is created it automatically gets inserted
-		into the return-object of the shaven function call.
-		Therefore it can get easily referenced later on.</p>
+			into the return-object of the shaven function call.
+			Therefore it can get easily referenced later on.</p>
 
-		<textarea id=codeIdReference rows=7 data-lang=js  readonly>
+		<textarea id=codeIdReference rows=7 data-lang=js readonly>
 			var shavenObject = shaven(
 				[document.body,
 					['div#test', 'some text']
@@ -218,10 +227,11 @@
 			doSomething(shavenObject.test)
 		</textarea>
 
-		<p>Reference an element without an id by using the <code>$</code> keyword
+		<p>Reference an element without an id by using the <code>$</code>
+			keyword
 			to assign it a reference-name.</p>
 
-		<textarea id=codeDollarReference rows=7 data-lang=js  readonly>
+		<textarea id=codeDollarReference rows=7 data-lang=js readonly>
 			var shavenObject = shaven(
 				[document.body,
 					['div$test', 'some text']
@@ -236,9 +246,11 @@
 		<h1>Properties</h1>
 
 		<p>All entries of an object will become the attributes.
-		If an object entry is <code>undefined</code> the attribute will be an empty string.
-		If an entry is <code>null</code> or <code>false</code> the attribute will not
-		be created at all.</p>
+			If an object entry is <code>undefined</code> the attribute will be
+			an empty string.
+			If an entry is <code>null</code> or <code>false</code> the attribute
+			will not
+			be created at all.</p>
 
 		<p>If the style entry is an object it will automatically get compiled
 			to a string. This is especially useful for working with svgs, where
@@ -260,8 +272,10 @@
 
 		<p>compiles to</p>
 
-		<textarea id=codePropertiesOut rows=1 data-input=codeProperties data-lang=xml readonly>
-			<p class="new focus" data-lang="de" style="color:red;display:block">Hello</p>
+		<textarea id=codePropertiesOut rows=1 data-input=codeProperties
+		          data-lang=xml readonly>
+			<p class="new focus" data-lang="de" style="color:red;display:block">
+				Hello</p>
 		</textarea>
 
 	</section>
@@ -277,13 +291,15 @@
 
 		<p>compiles to</p>
 
-		<textarea id=codeEscapeOut rows=1 data-input=codeEscape data-lang=xml readonly>
+		<textarea id=codeEscapeOut rows=1 data-input=codeEscape data-lang=xml
+		          readonly>
 			<div>&amp;lt;p&amp;gt;This is &amp;lt;em&amp;gt;HTML&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;</div>
 		</textarea>
 
 		<br/>
 
-		<p>To disable escaping add a <code>&</code> at the end of the element-tag string.</p>
+		<p>To disable escaping add a <code>&</code> at the end of the
+			element-tag string.</p>
 
 		<textarea id=codeNoEscape rows=1 data-lang=js>
 			['div&', '<p>This is <em>HTML</em></p>']
@@ -291,7 +307,8 @@
 
 		<p>compiles to</p>
 
-		<textarea id=codeNoEscapeOut rows=1 data-input=codeNoEscape data-lang=xml readonly>
+		<textarea id=codeNoEscapeOut rows=1 data-input=codeNoEscape
+		          data-lang=xml readonly>
 			<div><p>This is <em>HTML</em></p></div>
 		</textarea>
 
@@ -300,7 +317,8 @@
 	<section>
 		<h1>Namespaces</h1>
 
-		<p>Shaven supports different namespaces and makes it therefore possible to
+		<p>Shaven supports different namespaces and makes it therefore possible
+			to
 			create SVGs, MathML and various other XML-based languages.</p>
 
 		<textarea id=codeSvg rows=6 data-lang=js readonly>
@@ -325,13 +343,19 @@
 	<section>
 		<h1>Falsy values</h1>
 
-		<p>When an element array contains an <code>undefined</code> content-value
-			or no content-value at all, the element will get compiled with an empty body.</p>
+		<p>When an element array contains an <code>undefined</code>
+			content-value
+			or no content-value at all, the element will get compiled with an
+			empty body.</p>
 
-		<p>When an element contains a <code>null</code> or a <code>false</code> value,
-			the element won't get compiled at all. This is handy for disabling parts
-			of templates or ensuring that no empty container-elements get rendered.
-			(A <code>true</code> value does therefore not change the compilation.)
+		<p>When an element contains a <code>null</code> or a <code>false</code>
+			value,
+			the element won't get compiled at all. This is handy for disabling
+			parts
+			of templates or ensuring that no empty container-elements get
+			rendered.
+			(A <code>true</code> value does therefore not change the
+			compilation.)
 		</p>
 
 	</section>
@@ -339,10 +363,13 @@
 	<section>
 		<h1>Templates</h1>
 
-		<p>In order to create reusable templates it's best practice to create a function
-			which accepts a data object, inserts the data into the JsonML array and
+		<p>In order to create reusable templates it's best practice to create a
+			function
+			which accepts a data object, inserts the data into the JsonML array
+			and
 			returns it.<br/>
-			Finally iterate over the contacts and use one of the two insertion methods
+			Finally iterate over the contacts and use one of the two insertion
+			methods
 			to build the DOM with the contacts.</p>
 
 		<textarea id=codeTemplate rows=17 data-lang=js readonly>
@@ -424,7 +451,27 @@
 		}
 	}(document, 'script', 'twitter-wjs')
 
-	document.querySelector('.twitter-share-button').style.display = 'block !important'
+	document
+			.querySelector('.twitter-share-button')
+			.style
+			.display = 'block !important'
+</script>
+
+<script>
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r
+		i[r] = i[r] || function () {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date()
+		a = s.createElement(o)
+		m = s.getElementsByTagName(o)[0]
+		a.async = 1
+		a.src = g
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script',
+			'//www.google-analytics.com/analytics.js', 'ga')
+	ga('create', 'UA-62527051-1', 'auto')
+	ga('send', 'pageview')
 </script>
 
 </body>
