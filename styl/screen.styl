@@ -39,7 +39,7 @@ code
 	border 1px solid rgb(220, 220, 220)
 	padding 0 0.3em
 	border-radius 2px
-	color: rgb(100, 100, 100)
+	color rgb(100, 100, 100)
 
 #forkMe
 	display block
@@ -99,14 +99,13 @@ section
 		margin-bottom 1.5em
 		margin-top 2.5em
 	h1 + h2
-		margin-top: 1em
+		margin-top 1em
 	textarea
 		background-color rgb(20, 20, 20)
-		color: white
+		color white
 		height 100%
-		//position: relative
-		//right: 2em
-		margin-bottom: 1em
+		margin-left -2em
+		width 120%
 
 strong
 	margin-bottom 2em
@@ -120,10 +119,10 @@ footer
 		color white
 		text-decoration none
 	span
-		margin: 0 0.5em
+		margin 0 0.5em
 	#version
 		margin-top 1em
-		display: block
+		display block
 
 // Codemirror
 
@@ -131,7 +130,7 @@ footer
 	height auto
 	margin-left -2em
 	margin-right -2em
-	margin-bottom: 1em
+	margin-bottom 1em
 
 .editable:after
 	content " "
@@ -153,14 +152,18 @@ footer
 .CodeMirror-scroll
 	height inherit
 
-@media screen and (min-width: width)
+@media screen and (min-width width)
 
 	#wrapcontent
 		width width
 
+	section
+		textarea
+			width 110%
+
 	footer
 		text-align left
 		#version
-			float: right
+			float right
 			margin-top 0
 
