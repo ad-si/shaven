@@ -52,8 +52,8 @@
 
 		<textarea id=codeOverview class=code rows=11 data-lang=js>
 			['#demo',
-				['h1#logo', 'Static Example', {style: 'color:blue'}],
-				['p', 'some example text'],
+				['h1#logo', 'Test', {title: 'Test'}],
+				['p', 'Some example text'],
 				['ul#list.bullets',
 					['li', 'item1'],
 					['li.active', 'item2'],
@@ -69,9 +69,9 @@
 		<textarea id=codeOverviewOut class=code rows=12
 		          data-lang=xml data-input=codeOverview readonly>
 			<div id="demo">
-				<h1 id="logo" style="color:blue">Static Example</h1>
+				<h1 id="logo" title="Test">Test</h1>
 
-				<p>some example text</p>
+				<p>Some example text</p>
 				<ul id="list" class="bullets">
 					<li>item1</li>
 					<li class="active">item2</li>
@@ -327,7 +327,12 @@
 		<textarea id=codeSvg rows=6 data-lang=js readonly>
 			shaven(
 				['svg', {height: 10, width: 10},
-					['circle', {cx: 5, cy: 5, r: 5, style: 'fill:green'}]
+					['circle', {
+						cx: 5,
+						cy: 5,
+						r: 5,
+						style: 'fill:green'
+					}]
 				],
 				'http://www.w3.org/2000/svg'
 			)
@@ -391,7 +396,10 @@
 			}
 
 			contacts.forEach(function(contact){
-				shaven([document.body, contactTemplate(contact)])
+				shaven([
+					document.body,
+					contactTemplate(contact)
+				])
 			})
 		</textarea>
 
