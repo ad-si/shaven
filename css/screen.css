@@ -3,14 +3,18 @@
   margin: 0;
   padding: 0;
   font-size: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 html {
   width: 100%;
   background-color: #0096aa;
-  background-image: url("../img/noise.png"), -webkit-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("../img/noise.png"), -moz-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("../img/noise.png"), radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("/img/noise.png"), -webkit-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("/img/noise.png"), -moz-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("/img/noise.png"), -o-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("/img/noise.png"), -ms-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("/img/noise.png"), radial-gradient(to bottom center, #1eaab4, #1e78a0 600px);
 }
 body {
   font-size: 14px;
@@ -39,12 +43,13 @@ code {
   background-color: #f0f0f0;
   border: 1px solid #dcdcdc;
   padding: 0 0.3em;
+  -webkit-border-radius: 2px;
   border-radius: 2px;
   color: #646464;
 }
 #forkMe {
   display: block;
-  background-image: url("https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png");
+  background-image: url("//s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png");
   height: 149px;
   width: 149px;
   text-indent: -9999px;
@@ -61,13 +66,14 @@ code {
   height: 20px;
 }
 #wrapcontent {
-  width: 640px;
   margin: auto;
-  padding-top: 60px;
-  background-image: url("../img/mustache.png");
+  padding: 4em 1em 0 1em;
+  background-image: url("/img/mustache.png");
   background-repeat: no-repeat;
-  background-position: 320px 30px;
-  background-size: 35%;
+  background-position: 240px 40px;
+  -webkit-background-size: 12em;
+  -moz-background-size: 12em;
+  background-size: 12em;
 }
 header h1 {
   font-size: 90px;
@@ -77,7 +83,7 @@ header h1 {
   margin-bottom: 20px;
 }
 header h2 {
-  font-size: 20px;
+  font-size: 19px;
   font-family: "Trebuchet MS", sans-serif;
   font-weight: 500;
   color: #fff;
@@ -87,7 +93,9 @@ header h2 {
 }
 section {
   background-color: #fff;
+  -webkit-border-radius: 8px;
   border-radius: 8px;
+  -webkit-box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
   box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
   margin-bottom: 20px;
   padding: 2em;
@@ -104,26 +112,23 @@ section h2 {
   margin-bottom: 1.5em;
   margin-top: 2.5em;
 }
-section h1+h2 {
+section h1 + h2 {
   margin-top: 1em;
 }
 section textarea {
   background-color: #141414;
   color: #fff;
-  width: 640px;
   height: 100%;
-  position: relative;
-  right: 2em;
   margin-bottom: 1em;
 }
 strong {
   margin-bottom: 2em;
 }
 footer {
-  width: 640px;
+  padding: 0 2em;
+  text-align: center;
   color: #c8c8c8;
   margin-bottom: 5em;
-  padding: 0 2em;
 }
 footer a {
   color: #fff;
@@ -133,18 +138,20 @@ footer span {
   margin: 0 0.5em;
 }
 footer #version {
-  float: right;
+  margin-top: 1em;
+  display: block;
 }
 .CodeMirror {
-  width: 640px;
   height: auto;
-  position: relative;
-  right: 2em;
+  margin-left: -2em;
+  margin-right: -2em;
   margin-bottom: 1em;
 }
 .editable:after {
   content: " ";
-  background-image: url("../img/edit.png");
+  background-image: url("/img/edit.png");
+  -webkit-background-size: 23px;
+  -moz-background-size: 23px;
   background-size: 23px;
   width: 23px;
   height: 23px;
@@ -153,8 +160,23 @@ footer #version {
   right: 10px;
 }
 .CodeMirror-lines {
-  padding: 20px 40px;
+  padding: 1.4em 2.5em;
+}
+.CodeMirror-code {
+  font-size: 12px;
 }
 .CodeMirror-scroll {
   height: inherit;
+}
+@media screen and (min-width: 640px) {
+  #wrapcontent {
+    width: 640px;
+  }
+  footer {
+    text-align: left;
+  }
+  footer #version {
+    float: right;
+    margin-top: 0;
+  }
 }
