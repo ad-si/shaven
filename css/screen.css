@@ -10,11 +10,11 @@
 html {
   width: 100%;
   background-color: #0096aa;
-  background-image: url("/img/noise.png"), -webkit-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("/img/noise.png"), -moz-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("/img/noise.png"), -o-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("/img/noise.png"), -ms-radial-gradient(top center, #1eaab4, #1e78a0 600px);
-  background-image: url("/img/noise.png"), radial-gradient(to bottom center, #1eaab4, #1e78a0 600px);
+  background-image: url("../img/noise.png"), -webkit-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("../img/noise.png"), -moz-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("../img/noise.png"), -o-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("../img/noise.png"), -ms-radial-gradient(top center, #1eaab4, #1e78a0 600px);
+  background-image: url("../img/noise.png"), radial-gradient(to bottom center, #1eaab4, #1e78a0 600px);
 }
 body {
   font-size: 14px;
@@ -68,7 +68,7 @@ code {
 #wrapcontent {
   margin: auto;
   padding: 4em 1em 0 1em;
-  background-image: url("/img/mustache.png");
+  background-image: url("../img/mustache.png");
   background-repeat: no-repeat;
   background-position: 240px 40px;
   -webkit-background-size: 12em;
@@ -149,7 +149,7 @@ footer #version {
 }
 .editable:after {
   content: " ";
-  background-image: url("/img/edit.png");
+  background-image: url("../img/edit.png");
   -webkit-background-size: 23px;
   -moz-background-size: 23px;
   background-size: 23px;
