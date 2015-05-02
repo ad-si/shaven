@@ -22,7 +22,7 @@
     "url": "https://github.com/adius/shaven.git"
   },
   "scripts": {
-    "start": "stylus -u nib --watch --out ./css styl & jekyll serve --trace --drafts",
+    "start": "stylus -u nib --watch --out ./css styl",
     "test": "mocha -b --inline-diffs -R spec",
     "build": "jake -f ./jakefile -B",
     "prepublish": "npm run-script build && npm test && jscs ."
