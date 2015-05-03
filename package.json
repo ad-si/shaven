@@ -31,15 +31,15 @@
     "escape-html": "~1.0.1"
   },
   "devDependencies": {
-    "jake": "~8.0.10",
-    "js-yaml": "~3.2.2",
+    "jake": "^8.0.10",
+    "js-yaml": "^3.3.0",
     "jscs": "^1.13.1",
-    "jsdom": "~1.0.1",
-    "jshint": "~2.5.0",
-    "mocha": "~1.21.4",
+    "jsdom": "^1.5.0",
+    "jshint": "^2.7.0",
+    "mocha": "^2.2.4",
     "nib": "^1.1.0",
     "stylus": "^0.51.1",
-    "uglify-js": "~2.4.13"
+    "uglify-js": "^2.4.13"
   },
   "engines": {
     "node": "~0.10.26"
