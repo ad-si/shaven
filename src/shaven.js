@@ -76,6 +76,12 @@ shaven = function dom (array, namespace, returnObject) {
 	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
 
+	if (!(array[0] instanceof Element))
+		throw new Error(
+			'First element of array must be either a string or a DOM element'
+		)
+
+
 	// For each in the element array (except the first)
 	for (i = 1; i < array.length; i++) {
 

@@ -63,9 +63,10 @@ module.exports = function shaven (array, namespace, returnObject) {
 	}
 
 
+	if (typeof array[0] !== 'string')
+		throw new Error('First element of array must be a string')
 
-	if (typeof array[0] === 'string')
-		array[0] = createElement(array[0])
+	array[0] = createElement(array[0])
 
 
 	for (i = 1; i < array.length; i++) {
