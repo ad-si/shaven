@@ -667,7 +667,7 @@
 		shaven = require('../src/index.js')
 		jsdom = require('jsdom')
 
-		runTestSuite('jsdom')
 		runTestSuite('nodejs')
+		runTestSuite('jsdom')
 	}
 }()
