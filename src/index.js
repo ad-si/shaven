@@ -64,9 +64,6 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 
 
-	if (Array.isArray(array[0]))
-		array.unshift('temp')
-
 	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
 
