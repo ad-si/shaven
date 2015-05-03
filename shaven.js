@@ -1,4 +1,4 @@
-// Shaven 0.7.0 by Adrian Sieber (adriansieber.com)
+// Shaven 0.7.1 by Adrian Sieber (adriansieber.com)
 
 
 // array: Array containing the DOM fragment in JsonML
@@ -71,15 +71,16 @@ shaven = function dom (array, namespace, returnObject) {
 		return value
 	}
 
-	// TODO: Create customised renderer
-	// If is object
-	// if (array === Object(array)) {
-
-	// } else {
 
 	// If is string create DOM element else is already a DOM element
 	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
+
+	if (!(array[0] instanceof Element))
+		throw new Error(
+			'First element of array must be either a string or a DOM element'
+		)
+
 
 	// For each in the element array (except the first)
 	for (i = 1; i < array.length; i++) {
@@ -164,7 +165,7 @@ shaven = function dom (array, namespace, returnObject) {
 		else
 			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
-	// }
+
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
