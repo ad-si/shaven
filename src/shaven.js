@@ -9,10 +9,10 @@ shaven = function dom (array, namespace, returnObject) {
 	'use strict'
 
 	var doc = document,
-	    unescaped,
-	    callback,
-	    attributeKey,
-	    i
+		unescaped,
+		callback,
+		attributeKey,
+		i
 
 
 	// Set on first iteration
@@ -25,11 +25,11 @@ shaven = function dom (array, namespace, returnObject) {
 	function createElement (sugarString) {
 
 		var tags = sugarString.match(/^\w+/),
-		    tag = tags ? tags[0] : 'div',
-		    element = doc.createElementNS(namespace, tag),
-		    id = sugarString.match(/#([\w-]+)/),
-		    ref = sugarString.match(/\$([\w-]+)/),
-		    classNames = sugarString.match(/\.[\w-]+/g)
+			tag = tags ? tags[0] : 'div',
+			element = doc.createElementNS(namespace, tag),
+			id = sugarString.match(/#([\w-]+)/),
+			ref = sugarString.match(/\$([\w-]+)/),
+			classNames = sugarString.match(/\.[\w-]+/g)
 
 
 		// Assign id if is set
@@ -106,6 +106,13 @@ shaven = function dom (array, namespace, returnObject) {
 		// If is array has to be child element
 		else if (Array.isArray(array[i])) {
 
+			if (Array.isArray(array[i][0])) {
+				array[i].reverse().forEach(function (subArray) {
+					array.splice(i + 1, 0, subArray)
+				})
+				i++
+			}
+
 			// Use shaven recursively for all child elements
 			dom(array[i], namespace, returnObject)
 
@@ -128,13 +135,13 @@ shaven = function dom (array, namespace, returnObject) {
 				if (array[i].hasOwnProperty(attributeKey)) {
 
 					if (array[i][attributeKey] !== null &&
-					    array[i][attributeKey] !== false)
+						array[i][attributeKey] !== false)
 						if (array[i][attributeKey] === undefined)
 							array[0].setAttribute(attributeKey, '')
 
 						else {
 							if (attributeKey === 'style' &&
-							    typeof array[i][attributeKey] === 'object')
+								typeof array[i][attributeKey] === 'object')
 
 								array[0].setAttribute(
 									attributeKey,

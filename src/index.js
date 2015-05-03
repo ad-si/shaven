@@ -7,11 +7,11 @@ module.exports = function shaven (array, namespace, returnObject) {
 	'use strict'
 
 	var HTMLString,
-	    doesEscape,
-	    i,
-	    attributeKey,
-	    callback,
-	    key
+		doesEscape,
+		i,
+		attributeKey,
+		callback,
+		key
 
 
 	returnObject = returnObject || {}
@@ -20,14 +20,14 @@ module.exports = function shaven (array, namespace, returnObject) {
 	function createElement (sugarString) {
 
 		var tags = sugarString.match(/^\w+/),
-		    element = {
-			    tag: tags ? tags[0] : 'div',
-			    attr: {},
-			    children: []
-		    },
-		    id = sugarString.match(/#([\w-]+)/),
-		    reference = sugarString.match(/\$([\w-]+)/),
-		    classNames = sugarString.match(/\.[\w-]+/g)
+			element = {
+				tag: tags ? tags[0] : 'div',
+				attr: {},
+				children: []
+			},
+			id = sugarString.match(/#([\w-]+)/),
+			reference = sugarString.match(/\$([\w-]+)/),
+			classNames = sugarString.match(/\.[\w-]+/g)
 
 
 		// Assign id if is set
@@ -68,6 +68,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	// } else {
 
+	if (Array.isArray(array[0]))
+		array.unshift('temp')
+
 	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
 
@@ -94,6 +97,13 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 		else if (Array.isArray(array[i])) {
 
+			if (Array.isArray(array[i][0])) {
+				array[i].reverse().forEach(function (subArray) {
+					array.splice(i + 1, 0, subArray)
+				})
+				i++
+			}
+
 			shaven(array[i], namespace, returnObject)
 
 			if (array[i][0])
@@ -108,9 +118,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 			for (attributeKey in array[i])
 				if (array[i].hasOwnProperty(attributeKey))
 					if (array[i][attributeKey] !== null &&
-					    array[i][attributeKey] !== false)
+						array[i][attributeKey] !== false)
 						if (attributeKey === 'style' &&
-						    typeof array[i][attributeKey] === 'object')
+							typeof array[i][attributeKey] === 'object')
 							array[0].attr[attributeKey] = JSON
 								.stringify(array[i][attributeKey], replacer)
 								.slice(2, -2)
