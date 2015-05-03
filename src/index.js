@@ -62,11 +62,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 		return value
 	}
 
-	// TODO: Create customised renderer
-	// If is object
-	// if (array === Object(array)) {
 
-	// } else {
 
 	if (Array.isArray(array[0]))
 		array.unshift('temp')
@@ -135,7 +131,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 		else
 			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
-	// }
+
 
 	if (array[0] !== false) {
 

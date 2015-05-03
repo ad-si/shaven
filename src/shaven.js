@@ -71,11 +71,6 @@ shaven = function dom (array, namespace, returnObject) {
 		return value
 	}
 
-	// TODO: Create customised renderer
-	// If is object
-	// if (array === Object(array)) {
-
-	// } else {
 
 	// If is string create DOM element else is already a DOM element
 	if (typeof array[0] === 'string')
@@ -164,7 +159,7 @@ shaven = function dom (array, namespace, returnObject) {
 		else
 			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
-	// }
+
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
