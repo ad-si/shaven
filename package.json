@@ -42,7 +42,7 @@
     "uglify-js": "^2.4.13"
   },
   "engines": {
-    "node": "~0.10.26"
+    "node": "~0.12.2"
   },
   "jshintConfig": {
     "bitwise": true,
