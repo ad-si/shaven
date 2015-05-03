@@ -369,6 +369,34 @@
 	</section>
 
 	<section>
+		<h1>Subarrays</h1>
+
+		<p>An array which consists exclusively of subarrays will get merged
+				into the current array</p>
+
+		<textarea id=codeSubarray rows=1 data-lang=js>
+			['p', [
+				['span', 'One'],
+				['span', 'Two'],
+				['span', 'Three'],
+			]]
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id=codeSubarrayOut rows=1 data-input=codeSubarray
+		          data-lang=xml readonly>
+			<p>
+				<span>One</span>
+				<span>Two</span>
+				<span>Three</span>
+			</p>
+		</textarea>
+
+
+	</section>
+
+	<section>
 		<h1>Templates</h1>
 
 		<p>In order to create reusable templates it's best practice to create a
