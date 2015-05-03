@@ -545,17 +545,59 @@
 							'<span>1</span>' +
 							'<span>2</span>' +
 							'<span>3</span>' +
+							'<span>4</span>' +
+							'<span>5</span>' +
 							'</p>',
 						element = scope.shaven(['p', 'Numbers: ', [
 							['span', '1'],
 							['span', '2'],
-							['span', '3']
+							['span', '3'],
+							[
+								['span', '4'],
+								['span', '5']
+							]
 						]])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, html)
 					else
 						assert.strictEqual(element.outerHTML, html)
+
+					done()
+				})
+			})
+
+			it('should throw an error for an invalid array', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var errorText,
+						errorRegex
+
+
+					if (environment === 'nodejs')
+						errorText = 'First element of array must be a string'
+					else
+						errorText = 'First element of array must be ' +
+							'either a string or a DOM element'
+
+					errorRegex = new RegExp(errorText)
+
+					assert.throws(
+						function () {
+							scope.shaven([{key: 'value'}])
+						},
+						errorRegex
+					)
+
+					assert.throws(
+						function () {
+							scope.shaven([144, 'span', 'text'])
+						},
+						errorRegex
+					)
 
 					done()
 				})
