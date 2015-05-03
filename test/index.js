@@ -47,7 +47,7 @@
 			if (environment === 'browser' || environment === 'jsdom') {
 
 
-				it('should be attachable to elements', function (done) {
+				it('attaches to elements', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
 
@@ -65,7 +65,7 @@
 				})
 
 
-				it('should append html elements', function (done) {
+				it('appends html elements', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
 
@@ -84,7 +84,7 @@
 				})
 
 
-				it('should return shaven object with element-ids as key', function (done) {
+				it('returns a shaven object with element-ids as keys', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
 
@@ -101,7 +101,7 @@
 				})
 
 
-				it('should return marked elements ', function (done) {
+				it('returns marked elements ', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
 
@@ -125,7 +125,7 @@
 			}
 
 
-			it('should set string as textContent', function (done) {
+			it('sets a string as textContent', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -144,7 +144,7 @@
 			})
 
 
-			it('should set number as textContent', function (done) {
+			it('sets a number as textContent', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -163,7 +163,7 @@
 			})
 
 
-			it('should build elements recursively', function (done) {
+			it('builds elements recursively', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -188,7 +188,7 @@
 			})
 
 
-			it('should be possible to set properties', function (done) {
+			it('is possible to set properties', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -212,7 +212,7 @@
 			})
 
 
-			it('should not set falsy properties', function (done) {
+			it('does not set falsy properties', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -241,7 +241,7 @@
 			})
 
 
-			it('should build a string from a style object', function (done) {
+			it('builds a string from a style object', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -272,7 +272,7 @@
 			})
 
 
-			it('should not include falsy values in style string', function (done) {
+			it('does not include falsy values in style string', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -302,7 +302,7 @@
 			})
 
 
-			it('should ignore "true" values', function (done) {
+			it('does ignore "true" values', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -325,7 +325,7 @@
 			describe('Syntax-sugar string', function () {
 
 
-				it('should use div as default tag', function (done) {
+				it('uses div as default tag', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -344,7 +344,7 @@
 				})
 
 
-				it('should set the id', function (done) {
+				it('sets the id', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -363,7 +363,7 @@
 				})
 
 
-				it('should set the class', function (done) {
+				it('sets the class', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -382,7 +382,7 @@
 				})
 
 
-				it('should work with both class and id', function (done) {
+				it('works with both class and id', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -401,7 +401,7 @@
 				})
 
 
-				it('should work with class and id reversed', function (done) {
+				it('works with class and id reversed', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -420,7 +420,7 @@
 				})
 
 
-				it('should understand multiple classes and ids', function (done) {
+				it('understands multiple classes and ids', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -440,7 +440,7 @@
 			})
 
 
-			it('should call the provided callback function', function (done) {
+			it('calls the provided callback function', function (done) {
 
 				testInEnv('<div id="test"></div> ', function (error, scope) {
 
@@ -464,7 +464,7 @@
 			})
 
 
-			it('should return a shaven object and not an html element or string', function (done) {
+			it('returns a shaven object and not an html element or string', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -479,7 +479,7 @@
 			})
 
 
-			it('should return the root html element by referencing [0]', function (done) {
+			it('returns the root html element by referencing [0]', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -497,7 +497,7 @@
 			})
 
 
-			it('should escape html string', function (done) {
+			it('escapes html strings', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -516,7 +516,7 @@
 			})
 
 
-			it('should build html from string', function (done) {
+			it('builds html from strings', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -535,7 +535,7 @@
 			})
 
 
-			it('should accept an array of elements', function (done) {
+			it('accepts an array of elements', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -567,7 +567,7 @@
 				})
 			})
 
-			it('should throw an error for an invalid array', function (done) {
+			it('throws an error for an invalid array', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
@@ -605,7 +605,7 @@
 
 
 			if (environment !== 'jsdom')
-				it('should work with SVGs', function (done) {
+				it('works with SVGs', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -650,7 +650,7 @@
 
 			describe('Falsy values', function () {
 
-				it('should return an empty element for missing content value', function (done) {
+				it('returns an empty element for missing content value', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -668,7 +668,7 @@
 				})
 
 
-				it('should return an empty element for undefined content value', function (done) {
+				it('returns an empty element for undefined content value', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -685,7 +685,7 @@
 				})
 
 
-				it('should return no element if content value is "false"', function (done) {
+				it('returns no element if content value is "false"', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
@@ -703,7 +703,7 @@
 				})
 
 
-				it('should return no element if content value is "null"', function (done) {
+				it('returns no element if content value is "null"', function (done) {
 
 					testInEnv(null, function (error, scope) {
 
