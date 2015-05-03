@@ -33,7 +33,7 @@
   "devDependencies": {
     "jake": "~8.0.10",
     "js-yaml": "~3.2.2",
-    "jscs": "~1.6.2",
+    "jscs": "^1.13.1",
     "jsdom": "~1.0.1",
     "jshint": "~2.5.0",
     "mocha": "~1.21.4",
