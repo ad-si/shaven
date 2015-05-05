@@ -599,32 +599,22 @@
 
 				testInEnv(null, function (error, scope) {
 
+					var regexString = '.*first element.*must be.*string.*array.*'
+
 					assert.ifError(error)
-
-					var errorText,
-						errorRegex
-
-
-					if (environment === 'nodejs')
-						errorText = 'First element of array must be a string'
-					else
-						errorText = 'First element of array must be ' +
-							'either a string or a DOM element'
-
-					errorRegex = new RegExp(errorText)
 
 					assert.throws(
 						function () {
 							scope.shaven([{key: 'value'}])
 						},
-						errorRegex
+						new RegExp(regexString, 'gi')
 					)
 
 					assert.throws(
 						function () {
 							scope.shaven([144, 'span', 'text'])
 						},
-						errorRegex
+						new RegExp(regexString, 'gi')
 					)
 
 					done()
