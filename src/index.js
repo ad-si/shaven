@@ -133,27 +133,29 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	if (array[0] !== false) {
 
-		HTMLString = ['<', array[0].tag]
+		HTMLString = '<' + array[0].tag
 
 		for (key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
-				HTMLString.push(' ', key, '="', array[0].attr[key], '"')
+				HTMLString += ' ' + key + '="' +
+					(array[0].attr[key] || '') + '"'
 
-		HTMLString.push('>')
+		HTMLString += '>'
 
 		array[0].children.forEach(function (child) {
-			HTMLString.push(child)
+			HTMLString += child
 		})
 
-		HTMLString.push('</', array[0].tag, '>')
+		HTMLString += '</' + array[0].tag + '>'
 
-		array[0] = HTMLString.join('')
+		array[0] = HTMLString
 	}
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
 
-	if (callback) callback(array[0])
+	if (callback)
+		callback(array[0])
 
 	// returns object containing all elements with an id and the root element
 	return returnObject
