@@ -9,10 +9,10 @@ shaven = function dom (array, namespace, returnObject) {
 	'use strict'
 
 	var doc = document,
+		i = 1,
 		unescaped,
 		callback,
-		attributeKey,
-		i
+		attributeKey
 
 
 	// Set on first iteration
@@ -34,7 +34,6 @@ shaven = function dom (array, namespace, returnObject) {
 
 		// Assign id if is set
 		if (id) {
-
 			element.id = id[1]
 
 			// Add element to the return object
@@ -72,18 +71,24 @@ shaven = function dom (array, namespace, returnObject) {
 	}
 
 
-	// If is string create DOM element else is already a DOM element
-	if (typeof array[0] === 'string')
+	if (typeof array[0] === 'string') {
+		// Create DOM element
 		array[0] = createElement(array[0])
-
-	if (!(array[0] instanceof Element))
+	}
+	else if (array[0] instanceof Element) {
+		// Is already a DOM element
+	}
+	else if (Array.isArray(array[0])) {
+		i = 0
+	}
+	else
 		throw new Error(
 			'First element of array must be either a string or a DOM element'
 		)
 
 
 	// For each in the element array (except the first)
-	for (i = 1; i < array.length; i++) {
+	for (; i < array.length; i++) {
 
 		// Don't render element if value is false or null
 		if (array[i] === false || array[i] === null) {
@@ -111,6 +116,9 @@ shaven = function dom (array, namespace, returnObject) {
 				array[i].reverse().forEach(function (subArray) {
 					array.splice(i + 1, 0, subArray)
 				})
+
+				if (i !== 0)
+					continue
 				i++
 			}
 

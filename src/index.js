@@ -6,9 +6,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	'use strict'
 
-	var HTMLString,
+	var i = 1,
+		HTMLString,
 		doesEscape,
-		i,
 		attributeKey,
 		callback,
 		key
@@ -32,7 +32,6 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 		// Assign id if is set
 		if (id) {
-
 			element.attr.id = id[1]
 
 			// Add element to the return object
@@ -63,13 +62,19 @@ module.exports = function shaven (array, namespace, returnObject) {
 	}
 
 
-	if (typeof array[0] !== 'string')
-		throw new Error('First element of array must be a string')
+	if (typeof array[0] === 'string') {
+		array[0] = createElement(array[0])
+	}
+	else if (Array.isArray(array[0])) {
+		i = 0
+	}
+	else
+		throw new Error(
+			'First element of array must be a string or an array'
+		)
 
-	array[0] = createElement(array[0])
 
-
-	for (i = 1; i < array.length; i++) {
+	for (; i < array.length; i++) {
 
 		// Don't render element if value is false or null
 		if (array[i] === false || array[i] === null) {
@@ -95,6 +100,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 				array[i].reverse().forEach(function (subArray) {
 					array.splice(i + 1, 0, subArray)
 				})
+
+				if (i !== 0)
+					continue
 				i++
 			}
 
