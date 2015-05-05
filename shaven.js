@@ -71,19 +71,16 @@ shaven = function dom (array, namespace, returnObject) {
 	}
 
 
-	if (typeof array[0] === 'string') {
-		// Create DOM element
+	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
-	}
-	else if (array[0] instanceof Element) {
-		// Is already a DOM element
-	}
-	else if (Array.isArray(array[0])) {
+
+	else if (Array.isArray(array[0]))
 		i = 0
-	}
-	else
+
+	else if (!(array[0] instanceof Element))
 		throw new Error(
-			'First element of array must be either a string or a DOM element'
+			'First element of array must be either a string, ' +
+			'an array or a DOM element and not ' + JSON.stringify(array[0])
 		)
 
 
