@@ -83,7 +83,8 @@ shaven = function dom (array, namespace, returnObject) {
 	}
 	else
 		throw new Error(
-			'First element of array must be either a string or a DOM element'
+			'First element of array must be either a string, ' +
+			'an array or a DOM element and not ' + JSON.stringify(array[0])
 		)
 
 

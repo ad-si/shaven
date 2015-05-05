@@ -70,7 +70,8 @@ module.exports = function shaven (array, namespace, returnObject) {
 	}
 	else
 		throw new Error(
-			'First element of array must be a string or an array'
+			'First element of array must be a string, ' +
+			'or an array and not ' + JSON.stringify(array[0])
 		)
 
 
