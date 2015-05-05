@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "stylus -u nib --watch --out ./css styl",
-    "test": "mocha -b --inline-diffs -R spec",
+    "test": "mocha -b --full-trace --inline-diffs -R spec",
     "build": "jake -f ./jakefile -B",
     "prepublish": "npm run-script build && npm test && jscs ."
   },
