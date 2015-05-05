@@ -567,6 +567,34 @@
 				})
 			})
 
+			it('accepts an array of elements at index 0', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var html = '<p>Numbers: ' +
+							'<span>1</span>' +
+							'<span>2</span>' +
+							'<span>3</span>' +
+							'</p>',
+						element = scope.shaven(['p', 'Numbers: ', [
+							[
+								['span', '1'],
+								['span', '2'],
+								['span', '3']
+							]
+						]])[0]
+
+					if (environment === 'nodejs')
+						assert.strictEqual(element, html)
+					else
+						assert.strictEqual(element.outerHTML, html)
+
+					done()
+				})
+			})
+
 			it('throws an error for an invalid array', function (done) {
 
 				testInEnv(null, function (error, scope) {
