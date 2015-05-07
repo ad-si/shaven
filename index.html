@@ -4,11 +4,11 @@
 	<meta charset=UTF-8>
 	<title>Shaven</title>
 
-	<meta name=viewport content=width=device-width>
+	<meta name=viewport content="width=device-width">
 
-	<link href=http://fonts.googleapis.com/css?family=Text+Me+One|Grand+Hotel
-	      rel=stylesheet type=text/css>
-	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css>
+	<link rel=stylesheet
+	      href="//fonts.googleapis.com/css?family=Grand+Hotel">
+	<link rel=stylesheet href=bower_components/codemirror/lib/codemirror.css >
 	<link rel=stylesheet href=bower_components/codemirror/theme/twilight.css>
 	<link rel=stylesheet href=css/screen.css>
 	<link rel="shortcut icon" href=img/favicon.png>
@@ -36,7 +36,7 @@
 
 		<div id=buttons>
 			<iframe class=github
-			        src=http://ghbtns.com/github-btn.html?user=adius&repo=shaven&type=watch&count=true&size=small>
+			        src="http://ghbtns.com/github-btn.html?user=adius&amp;repo=shaven&amp;type=watch&amp;count=true&amp;size=small">
 			</iframe>
 			<a href="https://twitter.com/share"
 			   class="twitter-share-button"
@@ -97,7 +97,6 @@
 	</section>
 
 	<section>
-
 		<h1>Installation</h1>
 
 		<p>On the server you can install Shaven with npm:</p>
@@ -305,7 +304,7 @@
 			element-tag string.</p>
 
 		<textarea id=codeNoEscape rows=1 data-lang=js>
-			['div&', '<p>This is <em>HTML</em></p>']
+			['div&amp;', '<p>This is <em>HTML</em></p>']
 		</textarea>
 
 		<p>compiles to</p>
