@@ -538,7 +538,7 @@
 						element = scope.shaven(
 							['p', 'Test', {
 								title: '" &',
-								lang: "' < >"
+								lang: '\' < >'
 							}]
 						)[0]
 
