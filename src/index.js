@@ -7,8 +7,8 @@ module.exports = function shaven (array, namespace, returnObject) {
 	'use strict'
 
 	var i = 1,
+		doesEscape = true,
 		HTMLString,
-		doesEscape,
 		attributeKey,
 		callback,
 		key
@@ -61,6 +61,21 @@ module.exports = function shaven (array, namespace, returnObject) {
 		return value
 	}
 
+	function escapeAttribute (string) {
+		return String(string)
+			.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+	}
+
+	function escapeHTML (string) {
+		return String(string)
+			.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&apos;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+	}
+
 
 	if (typeof array[0] === 'string')
 		array[0] = createElement(array[0])
@@ -88,9 +103,14 @@ module.exports = function shaven (array, namespace, returnObject) {
 			continue
 		}
 
-		else if (typeof array[i] === 'string' || typeof array[i] === 'number') {
+		else if (typeof array[i] === 'string') {
 			if (doesEscape)
-				array[i] = escape(array[i])
+				array[i] = escapeHTML(array[i])
+
+			array[0].children.push(array[i])
+		}
+
+		else if (typeof array[i] === 'number') {
 
 			array[0].children.push(array[i])
 		}
@@ -147,7 +167,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 		for (key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
 				HTMLString += ' ' + key + '="' +
-					(array[0].attr[key] || '') + '"'
+					escapeAttribute(array[0].attr[key] || '') + '"'
 
 		HTMLString += '>'
 

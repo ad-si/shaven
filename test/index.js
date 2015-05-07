@@ -497,19 +497,55 @@
 			})
 
 
-			it('escapes html strings', function (done) {
+			it('escapes html strings in tags', function (done) {
 
 				testInEnv(null, function (error, scope) {
 
 					assert.ifError(error)
 
 					var html = '<p>Some <strong>HTML</strong></p>',
+						escapedHtml = '&lt;p&gt;Some ' +
+							'&lt;strong&gt;HTML&lt;/strong&gt;' +
+							'&lt;/p&gt;',
 					    element = scope.shaven(['div', html])[0]
 
 					if (environment === 'nodejs')
-						assert.strictEqual(element, '<div>' + html + '</div>')
+						assert.strictEqual(
+							element,
+							'<div>' + escapedHtml + '</div>'
+						)
 					else
-						assert.strictEqual(element.textContent, html)
+						assert.strictEqual(element.innerHTML, escapedHtml)
+
+					done()
+				})
+			})
+
+
+			it('escapes html strings in attributes', function (done) {
+
+				testInEnv(null, function (error, scope) {
+
+					assert.ifError(error)
+
+					var escapedHtml =
+							'<p ' +
+							'title="&quot; &amp;" ' +
+							'lang="\' < >"' +
+							'>' +
+							'Test' +
+							'</p>',
+						element = scope.shaven(
+							['p', 'Test', {
+								title: '" &',
+								lang: "' < >"
+							}]
+						)[0]
+
+					if (environment === 'nodejs')
+						assert.strictEqual(element, escapedHtml)
+					else
+						assert.strictEqual(element.outerHTML, escapedHtml)
 
 					done()
 				})
