@@ -2,7 +2,8 @@
 
 	'use strict'
 
-	var assert,
+	var path,
+	    assert,
 	    scope = {},
 	    isBrowser = (typeof window !== 'undefined'),
 	    shaven,
@@ -50,7 +51,6 @@
 				it('attaches to elements', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
-
 						assert.ifError(error)
 
 						var expected = '<div id="test"><p></p></div>',
@@ -658,48 +658,49 @@
 			})
 
 
-			if (environment !== 'jsdom')
-				it('works with SVGs', function (done) {
+			it('works with SVGs', function (done) {
 
-					testInEnv(null, function (error, scope) {
+				testInEnv(null, function (error, window) {
 
-						assert.ifError(error)
+					assert.ifError(error)
 
-						var expected = '<svg id="svg" height="10" width="10">' +
-						               '<circle class="top" cx="5" cy="5" r="5" style="fill:green"></circle>' +
-						               '</svg>',
-						    array = ['svg#svg', {height: 10, width: 10},
-							    ['circle.top', {cx: 5, cy: 5, r: 5, style: 'fill:green'}]
-						    ],
-						    browserSvgElement,
-						    svg
+					var expected = '' +
+					        '<svg id="svg" height="10" width="10">' +
+					            '<circle class="top" cx="5" cy="5" r="5" ' +
+					                'style="fill:green">' +
+					            '</circle>' +
+					        '</svg>',
+					    array = [
+					        'svg#svg', {
+					            height: 10,
+					            width: 10},
+					            ['circle.top', {
+					                cx: 5,
+					                cy: 5,
+					                r: 5,
+					                style: 'fill:green'
+					            }]
+					        ],
+					    browserSvgElement,
+					    svg
 
 
-						if (environment === 'nodejs')
-							assert.strictEqual(scope.shaven(array)[0], expected)
+					if (environment === 'nodejs')
+						assert.strictEqual(shaven(array)[0], expected)
 
-						else if (environment === 'browser') {
+					else {
+						browserSvgElement = window.shaven(
+							[window.document.body, array]
+						)[0]
 
-							browserSvgElement = scope.shaven(
-								[getById('test', scope), array],
-								'http://www.w3.org/2000/svg'
-							)[0]
+						svg = window.document.getElementById('svg')
 
-							svg = getById('svg', scope)
+						assert.strictEqual(svg.outerHTML, expected)
+					}
 
-							assert(svg.offsetWidth === 10 && svg.offsetHeight === 10)
-							assert.strictEqual(browserSvgElement.innerHTML, expected)
-
-							svg.parentNode.removeChild(svg)
-						}
-
-						done()
-					})
+					done()
 				})
-
-			else
-			// TODO (Must fail with the wrong namespace)
-				it('should work with SVGs (but only with the correct namespace)')
+			})
 
 
 			describe('Falsy values', function () {
@@ -786,9 +787,10 @@
 	}
 	else {
 
+		path = require('path')
 		assert = require('assert')
-		shaven = require('../src/index.js')
 		jsdom = require('jsdom')
+		shaven = require('../src/index.js')
 
 		runTestSuite('nodejs')
 		runTestSuite('jsdom')
