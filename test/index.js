@@ -23,7 +23,7 @@
 			else if (environment === 'jsdom')
 				jsdom.env({
 					html: html === null ? '<div></div>' : html,
-					scripts: ['../src/shaven.js'],
+					scripts: path.resolve('src/shaven.js'),
 					done: callback
 				})
 
