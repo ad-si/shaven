@@ -64,15 +64,13 @@ compiles to
 
 Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a detailed description of how to install shaven.
 
-## Development
 
-Make sure to only modify `package.yaml` instead of `(package|bower).json` and to run `$ jake` afterwards to sync the changes.
+## Development
 
 All code changes must be made in the server and browser version of shaven (`src/index.js` and `src/shaven.js`)
 
 - Tests: `$ npm test`
-- Build: `$ npm run-script build`
-- Run `$ npm prepublish` before each commit
-- Make extra commits for version bumps
-- Tag new versions like `vx.y.z`
-- Publish to npm `$ npm publish` and bower `$ bower register`
+- Build: `$ npm run build`
+- Execute `$ npm run prepublish` before each commit
+- Make extra commits for version bumps (use `$ npm version major|minor|patch|`)
+- Publish to npm `$ npm publish`
