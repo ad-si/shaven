@@ -14,6 +14,34 @@
 		return window.document.getElementById(id)
 	}
 
+	function sortElementAttributes (element) {
+		// From http://stackoverflow.com/a/13754747/1850340
+
+		var attrs = element.attributes,
+			serializer = new XMLSerializer(),
+
+			i = attrs.length,
+			l = i,
+			nodeArr = [],
+			nodeArrKeys = [],
+			name
+
+		for (i; i--;) {
+			name = attrs[i].nodeName
+			nodeArr[name] = (attrs.removeNamedItem(name))
+			nodeArrKeys[i] = name
+		}
+
+		nodeArrKeys = nodeArrKeys.sort()
+		i++
+
+		for (i; l > i; i++) {
+			attrs.setNamedItem(nodeArr[nodeArrKeys[i]])
+		}
+
+		console.log(serializer.serializeToString(element));
+	}
+
 	function runTestSuite (environment) {
 
 		function testInEnv (html, callback) {
@@ -190,23 +218,44 @@
 
 			it('is possible to set properties', function (done) {
 
-				testInEnv(null, function (error, scope) {
+				testInEnv('<div id="test"></div>', function (error, scope) {
 
 					assert.ifError(error)
 
-					var expected = '<p id="foo" class="bar" data-info="baz"></p>',
+					var expectedString = '<p id="foo" ' +
+							'class="bar" data-info="baz"></p>',
 					    actual = scope.shaven(
 						    ['p', {
 							    id: 'foo',
 							    class: 'bar',  // class is restricted word
 							    'data-info': 'baz' // attribute with dash
 						    }]
-					    )[0]
+					    )[0],
+						expectedElement
 
 					if (environment === 'nodejs')
-						assert.strictEqual(actual, expected)
-					else
-						assert.strictEqual(actual.outerHTML, expected)
+						assert.strictEqual(actual, expectedString)
+
+					else {
+						scope.document
+							.getElementById('test')
+							.innerHTML = expectedString,
+
+						expectedElement = scope.document.getElementById('foo')
+
+						if (environment === 'jsdom')
+							assert.strictEqual(
+								actual.outerHTML,
+								expectedElement.outerHTML
+							)
+						else
+							assert(
+								actual.isEqualNode(expectedElement),
+								'\n' + actual.outerHTML + '\nshould equal\n' +
+									expectedElement.outerHTML
+							)
+					}
+
 					done()
 				})
 			})
@@ -214,11 +263,12 @@
 
 			it('does not set falsy properties', function (done) {
 
-				testInEnv(null, function (error, scope) {
+				testInEnv('<div id="test"></div>', function (error, scope) {
 
 					assert.ifError(error)
 
-					var expected = '<p title="foo" tabindex="3" data-info=""></p>',
+					var expectedString = '<p title="foo" ' +
+					        'tabindex="3" data-info=""></p>',
 					    actual = scope.shaven(
 						    ['p', {
 							    title: 'foo',
@@ -227,14 +277,33 @@
 							    'data-test': null,
 							    'data-info': undefined
 						    }]
-					    )[0]
+					    )[0],
+					    expectedElement
 
 
 					if (environment === 'nodejs')
-						assert.strictEqual(actual, expected)
+						assert.strictEqual(actual, expectedString)
 
-					else
-						assert.strictEqual(actual.outerHTML, expected)
+					else {
+						scope.document
+							.getElementById('test')
+							.innerHTML = expectedString,
+
+						expectedElement = scope.document
+							.getElementsByTagName('p')[0]
+
+						if (environment === 'jsdom')
+							assert.strictEqual(
+								actual.outerHTML,
+								expectedElement.outerHTML
+							)
+						else
+							assert(
+								actual.isEqualNode(expectedElement),
+								'\n' + actual.outerHTML + '\nshould equal\n' +
+									expectedElement.outerHTML
+							)
+					}
 
 					done()
 				})
@@ -384,17 +453,39 @@
 
 				it('works with both class and id', function (done) {
 
-					testInEnv(null, function (error, scope) {
+					testInEnv('<div id=test></div>', function (error, scope) {
 
 						assert.ifError(error)
 
-						var expected = '<p id="b" class="new"></p>',
-						    element = scope.shaven(['p#b.new'])[0]
+						var expectedString = '<p id="b" class="new"></p>',
+							element = scope.shaven(['p#b.new'])[0],
+							expectedElement
 
 						if (environment === 'nodejs')
-							assert.strictEqual(element, expected)
-						else
-							assert.strictEqual(element.outerHTML, expected)
+							assert.strictEqual(element, expectedString)
+
+						else {
+
+							scope.document
+								.getElementById('test')
+								.innerHTML = expectedString
+
+							expectedElement = scope.document
+								.getElementById('b')
+
+							if (environment === 'jsdom')
+								assert.strictEqual(
+									element.outerHTML,
+									expectedElement.outerHTML
+								)
+							else
+								assert(
+									element.isEqualNode(expectedElement),
+									element.outerHTML +
+									'\nshould be equal to\n' +
+									expectedElement.outerHTML
+								)
+						}
 
 						done()
 					})
@@ -403,18 +494,38 @@
 
 				it('works with class and id reversed', function (done) {
 
-					testInEnv(null, function (error, scope) {
+					testInEnv('<div id=test></div>', function (error, scope) {
 
 						assert.ifError(error)
 
-						var expected = '<p id="c" class="new"></p>',
-						    element = scope.shaven(['p.new#c'])[0]
+						var expectedString = '<p id="c" class="new"></p>',
+						    element = scope.shaven(['p.new#c'])[0],
+							expectedElement
 
 						if (environment === 'nodejs')
-							assert.strictEqual(element, expected)
-						else
-							assert.strictEqual(element.outerHTML, expected)
+							assert.strictEqual(element, expectedString)
 
+						else {
+							scope.document
+								.getElementById('test')
+								.innerHTML = expectedString
+
+							expectedElement = scope.document
+								.getElementById('c')
+
+							if (environment === 'jsdom')
+								assert.strictEqual(
+									element.outerHTML,
+									expectedElement.outerHTML
+								)
+							else
+								assert(
+									element.isEqualNode(expectedElement),
+									element.outerHTML +
+									'\nshould to be equal to\n' +
+									expectedElement.outerHTML
+								)
+						}
 						done()
 					})
 				})
@@ -422,17 +533,38 @@
 
 				it('understands multiple classes and ids', function (done) {
 
-					testInEnv(null, function (error, scope) {
+					testInEnv('<div id=test></div>', function (error, scope) {
 
 						assert.ifError(error)
 
-						var expected = '<p id="foo" class="bar baz"></p>',
-						    element = scope.shaven(['p.bar#foo.baz'])[0]
+						var expectedString = '<p id="foo" class="bar baz"></p>',
+						    element = scope.shaven(['p.bar#foo.baz'])[0],
+							expectedElement
 
 						if (environment === 'nodejs')
-							assert.strictEqual(element, expected)
-						else
-							assert.strictEqual(element.outerHTML, expected)
+							assert.strictEqual(element, expectedString)
+
+						else {
+							scope.document
+								.getElementById('test')
+								.innerHTML = expectedString
+
+							expectedElement = scope.document
+								.getElementById('foo')
+
+							if (environment === 'jsdom')
+								assert.strictEqual(
+									element.outerHTML,
+									expectedElement.outerHTML
+								)
+							else
+								assert(
+									element.isEqualNode(expectedElement),
+									element.outerHTML +
+									'\nshould to be equal to\n' +
+									expectedElement.outerHTML
+								)
+						}
 
 						done()
 					})
@@ -660,11 +792,11 @@
 
 			it('works with SVGs', function (done) {
 
-				testInEnv(null, function (error, window) {
+				testInEnv('<div id=test></div>', function (error, window) {
 
 					assert.ifError(error)
 
-					var expected = '' +
+					var expectedString = '' +
 					        '<svg id="svg" height="10" width="10">' +
 					            '<circle class="top" cx="5" cy="5" r="5" ' +
 					                'style="fill:green">' +
@@ -681,22 +813,97 @@
 					                style: 'fill:green'
 					            }]
 					        ],
-					    browserSvgElement,
-					    svg
+					    svgElement,
+					    expectedElement
 
 
 					if (environment === 'nodejs')
-						assert.strictEqual(shaven(array)[0], expected)
+						assert.strictEqual(shaven(array)[0], expectedString)
 
 					else {
-						browserSvgElement = window.shaven(
-							[window.document.body, array]
+						svgElement = window.shaven(
+							array,
+							'http://www.w3.org/2000/svg'
 						)[0]
 
-						svg = window.document.getElementById('svg')
+						window.document
+							.getElementById('test')
+							.innerHTML = expectedString
 
-						assert.strictEqual(svg.outerHTML, expected)
+						expectedElement = window.document
+							.getElementById('svg')
+
+						if (environment === 'jsdom')
+							assert.strictEqual(
+								svgElement.outerHTML,
+								expectedElement.outerHTML
+							)
+						else
+							assert(
+								svgElement.isEqualNode(expectedElement),
+								'\n' + svgElement.outerHTML +
+								'\nshould equal\n' +
+								expectedElement.outerHTML
+							)
 					}
+
+					done()
+				})
+			})
+
+			if (environment === 'browser')
+			it('does not work with SVGs without a namespace', function (done) {
+
+				testInEnv('<div id=test></div>', function (error, window) {
+
+					assert.ifError(error)
+
+					var expectedString = '' +
+					        '<svg height="10" width="10" id="svg">' +
+					            '<circle class="top" cx="5" cy="5" r="5" ' +
+					                'style="fill:green">' +
+					            '</circle>' +
+					        '</svg>',
+					    array = [
+					        'svg#svg', {
+					            height: 10,
+					            width: 10},
+					            ['circle.top', {
+					                cx: 5,
+					                cy: 5,
+					                r: 5,
+					                style: 'fill:green'
+					            }]
+					        ],
+					    svgElement,
+					    expectedElement,
+						areEqual
+
+					svgElement = window.shaven(array)[0]
+
+					window.document
+						.getElementById('test')
+						.innerHTML = expectedString
+
+					expectedElement = window.document
+						.getElementById('svg')
+
+					sortElementAttributes(svgElement)
+					sortElementAttributes(svgElement.firstChild)
+					sortElementAttributes(expectedElement)
+					sortElementAttributes(expectedElement.firstChild)
+
+					areEqual = svgElement.isEqualNode(expectedElement)
+
+					assert(
+						(svgElement.outerHTML === expectedElement.outerHTML) &&
+						!areEqual,
+						'Although the elements have the same outerHTML, ' +
+						'they should not be equal nodes.\n' +
+						'svgElement:\t\t' + svgElement.outerHTML +
+						'\nexpectedElement:\t' + expectedElement.outerHTML +
+						'\nAre equal:\t' + areEqual
+					)
 
 					done()
 				})
