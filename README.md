@@ -65,6 +65,20 @@ compiles to
 Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a detailed description of how to install shaven.
 
 
+## Browser Support
+
+Firefox: 20+
+Opera: 21+
+Chrome: 34+
+Safari: 9+ (Does not correctly escape HTML strings in attributes)
+IE: ? (Probably 9+. Please submit a pull request if you know more.)
+Edge (EdgeHTML): 12+
+
+Earlier Firefox, Opera and Chrome versions have the same bug as Safari.
+That means even much older versions will just work fine
+under normal circumstances.
+
+
 ## Development
 
 All code changes must be made in the server and browser version of shaven (`src/index.js` and `src/shaven.js`)
