@@ -67,12 +67,12 @@ Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a detail
 
 ## Browser Support
 
-Firefox: 20+
-Opera: 21+
-Chrome: 34+
-Safari: 9+ (Does not correctly escape HTML strings in attributes)
-IE: ? (Probably 9+. Please submit a pull request if you know more.)
-Edge (EdgeHTML): 12+
+- Firefox: 20+
+- Opera: 21+
+- Chrome: 34+
+- Safari: 9+ (Does not correctly escape HTML strings in attributes)
+- IE: ? (Probably 9+. Please submit a pull request if you know more.)
+- Edge (EdgeHTML): 12+
 
 Earlier Firefox, Opera and Chrome versions have the same bug as Safari.
 That means even much older versions will just work fine
