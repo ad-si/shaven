@@ -15,7 +15,19 @@ function walkTree (node) {
 		return node.map(walkTree)
 
 	if (node.childNodes)
-		return [node.nodeName, ...walkTree(node.childNodes)]
+		return [
+			node.nodeName,
+			...([
+				node.attrs.reduce(
+					(object, attribute) => {
+						object[attribute.name] = attribute.value
+						return object
+					},
+					{}
+				),
+				...walkTree(node.childNodes)
+			].filter(n => Object.keys(n).length > 0))
+		]
 
 	if (node.nodeName === '#documentType')
 		return ''
