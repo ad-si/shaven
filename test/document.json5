@@ -3,7 +3,10 @@
 	[
 		"head",
 		[
-			"meta"
+			"meta",
+			{
+				"charset": "utf-8"
+			}
 		],
 		[
 			"title",
@@ -18,20 +21,32 @@
 		],
 		[
 			"p",
+			{
+				"id": "slogan"
+			},
 			"This is a test sentence."
 		],
 		[
 			"table",
+			{
+				"data-rows": "2"
+			},
 			[
 				"tbody",
 				[
 					"tr",
 					[
 						"th",
+						{
+							"style": "color: red"
+						},
 						"Number"
 					],
 					[
 						"th",
+						{
+							"style": "color: blue"
+						},
 						"Test"
 					]
 				],
