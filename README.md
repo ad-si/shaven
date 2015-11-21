@@ -14,10 +14,10 @@ Checkout [adriansieber.com/shaven](http://adriansieber.com/shaven) for an extens
 			['p','some example text'],
 			['ul#list.bullets',
 				['li', 'item1'],
-                ['li.active', 'item2'],
-                ['li',
-                    ['a', 'item3', {href: '#'}]
-                ]
+				['li.active', 'item2'],
+				['li',
+					['a', 'item3', {href: '#'}]
+				]
 			]
 		]
 	)
