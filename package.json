@@ -4,6 +4,9 @@
   "description": "Convert HTML documents to shaven arrays",
   "main": "source/index.js",
   "bin": "source/cli.js",
+  "scripts": {
+    "test": "node test/index.js"
+  },
   "keywords": [
     "shaven"
   ],
