@@ -1,6 +1,6 @@
 {
   "name": "html2shaven",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Convert HTML documents to shaven arrays",
   "main": "source/index.js",
   "bin": "source/cli.js",
