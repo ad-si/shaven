@@ -8,11 +8,11 @@ window.shaven = function dom (array, namespace, returnObject) {
 
 	'use strict'
 
-	var doc = document,
-		i = 1,
-		unescaped,
-		callback,
-		attributeKey
+	var doc = document
+	var i = 1
+	var unescaped
+	var callback
+	var attributeKey
 
 
 	// Set on first iteration
@@ -24,12 +24,12 @@ window.shaven = function dom (array, namespace, returnObject) {
 	// Create DOM element from syntax sugar string
 	function createElement (sugarString) {
 
-		var tags = sugarString.match(/^[\w-]+/),
-			tag = tags ? tags[0] : 'div',
-			element = doc.createElementNS(namespace, tag),
-			id = sugarString.match(/#([\w-]+)/),
-			ref = sugarString.match(/\$([\w-]+)/),
-			classNames = sugarString.match(/\.[\w-]+/g)
+		var tags = sugarString.match(/^[\w-]+/)
+		var tag = tags ? tags[0] : 'div'
+		var element = doc.createElementNS(namespace, tag)
+		var id = sugarString.match(/#([\w-]+)/)
+		var ref = sugarString.match(/\$([\w-]+)/)
+		var classNames = sugarString.match(/\.[\w-]+/g)
 
 
 		// Assign id if is set

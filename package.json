@@ -33,7 +33,7 @@
   "devDependencies": {
     "jake": "^8.0.10",
     "js-yaml": "^3.3.0",
-    "jscs": "^1.13.1",
+    "jscs": "^2.8.0",
     "jsdom": "^6.5.1",
     "jshint": "^2.7.0",
     "mocha": "^2.3.3",
@@ -95,7 +95,7 @@
       "beforeOpeningRoundBrace": true,
       "beforeOpeningCurlyBrace": true
     },
-    "requireMultipleVarDecl": "onevar",
+    "disallowMultipleVarDecl": true,
     "requireBlocksOnNewline": true,
     "disallowEmptyBlocks": true,
     "disallowSpacesInsideArrayBrackets": true,

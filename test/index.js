@@ -2,13 +2,8 @@
 
 	'use strict'
 
-	var path,
-	    assert,
-	    scope = {},
-	    isBrowser = (typeof window !== 'undefined'),
-	    shaven,
-	    jsdom
-
+	const scope = {}
+	const isBrowser = (typeof window !== 'undefined')
 
 	function getById (id, window) {
 		return window.document.getElementById(id)
@@ -16,18 +11,15 @@
 
 	function sortElementAttributes (element) {
 		// From http://stackoverflow.com/a/13754747/1850340
-
-		var attrs = element.attributes,
-			serializer = new XMLSerializer(),
-
-			i = attrs.length,
-			l = i,
-			nodeArr = [],
-			nodeArrKeys = [],
-			name
+		const attrs = element.attributes
+		const serializer = new XMLSerializer()
+		let i = attrs.length
+		const l = i
+		const nodeArr = []
+		let nodeArrKeys = []
 
 		for (i; i--;) {
-			name = attrs[i].nodeName
+			const name = attrs[i].nodeName
 			nodeArr[name] = (attrs.removeNamedItem(name))
 			nodeArrKeys[i] = name
 		}
@@ -75,16 +67,15 @@
 
 			if (environment === 'browser' || environment === 'jsdom') {
 
-
 				it('attaches to elements', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {
 						assert.ifError(error)
 
-						var expected = '<div id="test"><p></p></div>',
-						    actual = window.shaven(
-							    [getById('test', window), ['p']]
-						    )[0].outerHTML
+						const expected = '<div id="test"><p></p></div>'
+						const actual = window
+							.shaven([getById('test', window), ['p']])[0]
+							.outerHTML
 
 						assert.strictEqual(actual, expected, actual)
 
@@ -99,11 +90,11 @@
 
 						assert.ifError(error)
 
-						var expected = '<div id="test"><p></p></div>',
-						    element = window.shaven(['p'])[0],
-						    actual = window.shaven(
-							    [getById('test', window), element]
-						    )[0].outerHTML
+						const expected = '<div id="test"><p></p></div>'
+						const element = window.shaven(['p'])[0]
+						const actual = window
+							.shaven([getById('test', window), element])[0]
+							.outerHTML
 
 						assert.strictEqual(actual, expected, actual)
 
@@ -117,13 +108,13 @@
 					testInEnv('<div id="test"></div>', function (error, window) {
 						assert.ifError(error)
 
-						var expected = '<div id="test">' +
-						    '<foo-bar></foo-bar>' +
-						    '</div>',
-						    element = window.shaven(['foo-bar'])[0],
-						    actual = window.shaven(
-							    [getById('test', window), element]
-						    )[0].outerHTML
+						const expected = '<div id="test">' +
+							'<foo-bar></foo-bar>' +
+							'</div>'
+						const element = window.shaven(['foo-bar'])[0]
+						const actual = window
+							.shaven([getById('test', window), element])[0]
+							.outerHTML
 
 						assert.strictEqual(actual, expected, actual)
 
@@ -138,12 +129,21 @@
 
 						assert.ifError(error)
 
-						var shavenObject = window.shaven(
-							[getById('test', window), ['p#foo'], ['p#bar']]
+						const shavenObject = window.shaven(
+							[getById('test', window),
+								['p#foo'],
+								['p#bar']
+							]
 						)
 
-						assert.strictEqual(shavenObject.foo, getById('foo', window))
-						assert.strictEqual(shavenObject.bar, getById('bar', window))
+						assert.strictEqual(
+							shavenObject.foo,
+							getById('foo', window)
+						)
+						assert.strictEqual(
+							shavenObject.bar,
+							getById('bar', window)
+						)
 						done()
 					})
 				})
@@ -155,8 +155,11 @@
 
 						assert.ifError(error)
 
-						var shavenObject = window.shaven(
-							[getById('test', window), ['a$foo'], ['p$bar']]
+						const shavenObject = window.shaven(
+							[getById('test', window),
+								['a$foo'],
+								['p$bar']
+							]
 						)
 
 						assert.strictEqual(
@@ -179,8 +182,8 @@
 
 					assert.ifError(error)
 
-					var expected = '<p>test</p>',
-					    element = scope.shaven(['p', 'test'])[0]
+					const expected = '<p>test</p>'
+					const element = scope.shaven(['p', 'test'])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -198,8 +201,8 @@
 
 					assert.ifError(error)
 
-					var expected = '<p>1234</p>',
-					    element = scope.shaven(['p', 1234])[0]
+					const expected = '<p>1234</p>'
+					const element = scope.shaven(['p', 1234])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -217,14 +220,14 @@
 
 					assert.ifError(error)
 
-					var expected = '<div><p>foo<em>bar</em></p></div>',
-					    actual = scope.shaven(
-						    ['div',
-							    ['p', 'foo',
-								    ['em', 'bar']
-							    ]
-						    ]
-					    )[0]
+					const expected = '<div><p>foo<em>bar</em></p></div>'
+					const actual = scope.shaven(
+						['div',
+							['p', 'foo',
+								['em', 'bar']
+							]
+						]
+					)[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(actual, expected)
@@ -242,16 +245,15 @@
 
 					assert.ifError(error)
 
-					var expectedString = '<p id="foo" ' +
-							'class="bar" data-info="baz"></p>',
-					    actual = scope.shaven(
-						    ['p', {
-							    id: 'foo',
-							    class: 'bar',  // class is restricted word
-							    'data-info': 'baz' // attribute with dash
-						    }]
-					    )[0],
-						expectedElement
+					const expectedString = '<p id="foo" ' +
+						'class="bar" data-info="baz"></p>'
+					const actual = scope.shaven(
+						['p', {
+							id: 'foo',
+							class: 'bar',  // class is restricted word
+							'data-info': 'baz' // attribute with dash
+						}]
+					)[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(actual, expectedString)
@@ -259,9 +261,10 @@
 					else {
 						scope.document
 							.getElementById('test')
-							.innerHTML = expectedString,
+							.innerHTML = expectedString
 
-						expectedElement = scope.document.getElementById('foo')
+						const expectedElement = scope.document
+							.getElementById('foo')
 
 						if (environment === 'jsdom')
 							assert.strictEqual(
@@ -287,18 +290,17 @@
 
 					assert.ifError(error)
 
-					var expectedString = '<p title="foo" ' +
-					        'tabindex="3" data-info=""></p>',
-					    actual = scope.shaven(
-						    ['p', {
-							    title: 'foo',
-							    tabindex: 3,
-							    lang: false,
-							    'data-test': null,
-							    'data-info': undefined
-						    }]
-					    )[0],
-					    expectedElement
+					const expectedString = '<p title="foo" ' +
+						'tabindex="3" data-info=""></p>'
+					const actual = scope.shaven(
+						['p', {
+							title: 'foo',
+							tabindex: 3,
+							lang: false,
+							'data-test': null,
+							'data-info': undefined
+						}]
+					)[0]
 
 
 					if (environment === 'nodejs')
@@ -307,9 +309,9 @@
 					else {
 						scope.document
 							.getElementById('test')
-							.innerHTML = expectedString,
+							.innerHTML = expectedString
 
-						expectedElement = scope.document
+						const expectedElement = scope.document
 							.getElementsByTagName('p')[0]
 
 						if (environment === 'jsdom')
@@ -336,18 +338,19 @@
 
 					assert.ifError(error)
 
-					var expected = '<p style="color:rgb(255,0,0);font-size:10;' +
-					               'font-family:Arial, \'Helvetica Neue\', ' +
-					               'sans-serif"></p>',
-					    actual = scope.shaven(
-						    ['p', {
-							    style: {
-								    color: 'rgb(255,0,0)',
-								    'font-size': 10,
-								    'font-family': 'Arial, "Helvetica Neue", sans-serif'
-							    }
-						    }]
-					    )[0]
+					const expected = '<p ' +
+						'style="color:rgb(255,0,0);font-size:10;' +
+							'font-family:Arial, \'Helvetica Neue\', ' +
+							'sans-serif"></p>'
+					const actual = scope.shaven(
+						['p', {
+							style: {
+								color: 'rgb(255,0,0)',
+								'font-size': 10,
+								'font-family': 'Arial, "Helvetica Neue", sans-serif'
+							}
+						}]
+					)[0]
 
 
 					if (environment === 'nodejs')
@@ -367,17 +370,17 @@
 
 					assert.ifError(error)
 
-					var expected = '<p style="color:red"></p>',
-					    actual = scope.shaven(
-						    ['p', {
-							    style: {
-								    color: 'red',
-								    border: false,
-								    'background-color': null,
-								    visibility: undefined
-							    }
-						    }]
-					    )[0]
+					const expected = '<p style="color:red"></p>'
+					const actual = scope.shaven(
+						['p', {
+							style: {
+								color: 'red',
+								border: false,
+								'background-color': null,
+								visibility: undefined
+							}
+						}]
+					)[0]
 
 
 					if (environment === 'nodejs')
@@ -397,8 +400,8 @@
 
 					assert.ifError(error)
 
-					var expected = '<p>test</p>',
-					    element = scope.shaven(['p', 'test', true])[0]
+					const expected = '<p>test</p>'
+					const element = scope.shaven(['p', 'test', true])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, expected)
@@ -420,8 +423,8 @@
 
 						assert.ifError(error)
 
-						var expected = '<div id="foo"></div>',
-						    element = scope.shaven(['#foo'])[0]
+						const expected = '<div id="foo"></div>'
+						const element = scope.shaven(['#foo'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expected)
@@ -439,8 +442,8 @@
 
 						assert.ifError(error)
 
-						var expected = '<p id="foo-1"></p>',
-						    element = scope.shaven(['p#foo-1'])[0]
+						const expected = '<p id="foo-1"></p>'
+						const element = scope.shaven(['p#foo-1'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expected)
@@ -458,8 +461,8 @@
 
 						assert.ifError(error)
 
-						var expected = '<p class="foo"></p>',
-						    element = scope.shaven(['p.foo'])[0]
+						const expected = '<p class="foo"></p>'
+						const element = scope.shaven(['p.foo'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expected)
@@ -477,9 +480,8 @@
 
 						assert.ifError(error)
 
-						var expectedString = '<p id="b" class="new"></p>',
-							element = scope.shaven(['p#b.new'])[0],
-							expectedElement
+						const expectedString = '<p id="b" class="new"></p>'
+						const element = scope.shaven(['p#b.new'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expectedString)
@@ -490,7 +492,7 @@
 								.getElementById('test')
 								.innerHTML = expectedString
 
-							expectedElement = scope.document
+							const expectedElement = scope.document
 								.getElementById('b')
 
 							if (environment === 'jsdom')
@@ -518,9 +520,8 @@
 
 						assert.ifError(error)
 
-						var expectedString = '<p id="c" class="new"></p>',
-						    element = scope.shaven(['p.new#c'])[0],
-							expectedElement
+						const expectedString = '<p id="c" class="new"></p>'
+						const element = scope.shaven(['p.new#c'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expectedString)
@@ -530,7 +531,7 @@
 								.getElementById('test')
 								.innerHTML = expectedString
 
-							expectedElement = scope.document
+							const expectedElement = scope.document
 								.getElementById('c')
 
 							if (environment === 'jsdom')
@@ -557,9 +558,9 @@
 
 						assert.ifError(error)
 
-						var expectedString = '<p id="foo" class="bar baz"></p>',
-						    element = scope.shaven(['p.bar#foo.baz'])[0],
-							expectedElement
+						const expectedString = '<p id="foo" class="bar baz">' +
+							'</p>'
+						const element = scope.shaven(['p.bar#foo.baz'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, expectedString)
@@ -569,7 +570,7 @@
 								.getElementById('test')
 								.innerHTML = expectedString
 
-							expectedElement = scope.document
+							const expectedElement = scope.document
 								.getElementById('foo')
 
 							if (environment === 'jsdom')
@@ -598,16 +599,15 @@
 
 					assert.ifError(error)
 
-					var called = false,
-					    element = false,
-					    shavenObject
+					let called = false
+					let element = false
 
 					function foo (el) {
 						called = true
 						element = el
 					}
 
-					shavenObject = scope.shaven(['p#bar', foo])
+					const shavenObject = scope.shaven(['p#bar', foo])
 
 					assert(called)
 					assert.strictEqual(element, shavenObject[0])
@@ -622,7 +622,7 @@
 
 					assert.ifError(error)
 
-					var shavenObject = scope.shaven(['p'])
+					const shavenObject = scope.shaven(['p'])
 
 					assert(typeof shavenObject === 'object')
 					assert.notStrictEqual(shavenObject.nodeType, 1)
@@ -637,7 +637,7 @@
 
 					assert.ifError(error)
 
-					var shavenObject = scope.shaven(['p'])
+					const shavenObject = scope.shaven(['p'])
 
 					if (environment !== 'nodejs')
 						assert.strictEqual(shavenObject[0].nodeType, 1)
@@ -655,11 +655,11 @@
 
 					assert.ifError(error)
 
-					var html = '<p>Some <strong>HTML</strong></p>',
-						escapedHtml = '&lt;p&gt;Some ' +
-							'&lt;strong&gt;HTML&lt;/strong&gt;' +
-							'&lt;/p&gt;',
-					    element = scope.shaven(['div', html])[0]
+					const html = '<p>Some <strong>HTML</strong></p>'
+					const escapedHtml = '&lt;p&gt;Some ' +
+						'&lt;strong&gt;HTML&lt;/strong&gt;' +
+						'&lt;/p&gt;'
+					const element = scope.shaven(['div', html])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(
@@ -677,8 +677,8 @@
 				testInEnv(null, function (error, scope) {
 					assert.ifError(error)
 
-					var html = '<p title="0">Test</p>',
-						element = scope.shaven(['p', 'Test', {title: 0}])[0]
+					const html = '<p title="0">Test</p>'
+					const element = scope.shaven(['p', 'Test', {title: 0}])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, html)
@@ -696,19 +696,19 @@
 
 					assert.ifError(error)
 
-					var escapedHtml =
-							'<p ' +
-							'title="&quot; &amp;" ' +
-							'lang="\' < >"' +
-							'>' +
-							'Test' +
-							'</p>',
-						element = scope.shaven(
-							['p', 'Test', {
-								title: '" &',
-								lang: '\' < >'
-							}]
-						)[0]
+					const escapedHtml =
+						'<p ' +
+						'title="&quot; &amp;" ' +
+						'lang="\' < >"' +
+						'>' +
+						'Test' +
+						'</p>'
+					const element = scope.shaven(
+						['p', 'Test', {
+							title: '" &',
+							lang: '\' < >'
+						}]
+					)[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, escapedHtml)
@@ -726,8 +726,8 @@
 
 					assert.ifError(error)
 
-					var html = '<p>Some <strong>HTML</strong></p>',
-					    element = scope.shaven(['div&', html])[0]
+					const html = '<p>Some <strong>HTML</strong></p>'
+					const element = scope.shaven(['div&', html])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, '<div>' + html + '</div>')
@@ -745,22 +745,22 @@
 
 					assert.ifError(error)
 
-					var html = '<p>Numbers: ' +
-							'<span>1</span>' +
-							'<span>2</span>' +
-							'<span>3</span>' +
-							'<span>4</span>' +
-							'<span>5</span>' +
-							'</p>',
-						element = scope.shaven(['p', 'Numbers: ', [
-							['span', '1'],
-							['span', '2'],
-							['span', '3'],
-							[
-								['span', '4'],
-								['span', '5']
-							]
-						]])[0]
+					const html = '<p>Numbers: ' +
+						'<span>1</span>' +
+						'<span>2</span>' +
+						'<span>3</span>' +
+						'<span>4</span>' +
+						'<span>5</span>' +
+						'</p>'
+					const element = scope.shaven(['p', 'Numbers: ', [
+						['span', '1'],
+						['span', '2'],
+						['span', '3'],
+						[
+							['span', '4'],
+							['span', '5']
+						]
+					]])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, html)
@@ -777,18 +777,18 @@
 
 					assert.ifError(error)
 
-					var html = '<p>Numbers: ' +
-							'<span>1</span>' +
-							'<span>2</span>' +
-							'<span>3</span>' +
-							'</p>',
-						element = scope.shaven(['p', 'Numbers: ', [
-							[
-								['span', '1'],
-								['span', '2'],
-								['span', '3']
-							]
-						]])[0]
+					const html = '<p>Numbers: ' +
+						'<span>1</span>' +
+						'<span>2</span>' +
+						'<span>3</span>' +
+						'</p>'
+					const element = scope.shaven(['p', 'Numbers: ', [
+						[
+							['span', '1'],
+							['span', '2'],
+							['span', '3']
+						]
+					]])[0]
 
 					if (environment === 'nodejs')
 						assert.strictEqual(element, html)
@@ -803,7 +803,8 @@
 
 				testInEnv(null, function (error, scope) {
 
-					var regexString = '.*first element.*must be.*string.*array.*'
+					const regexString = '.*first ' +
+						'element.*must be.*string.*array.*'
 
 					assert.ifError(error)
 
@@ -832,32 +833,31 @@
 
 					assert.ifError(error)
 
-					var expectedString = '' +
-					        '<svg id="svg" height="10" width="10">' +
-					            '<circle class="top" cx="5" cy="5" r="5" ' +
-					                'style="fill:green">' +
-					            '</circle>' +
-					        '</svg>',
-					    array = [
-					        'svg#svg', {
-					            height: 10,
-					            width: 10},
-					            ['circle.top', {
-					                cx: 5,
-					                cy: 5,
-					                r: 5,
-					                style: 'fill:green'
-					            }]
-					        ],
-					    svgElement,
-					    expectedElement
+					const expectedString = '' +
+						'<svg id="svg" height="10" width="10">' +
+							'<circle class="top" cx="5" cy="5" r="5" ' +
+								'style="fill:green">' +
+							'</circle>' +
+						'</svg>'
+					const array = ['svg#svg',
+						{
+							height: 10,
+							width: 10
+						},
+						['circle.top', {
+							cx: 5,
+							cy: 5,
+							r: 5,
+							style: 'fill:green'
+						}]
+					]
 
 
 					if (environment === 'nodejs')
 						assert.strictEqual(shaven(array)[0], expectedString)
 
 					else {
-						svgElement = window.shaven(
+						const svgElement = window.shaven(
 							array,
 							'http://www.w3.org/2000/svg'
 						)[0]
@@ -866,7 +866,7 @@
 							.getElementById('test')
 							.innerHTML = expectedString
 
-						expectedElement = window.document
+						const expectedElement = window.document
 							.getElementById('svg')
 
 						if (environment === 'jsdom')
@@ -894,34 +894,31 @@
 
 					assert.ifError(error)
 
-					var expectedString = '' +
-					        '<svg height="10" width="10" id="svg">' +
-					            '<circle class="top" cx="5" cy="5" r="5" ' +
-					                'style="fill:green">' +
-					            '</circle>' +
-					        '</svg>',
-					    array = [
-					        'svg#svg', {
-					            height: 10,
-					            width: 10},
-					            ['circle.top', {
-					                cx: 5,
-					                cy: 5,
-					                r: 5,
-					                style: 'fill:green'
-					            }]
-					        ],
-					    svgElement,
-					    expectedElement,
-						areEqual
-
-					svgElement = window.shaven(array)[0]
+					const expectedString = '' +
+						'<svg height="10" width="10" id="svg">' +
+							'<circle class="top" cx="5" cy="5" r="5" ' +
+								'style="fill:green">' +
+							'</circle>' +
+						'</svg>'
+					const array = ['svg#svg',
+						{
+							height: 10,
+							width: 10
+						},
+						['circle.top', {
+							cx: 5,
+							cy: 5,
+							r: 5,
+							style: 'fill:green'
+						}]
+					]
+					const svgElement = window.shaven(array)[0]
 
 					window.document
 						.getElementById('test')
 						.innerHTML = expectedString
 
-					expectedElement = window.document
+					const expectedElement = window.document
 						.getElementById('svg')
 
 					sortElementAttributes(svgElement)
@@ -929,7 +926,7 @@
 					sortElementAttributes(expectedElement)
 					sortElementAttributes(expectedElement.firstChild)
 
-					areEqual = svgElement.isEqualNode(expectedElement)
+					const areEqual = svgElement.isEqualNode(expectedElement)
 
 					assert(
 						(svgElement.outerHTML === expectedElement.outerHTML) &&
@@ -954,12 +951,15 @@
 
 						assert.ifError(error)
 
-						var element = scope.shaven(['div'])[0]
+						const element = scope.shaven(['div'])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, '<div></div>')
 						else
-							assert.strictEqual(element.outerHTML, '<div></div>')
+							assert.strictEqual(
+								element.outerHTML,
+								'<div></div>'
+							)
 
 						done()
 					})
@@ -972,12 +972,15 @@
 
 						assert.ifError(error)
 
-						var element = scope.shaven(['div', undefined])[0]
+						const element = scope.shaven(['div', undefined])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, '<div></div>')
 						else
-							assert.strictEqual(element.outerHTML, '<div></div>')
+							assert.strictEqual(
+								element.outerHTML,
+								'<div></div>'
+							)
 						done()
 					})
 				})
@@ -989,7 +992,7 @@
 
 						assert.ifError(error)
 
-						var element = scope.shaven(['div', ['p', false]])[0]
+						const element = scope.shaven(['div', ['p', false]])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, '<div></div>')
@@ -1007,7 +1010,7 @@
 
 						assert.ifError(error)
 
-						var element = scope.shaven(['div', ['p', null]])[0]
+						const element = scope.shaven(['div', ['p', null]])[0]
 
 						if (environment === 'nodejs')
 							assert.strictEqual(element, '<div></div>')
@@ -1024,16 +1027,16 @@
 
 	if (isBrowser) {
 
-		assert = window.assert
+		var assert = window.assert
 
 		runTestSuite('browser')
 	}
 	else {
 
-		path = require('path')
-		assert = require('assert')
-		jsdom = require('jsdom')
-		shaven = require('../src/index.js')
+		var path = require('path')
+		var assert = require('assert')
+		var jsdom = require('jsdom')
+		var shaven = require('../src/index.js')
 
 		runTestSuite('nodejs')
 		runTestSuite('jsdom')

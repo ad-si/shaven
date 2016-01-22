@@ -2,17 +2,16 @@
 
 	'use strict'
 
-	var textareas,
-	    editors = []
-
+	var editors = []
+	var textareas
 
 	function fixIndentation (string) {
 
 		// Remove leading tabs and last newline character
 
-		var numberOfTabs,
-		    matches,
-		    sortedString
+		var numberOfTabs
+		var matches
+		var sortedString
 
 		sortedString = string.split('\n').sort()
 		matches = sortedString[sortedString.length - 1].match(/^\s*/)
@@ -49,23 +48,23 @@
 
 	CodeMirror.defineExtension('autoFormat', function () {
 
-		var cm = this,
-		    totalLines = cm.lineCount(),
-		    totalChars = cm.getValue().length,
-		    from = {line: 0, ch: 0},
-		    to = {line: totalLines, ch: totalChars},
-		    outer = cm.getMode(),
-		    text = cm.getRange(from, to).split('\n'),
-		    state = CodeMirror.copyState(outer, cm.getTokenAt(from).state),
-		    tabSize = cm.getOption('tabSize'),
-		    out = '',
-		    lines = 0,
-		    atSol = from.ch === 0,
-		    i,
-		    stream,
-		    inner,
-		    style,
-		    cur
+		var cm = this
+		var totalLines = cm.lineCount()
+		var totalChars = cm.getValue().length
+		var from = {line: 0, ch: 0}
+		var to = {line: totalLines, ch: totalChars}
+		var outer = cm.getMode()
+		var text = cm.getRange(from, to).split('\n')
+		var state = CodeMirror.copyState(outer, cm.getTokenAt(from).state)
+		var tabSize = cm.getOption('tabSize')
+		var out = ''
+		var lines = 0
+		var atSol = from.ch === 0
+		var i
+		var stream
+		var inner
+		var style
+		var cur
 
 		function newline () {
 			out += '\n'
@@ -91,9 +90,9 @@
 				}
 
 				if (!atSol && inner.mode.newlineAfterToken &&
-				    inner.mode.newlineAfterToken(style, cur,
-						    stream.string.slice(stream.pos) ||
-						    text[i + 1] || '', inner.state)
+					inner.mode.newlineAfterToken(style, cur,
+							stream.string.slice(stream.pos) ||
+							text[i + 1] || '', inner.state)
 					)
 					newline()
 			}
@@ -108,7 +107,10 @@
 
 			cm.replaceRange(out, from, to)
 
-			for (var cur = from.line + 1, end = from.line + lines; cur <= end; ++cur)
+			cur = from.line + 1
+			end = from.line + lines
+
+			for (; cur <= end; ++cur)
 				cm.indentLine(cur, 'smart')
 
 			//cm.setSelection(from, cm.getCursor(false))
@@ -126,16 +128,16 @@
 		if (element.dataset.lang === 'js')
 			element.dataset.lang = 'javascript'
 
-		var isReadOnly = element.getAttribute('readonly') !== null,
-		    editor = {
-			    id: element.getAttribute('id'),
-			    inputId: element.dataset.input,
-			    isReadOnly: isReadOnly,
-			    cm: CodeMirror.fromTextArea(element, {
-				    readOnly: isReadOnly,
-				    mode: element.dataset.lang || 'text'
-			    })
-		    }
+		var isReadOnly = element.getAttribute('readonly') !== null
+		var editor = {
+			id: element.getAttribute('id'),
+			inputId: element.dataset.input,
+			isReadOnly: isReadOnly,
+			cm: CodeMirror.fromTextArea(element, {
+				readOnly: isReadOnly,
+				mode: element.dataset.lang || 'text'
+			})
+		}
 
 		editors.push(editor)
 

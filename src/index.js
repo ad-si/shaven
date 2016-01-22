@@ -6,12 +6,12 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	'use strict'
 
-	var i = 1,
-		doesEscape = true,
-		HTMLString,
-		attributeKey,
-		callback,
-		key
+	var i = 1
+	var doesEscape = true
+	var HTMLString
+	var attributeKey
+	var callback
+	var key
 
 
 	returnObject = returnObject || {}
@@ -19,15 +19,15 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	function createElement (sugarString) {
 
-		var tags = sugarString.match(/^[\w-]+/),
-			element = {
-				tag: tags ? tags[0] : 'div',
-				attr: {},
-				children: []
-			},
-			id = sugarString.match(/#([\w-]+)/),
-			reference = sugarString.match(/\$([\w-]+)/),
-			classNames = sugarString.match(/\.[\w-]+/g)
+		var tags = sugarString.match(/^[\w-]+/)
+		var element = {
+			tag: tags ? tags[0] : 'div',
+			attr: {},
+			children: []
+		}
+		var id = sugarString.match(/#([\w-]+)/)
+		var reference = sugarString.match(/\$([\w-]+)/)
+		var classNames = sugarString.match(/\.[\w-]+/g)
 
 
 		// Assign id if is set
