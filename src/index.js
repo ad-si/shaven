@@ -62,9 +62,11 @@ module.exports = function shaven (array, namespace, returnObject) {
 	}
 
 	function escapeAttribute (string) {
-		return String(string)
-			.replace(/&/g, '&amp;')
-			.replace(/"/g, '&quot;')
+		return (string || string === 0) ?
+			String(string)
+				.replace(/&/g, '&amp;')
+				.replace(/"/g, '&quot;') :
+			''
 	}
 
 	function escapeHTML (string) {
@@ -167,7 +169,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 		for (key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
 				HTMLString += ' ' + key + '="' +
-					escapeAttribute(array[0].attr[key] || '') + '"'
+					escapeAttribute(array[0].attr[key]) + '"'
 
 		HTMLString += '>'
 

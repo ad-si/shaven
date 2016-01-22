@@ -653,6 +653,22 @@
 				})
 			})
 
+			it('sets attribute to 0', function (done) {
+				testInEnv(null, function (error, scope) {
+					assert.ifError(error)
+
+					var html = '<p title="0">Test</p>',
+						element = scope.shaven(['p', 'Test', {title: 0}])[0]
+
+					if (environment === 'nodejs')
+						assert.strictEqual(element, html)
+					else
+						assert.strictEqual(element.outerHTML, html)
+
+					done()
+				})
+			})
+
 
 			it('escapes html strings in attributes', function (done) {
 
