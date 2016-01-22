@@ -268,17 +268,11 @@ function runTestSuite (environment) {
 					const expectedElement = scope.document
 						.getElementById('foo')
 
-					if (environment === 'jsdom')
-						assert.strictEqual(
-							actual.outerHTML,
+					assert(
+						actual.isEqualNode(expectedElement),
+						'\n' + actual.outerHTML + '\nshould equal\n' +
 							expectedElement.outerHTML
-						)
-					else
-						assert(
-							actual.isEqualNode(expectedElement),
-							'\n' + actual.outerHTML + '\nshould equal\n' +
-								expectedElement.outerHTML
-						)
+					)
 				}
 
 				done()
@@ -316,17 +310,11 @@ function runTestSuite (environment) {
 					const expectedElement = scope.document
 						.getElementsByTagName('p')[0]
 
-					if (environment === 'jsdom')
-						assert.strictEqual(
-							actual.outerHTML,
+					assert(
+						actual.isEqualNode(expectedElement),
+						'\n' + actual.outerHTML + '\nshould equal\n' +
 							expectedElement.outerHTML
-						)
-					else
-						assert(
-							actual.isEqualNode(expectedElement),
-							'\n' + actual.outerHTML + '\nshould equal\n' +
-								expectedElement.outerHTML
-						)
+					)
 				}
 
 				done()
@@ -497,18 +485,12 @@ function runTestSuite (environment) {
 						const expectedElement = scope.document
 							.getElementById('b')
 
-						if (environment === 'jsdom')
-							assert.strictEqual(
-								element.outerHTML,
-								expectedElement.outerHTML
-							)
-						else
-							assert(
-								element.isEqualNode(expectedElement),
-								element.outerHTML +
-								'\nshould be equal to\n' +
-								expectedElement.outerHTML
-							)
+						assert(
+							element.isEqualNode(expectedElement),
+							element.outerHTML +
+							'\nshould be equal to\n' +
+							expectedElement.outerHTML
+						)
 					}
 
 					done()
@@ -536,18 +518,12 @@ function runTestSuite (environment) {
 						const expectedElement = scope.document
 							.getElementById('c')
 
-						if (environment === 'jsdom')
-							assert.strictEqual(
-								element.outerHTML,
-								expectedElement.outerHTML
-							)
-						else
-							assert(
-								element.isEqualNode(expectedElement),
-								element.outerHTML +
-								'\nshould to be equal to\n' +
-								expectedElement.outerHTML
-							)
+						assert(
+							element.isEqualNode(expectedElement),
+							element.outerHTML +
+							'\nshould to be equal to\n' +
+							expectedElement.outerHTML
+						)
 					}
 					done()
 				})
@@ -575,18 +551,12 @@ function runTestSuite (environment) {
 						const expectedElement = scope.document
 							.getElementById('foo')
 
-						if (environment === 'jsdom')
-							assert.strictEqual(
-								element.outerHTML,
-								expectedElement.outerHTML
-							)
-						else
-							assert(
-								element.isEqualNode(expectedElement),
-								element.outerHTML +
-								'\nshould to be equal to\n' +
-								expectedElement.outerHTML
-							)
+						assert(
+							element.isEqualNode(expectedElement),
+							element.outerHTML +
+							'\nshould to be equal to\n' +
+							expectedElement.outerHTML
+						)
 					}
 
 					done()
@@ -874,18 +844,12 @@ function runTestSuite (environment) {
 					const expectedElement = window.document
 						.getElementById('svg')
 
-					if (environment === 'jsdom')
-						assert.strictEqual(
-							svgElement.outerHTML,
-							expectedElement.outerHTML
-						)
-					else
-						assert(
-							svgElement.isEqualNode(expectedElement),
-							'\n' + svgElement.outerHTML +
-							'\nshould equal\n' +
-							expectedElement.outerHTML
-						)
+					assert(
+						svgElement.isEqualNode(expectedElement),
+						'\n' + svgElement.outerHTML +
+						'\nshould equal\n' +
+						expectedElement.outerHTML
+					)
 				}
 
 				done()
