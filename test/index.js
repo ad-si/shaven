@@ -112,6 +112,26 @@
 				})
 
 
+				it('supports hyphens in html tags', function (done) {
+
+					testInEnv('<div id="test"></div>', function (error, window) {
+						assert.ifError(error)
+
+						var expected = '<div id="test">' +
+						    '<foo-bar></foo-bar>' +
+						    '</div>',
+						    element = window.shaven(['foo-bar'])[0],
+						    actual = window.shaven(
+							    [getById('test', window), element]
+						    )[0].outerHTML
+
+						assert.strictEqual(actual, expected, actual)
+
+						done()
+					})
+				})
+
+
 				it('returns a shaven object with element-ids as keys', function (done) {
 
 					testInEnv('<div id="test"></div>', function (error, window) {

@@ -19,7 +19,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	function createElement (sugarString) {
 
-		var tags = sugarString.match(/^\w+/),
+		var tags = sugarString.match(/^[\w-]+/),
 			element = {
 				tag: tags ? tags[0] : 'div',
 				attr: {},

@@ -24,7 +24,7 @@ window.shaven = function dom (array, namespace, returnObject) {
 	// Create DOM element from syntax sugar string
 	function createElement (sugarString) {
 
-		var tags = sugarString.match(/^\w+/),
+		var tags = sugarString.match(/^[\w-]+/),
 			tag = tags ? tags[0] : 'div',
 			element = doc.createElementNS(namespace, tag),
 			id = sugarString.match(/#([\w-]+)/),
