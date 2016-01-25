@@ -86,5 +86,9 @@ All code changes must be made in the server and browser version of shaven (`src/
 - Tests: `$ npm test`
 - Build: `$ npm run build`
 - Execute `$ npm run prepublish` before each commit
-- Make extra commits for version bumps (use `$ npm version major|minor|patch|`)
+- Bump version
+	1. Change version number in package file ([semver](http://semver.org))
+	2. Execute `npm run prepublish`
+	3. Commit
+	4. Tag commit (`v<version>`)
 - Publish to npm `$ npm publish`
