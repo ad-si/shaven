@@ -12,6 +12,10 @@ module.exports = function shaven (array, namespace, returnObject) {
 	var attributeKey
 	var callback
 	var key
+	var selfClosingTags = [
+		'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
+		'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'
+	]
 
 
 	returnObject = returnObject || {}
@@ -171,13 +175,18 @@ module.exports = function shaven (array, namespace, returnObject) {
 				HTMLString += ' ' + key + '="' +
 					escapeAttribute(array[0].attr[key]) + '"'
 
-		HTMLString += '>'
+		if (selfClosingTags.indexOf(array[0].tag) !== -1)
+			HTMLString += ' />'
 
-		array[0].children.forEach(function (child) {
-			HTMLString += child
-		})
+		else {
+			HTMLString += '>'
 
-		HTMLString += '</' + array[0].tag + '>'
+			array[0].children.forEach(function (child) {
+				HTMLString += child
+			})
+
+			HTMLString += '</' + array[0].tag + '>'
+		}
 
 		array[0] = HTMLString
 	}
