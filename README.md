@@ -81,7 +81,8 @@ under normal circumstances.
 
 ## Development
 
-All code changes must be made in the server and browser version of shaven (`src/index.js` and `src/shaven.js`)
+All code changes must be made in the server and browser version of shaven
+(`source/index.js` and `source/shaven.js`)
 
 - Tests: `$ npm test`
 - Build: `$ npm run build`

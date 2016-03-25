@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/adius/shaven/issues"
   },
-  "license": "MIT",
+  "license": "ISC",
   "author": {
     "name": "adius",
     "email": "mail@adriansieber.com",
@@ -22,10 +22,10 @@
     "url": "https://github.com/adius/shaven.git"
   },
   "scripts": {
-    "start": "stylus -u nib --watch --out ./css styl",
+    "start": "stylus -u nib --watch public/styles",
     "test": "mocha -b --full-trace --inline-diffs -R spec",
     "build": "jake -f ./jakefile -B",
-    "prepublish": "npm run-script build && npm test && jscs ."
+    "prepublish": "npm run build && npm test && jscs ."
   },
   "dependencies": {
     "escape-html": "~1.0.1"

@@ -1,15 +1,15 @@
-var fs = require('fs'),
-	uglify = require('uglify-js'),
+'use strict'
 
-	packageData = require('./package.json')
+const fs = require('fs')
+const uglify = require('uglify-js')
+
+const packageData = require('./package.json')
 
 
 function buildMinifiedJs (string) {
 
-	var ast,
-		compressor = uglify.Compressor()
-
-	ast = uglify.parse(string)
+	const compressor = uglify.Compressor()
+	const ast = uglify.parse(string)
 
 	ast.figure_out_scope()
 	ast.transform(compressor)
@@ -25,9 +25,9 @@ desc('Default build process')
 task(
 	'default',
 	[
-		'shaven.js',
-		'shaven.min.js',
-		'index.html'
+		'build/shaven.js',
+		'build/shaven.min.js',
+		'public/index.html'
 	],
 	function () {
 	}
@@ -35,70 +35,77 @@ task(
 
 
 desc('Compile shaven.js')
-file('shaven.js', ['src/shaven.js', 'package.json'], {async: true}, function () {
+file(
+	'build/shaven.js',
+	['source/shaven.js', 'package.json'],
+	{async: true},
+	function () {
 
-	var jsString = fs.readFileSync('src/shaven.js').toString(),
-		file = fs.openSync('shaven.js', 'w+')
+		const fileName = this.name
+		const jsString = fs
+			.readFileSync('source/shaven.js', 'utf-8')
+			.replace('{{ VERSION }}', packageData.version)
+		const file = fs.openSync(fileName, 'w+')
 
-	jsString = jsString.replace('{{ VERSION }}', packageData.version)
+		fs.write(file, jsString, undefined, undefined, () => {
+			console.log(`Building ${fileName} succeeded`)
+		})
 
-	fs.write(file, jsString, undefined, undefined, function () {
-		console.log('Building shaven.js succeeded')
-	})
-
-	complete()
-})
+		complete()
+	}
+)
 
 
 desc('Compile shaven.min.js')
-file('shaven.min.js', ['src/shaven.js', 'package.json'], {async: true}, function () {
+file(
+	'build/shaven.min.js',
+	['source/shaven.js', 'package.json'],
+	{async: true},
+	function () {
 
-	var jsString = fs.readFileSync('src/shaven.js').toString(),
-		file = fs.openSync('shaven.min.js', 'w+')
+		const fileName = this.name
+		const jsString = fs.readFileSync('source/shaven.js', 'utf-8')
+		const minifiedJsString = buildMinifiedJs(
+			jsString.replace('{{ VERSION }}', packageData.version)
+		)
+		const file = fs.openSync(fileName, 'w+')
 
-	jsString = buildMinifiedJs(jsString.replace('{{ VERSION }}', packageData.version))
+		fs.write(file, jsString, undefined, undefined, () => {
+			console.log(`Building ${fileName} succeeded`)
+		})
 
-	fs.write(file, jsString, undefined, undefined, function () {
-		console.log('Building shaven.min.js succeeded')
-	})
-
-	complete()
-})
+		complete()
+	}
+)
 
 
 desc('Compile index.html')
-file('index.html', ['package.json'], {async: true}, function () {
+file('public/index.html', ['package.json'], {async: true}, function () {
 
-	var fileName = this.name,
-		data
-
-	data = fs.readFileSync(fileName, {encoding: 'utf8'})
-
-	data = data.replace(/Version [\.0-9]+/g, 'Version ' + packageData.version)
+	const fileName = this.name
+	const data = fs
+		.readFileSync(fileName, 'utf-8')
+		.replace(/Version [\.0-9]+/g, `Version ${packageData.version}`)
 
 	fs.writeFileSync(fileName, data)
 
-	console.log('Building ' + fileName + ' succeeded')
+	console.log(`Building ${fileName} succeeded`)
 
 	complete()
 })
 
 
 desc('Remove compiled files')
-task('clean', [], {async: true}, function () {
+task('clean', [], {async: true}, () => {
 
-	var files = [
-		'shaven.js',
-		'shaven.min.js'
+	const files = [
+		'build/shaven.js',
+		'build/shaven.min.js'
 	]
 
-	files.forEach(function (file) {
-		fs.exists(file, function (exists) {
-
-			if (exists)
-				fs.unlink(file, function (err) {
-					if (err) console.log(err)
-				})
+	files.forEach(file => {
+		fs.unlink(file, error => {
+			if (error) console.error(error)
 		})
 	})
 

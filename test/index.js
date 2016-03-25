@@ -47,7 +47,7 @@ function runTestSuite (environment) {
 		else if (environment === 'jsdom')
 			jsdom.env({
 				html: html,
-				scripts: path.resolve('src/shaven.js'),
+				scripts: path.resolve('source/shaven.js'),
 				done: callback
 			})
 
@@ -1010,7 +1010,7 @@ else {
 	path = require('path')
 	assert = require('assert')
 	jsdom = require('jsdom')
-	shaven = require('../src/index.js')
+	shaven = require('../source/index.js')
 
 	runTestSuite('nodejs')
 	runTestSuite('jsdom')
