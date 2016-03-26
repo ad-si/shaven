@@ -14,21 +14,28 @@ module.exports = [
 		}
 	},
 	{
-		entry: './source/scripts/browser.js',
+		entry: './source/library/browser.js',
 		output: {
 			path: __dirname + '/build',
 			filename: 'shaven.js',
 		}
 	},
+	// TODO: Re-enable when ava is webpack compatible
 	// {
-	// 	entry: './test/index.js',
+	// 	entry: './test/main.js',
 	// 	output: {
-	// 		path: './test',
+	// 		path: __dirname + '/test',
 	// 		filename: 'bundle.js'
 	// 	},
 	// 	module: {
 	// 		loaders: [
-	// 			{ test: /\.js$/, loader: 'mocha' },
+	// 			{
+	// 				test: /\.js$/,
+	// 				loader: 'babel',
+	// 				query: {
+	// 					presets: ['es2015']
+	// 				},
+	// 			}
 	// 		]
 	// 	}
 	// }

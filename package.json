@@ -17,8 +17,8 @@
     "email": "mail@adriansieber.com",
     "url": "http://adriansieber.com"
   },
-  "main": "source/scripts/server",
-  "browser": "build/scripts/browser",
+  "main": "source/library/server",
+  "browser": "source/library/browser",
   "repository": {
     "type": "git",
     "url": "https://github.com/adius/shaven.git"
@@ -28,20 +28,28 @@
     "buildImages": "cp -r source/images build/images",
     "buildHTML": "mustache ./package.json source/templates/index.mustache > build/index.html",
     "build": "rm -rf build && npm run buildBundle && npm run buildImages && npm run buildHTML",
-    "test": "npm run build && mocha -b --full-trace --inline-diffs -R spec",
+    "test": "ava --require babel-register test/core.js test/jsdom.js",
     "prepublish": "npm test && jscs source"
+  },
+  "ava": {
+    "babel": "inherit"
   },
   "dependencies": {
     "escape-html": "~1.0.1"
   },
   "devDependencies": {
+    "ava": "^0.13.0",
+    "babel": "^6.5.2",
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-register": "^6.7.2",
     "brace": "^0.7.0",
     "css-loader": "^0.23.1",
     "jscs": "^2.8.0",
     "jsdom": "^8.1.0",
     "jshint": "^2.9.1",
     "json-loader": "^0.5.4",
-    "mocha": "^2.3.3",
     "mustache": "^2.2.1",
     "style-loader": "^0.13.1",
     "stylus-loader": "^1.5.1",

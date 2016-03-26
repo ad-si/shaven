@@ -23250,7 +23250,7 @@
 	// array: Array containing the DOM fragment in JsonML
 	// returnObject: Contains elements identified by their id
 
-	window.shaven = function dom (array, namespace, returnObject) {
+	module.exports = function dom (array, namespace, returnObject) {
 
 		'use strict'
 

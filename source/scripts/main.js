@@ -7,7 +7,7 @@ require('../styles/screen.styl')
 // TODO: Load fonts with webpack
 // require('https://fonts.googleapis.com/css?family=Grand+Hotel')
 
-const shaven = require('./browser')
+const shaven = require('../library/browser')
 const fixIndentation = require('./fixIndentation.js')
 
 Array
