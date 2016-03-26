@@ -5,72 +5,50 @@
   "homepage": "http://adriansieber.com/shaven",
   "keywords": [
     "template",
-    "DOM building"
+    "DOM building",
+    "JsonML"
   ],
   "bugs": {
     "url": "https://github.com/adius/shaven/issues"
   },
   "license": "ISC",
   "author": {
-    "name": "adius",
+    "name": "Adrian Sieber",
     "email": "mail@adriansieber.com",
     "url": "http://adriansieber.com"
   },
-  "main": "src/index.js",
+  "main": "source/scripts/server",
+  "browser": "build/scripts/browser",
   "repository": {
     "type": "git",
     "url": "https://github.com/adius/shaven.git"
   },
   "scripts": {
-    "start": "stylus -u nib --watch public/styles",
-    "test": "mocha -b --full-trace --inline-diffs -R spec",
-    "build": "jake -f ./jakefile -B",
-    "prepublish": "npm run build && npm test && jscs ."
+    "buildBundle": "webpack",
+    "buildImages": "cp -r source/images build/images",
+    "buildHTML": "mustache ./package.json source/templates/index.mustache > build/index.html",
+    "build": "rm -rf build && npm run buildBundle && npm run buildImages && npm run buildHTML",
+    "test": "npm run build && mocha -b --full-trace --inline-diffs -R spec",
+    "prepublish": "npm test && jscs source"
   },
   "dependencies": {
     "escape-html": "~1.0.1"
   },
   "devDependencies": {
-    "jake": "^8.0.10",
-    "js-yaml": "^3.3.0",
+    "brace": "^0.7.0",
+    "css-loader": "^0.23.1",
     "jscs": "^2.8.0",
-    "jsdom": "^7.2.2",
-    "jshint": "^2.7.0",
+    "jsdom": "^8.1.0",
+    "jshint": "^2.9.1",
+    "json-loader": "^0.5.4",
     "mocha": "^2.3.3",
-    "nib": "^1.1.0",
-    "stylus": "^0.51.1",
-    "uglify-js": "^2.4.13"
+    "mustache": "^2.2.1",
+    "style-loader": "^0.13.1",
+    "stylus-loader": "^1.5.1",
+    "webpack": "^1.12.14"
   },
   "engines": {
     "node": "~0.12.2"
-  },
-  "jshintConfig": {
-    "bitwise": true,
-    "camelcase": true,
-    "curly": false,
-    "eqeqeq": true,
-    "es3": false,
-    "forin": true,
-    "freeze": true,
-    "immed": true,
-    "indent": 4,
-    "latedef": true,
-    "newcap": true,
-    "noarg": true,
-    "noempty": true,
-    "nonbsp": true,
-    "nonew": true,
-    "plusplus": false,
-    "quotmark": "single",
-    "undef": true,
-    "unused": true,
-    "strict": true,
-    "trailing": true,
-    "maxparams": 3,
-    "maxdepth": 4,
-    "maxstatements": 10,
-    "maxlen": 100,
-    "asi": true
   },
   "jscsConfig": {
     "excludeFiles": [
