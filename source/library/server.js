@@ -12,7 +12,10 @@ module.exports = function shaven (array, namespace, returnObject) {
 	let callback
 
 
-	returnObject = returnObject || {}
+	returnObject = returnObject || {
+		ids: {},
+		references: {},
+	}
 
 	function createElement (sugarString) {
 		const properties = parseSugarString(sugarString)
@@ -24,13 +27,22 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 		if (properties.id) {
 			element.attr.id = properties.id
-			returnObject[properties.id] = element
+			console.assert(
+				!returnObject.ids.hasOwnProperty(properties.id),
+				`Ids must be unique and "${properties.id}" is already assigned`
+			)
+			returnObject.ids[properties.id] = element
 		}
 		if (properties.class) {
 			element.attr.class = properties.class
 		}
 		if (properties.reference) {
-			returnObject[properties.reference] = element
+			console.assert(
+				!returnObject.ids.hasOwnProperty(properties.reference),
+				`References must be unique and "${properties.id
+					}" is already assigned`
+			)
+			returnObject.references[properties.reference] = element
 		}
 
 		escapeHTML = properties.escapeHTML

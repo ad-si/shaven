@@ -1,11 +1,8 @@
 'use strict'
 
 import it from 'ava'
-import shaven from '..'
 
-let document = document || null
-
-if (document) {
+if (global.document) {
 	it.beforeEach(() => {
 		const container = document.createElement('div')
 		container.id = 'test'
@@ -58,15 +55,14 @@ it('builds elements recursively', (test) => {
 
 
 it('is possible to set properties', (test) => {
-	const expectedString = '<p id="foo" ' +
-		'class="bar" data-info="baz"></p>'
+	const expectedString = '<p id="foo" class="bar" data-info="baz"></p>'
 	let actual = shaven(
 		['p', {
 			id: 'foo',
 			class: 'bar',  // class is restricted word
 			'data-info': 'baz' // attribute with dash
 		}]
-	)[0]
+	).rootElement
 
 	if (typeof actual === 'string') {
 		test.is(actual, expectedString)
@@ -298,6 +294,17 @@ it('returns a shaven object and not an html element/string', (test) => {
 	test.not(shavenObject.nodeType, 1)
 })
 
+it('links ids and references', (test) => {
+	const shavenObject = shaven(['ul',
+		['li#first', 'First'],
+		['li$second', 'Second']
+	])
+
+	if (typeof shavenObject.rootElement !== 'string') {
+		test.is(shavenObject.ids.first.outerHTML, '<li id="first">First</li>')
+		test.is(shavenObject.references.second.outerHTML, '<li>Second</li>')
+	}
+})
 
 it('returns the root html element by referencing [0]', (test) => {
 	const shavenObject = shaven(['p'])
@@ -457,8 +464,7 @@ it('throws an error for an invalid array', (test) => {
 it('works with SVGs', (test) => {
 	const expectedString = '' +
 		'<svg id="svg" height="10" width="10">' +
-			'<circle class="top" cx="5" cy="5" r="5" ' +
-				'style="fill:green">' +
+			'<circle class="top" cx="5" cy="5" r="5" style="fill:green">' +
 			'</circle>' +
 		'</svg>'
 	const array = ['svg#svg',
@@ -473,15 +479,12 @@ it('works with SVGs', (test) => {
 			style: 'fill:green'
 		}]
 	]
-	const element = shaven(array)[0]
+	const svgElement = shaven(array, 'http://www.w3.org/2000/svg').rootElement
 
-
-	if (typeof element === 'string') {
-		test.is(element, expectedString)
+	if (typeof svgElement === 'string') {
+		test.is(svgElement, expectedString)
 	}
 	else {
-		const svgElement = shaven(array, 'http://www.w3.org/2000/svg')[0]
-
 		document.getElementById('test').innerHTML = expectedString
 
 		const expectedElement = document.getElementById('svg')
@@ -495,20 +498,20 @@ it('works with SVGs', (test) => {
 	}
 })
 
+
 it('escapes text in SVGs', (test) => {
 	const array = ['svg#svg',
 		['text', '<circle>']
 	]
 	const expectedString = '<svg id="svg"><text>&lt;circle&gt;</text></svg>'
-	const element = shaven(array, 'http://www.w3.org/2000/svg')[0]
+	const svgElement = shaven(array, 'http://www.w3.org/2000/svg').rootElement
 
-	if (typeof element === 'string') {
-		test.is(element, expectedString)
+	if (typeof svgElement === 'string') {
+		test.is(svgElement, expectedString)
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
 		const expectedElement = document.getElementById('svg')
-		const svgElement = shaven(array, 'http://www.w3.org/2000/svg')[0]
 
 		test.true(
 			svgElement.isEqualNode(expectedElement),

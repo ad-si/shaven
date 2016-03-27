@@ -1,7 +1,6 @@
 'use strict'
 
 import it from 'ava'
-import shaven from '../source/library/browser.js'
 
 it.beforeEach(() => {
 	const container = document.createElement('div')
@@ -45,7 +44,7 @@ it('supports hyphens in html tags', (test) => {
 })
 
 
-it('returns a shaven object with element-ids as keys', (test) => {
+it('returns a shaven object with links to elements with ids', (test) => {
 	const container = document.getElementById('test')
 	const shavenObject = shaven(
 		[container,
@@ -54,8 +53,8 @@ it('returns a shaven object with element-ids as keys', (test) => {
 		]
 	)
 
-	test.is(shavenObject.foo, document.getElementById('foo'))
-	test.is(shavenObject.bar, document.getElementById('bar'))
+	test.is(shavenObject.ids.foo, document.getElementById('foo'))
+	test.is(shavenObject.ids.bar, document.getElementById('bar'))
 })
 
 
@@ -69,11 +68,11 @@ it('returns marked elements ', (test) => {
 	)
 
 	test.is(
-		shavenObject.foo,
+		shavenObject.references.foo,
 		document.getElementsByTagName('a')[0]
 	)
 	test.is(
-		shavenObject.bar,
+		shavenObject.references.bar,
 		document.getElementsByTagName('p')[0]
 	)
 })

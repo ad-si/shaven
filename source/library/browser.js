@@ -13,7 +13,10 @@ export default function dom (array, namespace, returnObject) {
 	let callback
 
 	// Set on first iteration
-	returnObject = returnObject || {}
+	returnObject = returnObject || {
+		ids: {},
+		references: {},
+	}
 
 	// Set default namespace to XHTML namespace
 	namespace = namespace || 'http://www.w3.org/1999/xhtml'
@@ -24,13 +27,22 @@ export default function dom (array, namespace, returnObject) {
 
 		if (properties.id) {
 			element.id = properties.id
-			returnObject[properties.id] = element
+			console.assert(
+				!returnObject.ids.hasOwnProperty(properties.id),
+				`Ids must be unique and "${properties.id}" is already assigned`
+			)
+			returnObject.ids[properties.id] = element
 		}
 		if (properties.class) {
 			element.className = properties.class
 		}
 		if (properties.reference) {
-			returnObject[properties.reference] = element
+			console.assert(
+				!returnObject.ids.hasOwnProperty(properties.reference),
+				`References must be unique and "${properties.id
+					}" is already assigned`
+			)
+			returnObject.references[properties.reference] = element
 		}
 
 		escapeHTML = properties.escapeHTML
