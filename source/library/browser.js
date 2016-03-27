@@ -138,6 +138,9 @@ export default function dom (array, namespace, returnObject) {
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
+	returnObject.rootElement = array[0]
+
+	returnObject.toString = () => array[0].outerHTML
 
 	if (callback)
 		callback(array[0])

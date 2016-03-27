@@ -7,12 +7,9 @@ import * as escape from './escape'
 
 module.exports = function shaven (array, namespace, returnObject) {
 
-	var i = 1
-	var HTMLString
-	var callback
-	var key
-
+	let i = 1
 	let escapeHTML = false
+	let callback
 
 
 	returnObject = returnObject || {}
@@ -127,9 +124,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	if (array[0] !== false) {
 
-		HTMLString = '<' + array[0].tag
+		let HTMLString = '<' + array[0].tag
 
-		for (key in array[0].attr)
+		for (const key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
 				HTMLString += ' ' + key + '="' +
 					escape.attribute(array[0].attr[key]) + '"'
@@ -147,6 +144,9 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 	// Return root element on index 0
 	returnObject[0] = array[0]
+	returnObject.rootElement = array[0]
+
+	returnObject.toString = () => array[0]
 
 	if (callback)
 		callback(array[0])

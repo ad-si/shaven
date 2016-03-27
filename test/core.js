@@ -311,6 +311,24 @@ it('returns the root html element by referencing [0]', (done) => {
 })
 
 
+it('returns the root HTML element by referencing rootElement', (test) => {
+	const shavenObject = shaven(['p'])
+	const element = shavenObject.rootElement
+
+	if (typeof element === 'string')
+		test.is('<p></p>', element)
+	else
+		test.is(element.nodeType, 1)
+})
+
+
+it('returns the HTML of the root element when converted to string', (test) => {
+	const shavenObject = shaven(['p#test', 'Test'])
+
+	test.is('<p id="test">Test</p>', String(shavenObject))
+})
+
+
 it('escapes html strings in tags', (done) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
 	const escapedHtml = '&lt;p&gt;Some ' +
