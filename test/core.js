@@ -399,19 +399,40 @@ it('accepts an array of elements', (test) => {
 		'<span>2</span>' +
 		'<span>3</span>' +
 		'<span>4</span>' +
-		'<span>5</span>' +
 		'</p>'
 	let element = shaven(
 		['p', 'Numbers: ', [
 			['span', '1'],
 			['span', '2'],
-			['span', '3'],
 			[
-				['span', '4'],
-				['span', '5']
+				['span', '3'],
+				['span', '4']
 			]
 		]]
 	)[0]
+
+	if (typeof element !== 'string')
+		element = element.outerHTML
+
+	test.is(element, html)
+})
+
+
+it('ignores "undefined" in subarrays', (test) => {
+	const html = '<p>Numbers: ' +
+		'<span>1</span>' +
+		'<span>2</span>' +
+		'</p>'
+	let element = shaven(
+		['p',
+			'Numbers: ',
+			[
+				['span', '1'],
+				undefined,
+				['span', '2']
+			]
+		]
+	).rootElement
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
