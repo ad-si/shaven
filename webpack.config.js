@@ -1,3 +1,7 @@
+'use strict'
+
+const webpack = require('webpack')
+
 module.exports = [
 	{
 		entry: './source/scripts/main.js',
@@ -7,11 +11,15 @@ module.exports = [
 		},
 		module: {
 			loaders: [
+				{ test: /\.js$/, loader: 'babel', query: {presets: ['es2015']}},
 				{ test: /\.json$/, loader: 'json' },
 				{ test: /\.css$/, loaders: ['style', 'css'] },
 				{ test: /\.styl$/, loaders: ['style', 'css', 'stylus'] },
 			]
-		}
+		},
+		plugins: [
+			new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+		],
 	},
 	{
 		entry: './source/library/browser.js',

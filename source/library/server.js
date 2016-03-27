@@ -1,86 +1,49 @@
-var escape = require('escape-html')
+import parseSugarString from './parseSugarString'
+import stringifyStyleObject from './stringifyStyleObject'
+import * as escape from './escape'
+
 
 // TODO: remove namespace
 
 module.exports = function shaven (array, namespace, returnObject) {
 
-	'use strict'
-
 	var i = 1
-	var doesEscape = true
 	var HTMLString
-	var attributeKey
 	var callback
 	var key
+
+	let escapeHTML = false
 
 
 	returnObject = returnObject || {}
 
-
 	function createElement (sugarString) {
-
-		var tags = sugarString.match(/^[\w-]+/)
-		var element = {
-			tag: tags ? tags[0] : 'div',
+		const properties = parseSugarString(sugarString)
+		const element = {
+			tag: properties.tag,
 			attr: {},
-			children: []
-		}
-		var id = sugarString.match(/#([\w-]+)/)
-		var reference = sugarString.match(/\$([\w-]+)/)
-		var classNames = sugarString.match(/\.[\w-]+/g)
-
-
-		// Assign id if is set
-		if (id) {
-			element.attr.id = id[1]
-
-			// Add element to the return object
-			returnObject[id[1]] = element
+			children: [],
 		}
 
-		if (reference)
-			returnObject[reference[1]] = element
+		if (properties.id) {
+			element.attr.id = properties.id
+			returnObject[properties.id] = element
+		}
+		if (properties.class) {
+			element.attr.class = properties.class
+		}
+		if (properties.reference) {
+			returnObject[properties.reference] = element
+		}
 
-		if (classNames)
-			element.attr.class = classNames.join(' ').replace(/\./g, '')
-
-		if (sugarString.match(/&$/g))
-			doesEscape = false
+		escapeHTML = properties.escapeHTML
 
 		return element
 	}
 
-	function replacer (key, value) {
-
-		if (value === null || value === false || value === undefined)
-			return
-
-		if (typeof value !== 'string' && typeof value !== 'object')
-			return String(value)
-
-		return value
-	}
-
-	function escapeAttribute (string) {
-		return (string || string === 0) ?
-			String(string)
-				.replace(/&/g, '&amp;')
-				.replace(/"/g, '&quot;') :
-			''
-	}
-
-	function escapeHTML (string) {
-		return String(string)
-			.replace(/&/g, '&amp;')
-			.replace(/"/g, '&quot;')
-			.replace(/'/g, '&apos;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-	}
-
 
 	if (typeof array[0] === 'string')
-		array[0] = createElement(array[0])
+		array[0] = createElement(array[0], returnObject)
 
 	else if (Array.isArray(array[0]))
 		i = 0
@@ -106,8 +69,8 @@ module.exports = function shaven (array, namespace, returnObject) {
 		}
 
 		else if (typeof array[i] === 'string') {
-			if (doesEscape)
-				array[i] = escapeHTML(array[i])
+			if (escapeHTML)
+				array[i] = escape.HTML(array[i])
 
 			array[0].children.push(array[i])
 		}
@@ -138,25 +101,25 @@ module.exports = function shaven (array, namespace, returnObject) {
 		else if (typeof array[i] === 'function')
 			callback = array[i]
 
-
 		else if (typeof array[i] === 'object') {
-			for (attributeKey in array[i])
-				if (array[i].hasOwnProperty(attributeKey))
-					if (array[i][attributeKey] !== null &&
-						array[i][attributeKey] !== false)
-						if (attributeKey === 'style' &&
-							typeof array[i][attributeKey] === 'object')
-							array[0].attr[attributeKey] = JSON
-								.stringify(array[i][attributeKey], replacer)
-								.slice(2, -2)
-								.replace(/","/g, ';')
-								.replace(/":"/g, ':')
-								.replace(/\\"/g, '\'')
+			for (let attributeKey in array[i]) {
+				const attributeValue = array[i][attributeKey]
 
-						else
-							array[0].attr[attributeKey] = array[i][attributeKey]
+				if (array[i].hasOwnProperty(attributeKey) &&
+					attributeValue !== null &&
+					attributeValue !== false
+				)
+					if (attributeKey === 'style' &&
+						typeof attributeValue === 'object'
+					) {
+						array[0].attr[attributeKey] =
+							stringifyStyleObject(attributeValue)
+					}
+					else {
+						array[0].attr[attributeKey] = array[i][attributeKey]
+					}
+			}
 		}
-
 		else
 			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
 	}
@@ -169,7 +132,7 @@ module.exports = function shaven (array, namespace, returnObject) {
 		for (key in array[0].attr)
 			if (array[0].attr.hasOwnProperty(key))
 				HTMLString += ' ' + key + '="' +
-					escapeAttribute(array[0].attr[key]) + '"'
+					escape.attribute(array[0].attr[key]) + '"'
 
 		HTMLString += '>'
 

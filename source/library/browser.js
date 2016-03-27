@@ -1,19 +1,16 @@
-// Shaven {{ VERSION }} by Adrian Sieber (adriansieber.com)
-
+import parseSugarString from './parseSugarString'
+import stringifyStyleObject from './stringifyStyleObject'
 
 // array: Array containing the DOM fragment in JsonML
 // returnObject: Contains elements identified by their id
 
-module.exports = function dom (array, namespace, returnObject) {
+export default function dom (array, namespace, returnObject) {
 
 	'use strict'
 
-	var doc = document
-	var i = 1
-	var unescaped
-	var callback
-	var attributeKey
-
+	let i = 1
+	let escapeHTML = false
+	let callback
 
 	// Set on first iteration
 	returnObject = returnObject || {}
@@ -21,53 +18,24 @@ module.exports = function dom (array, namespace, returnObject) {
 	// Set default namespace to XHTML namespace
 	namespace = namespace || 'http://www.w3.org/1999/xhtml'
 
-	// Create DOM element from syntax sugar string
 	function createElement (sugarString) {
+		const properties = parseSugarString(sugarString)
+		const element = document.createElementNS(namespace, properties.tag)
 
-		var tags = sugarString.match(/^[\w-]+/)
-		var tag = tags ? tags[0] : 'div'
-		var element = doc.createElementNS(namespace, tag)
-		var id = sugarString.match(/#([\w-]+)/)
-		var ref = sugarString.match(/\$([\w-]+)/)
-		var classNames = sugarString.match(/\.[\w-]+/g)
-
-
-		// Assign id if is set
-		if (id) {
-			element.id = id[1]
-
-			// Add element to the return object
-			returnObject[id[1]] = element
+		if (properties.id) {
+			element.id = properties.id
+			returnObject[properties.id] = element
+		}
+		if (properties.class) {
+			element.className = properties.class
+		}
+		if (properties.reference) {
+			returnObject[properties.reference] = element
 		}
 
-		// Create reference to the element and add it to the return object
-		if (ref)
-			returnObject[ref[1]] = element
+		escapeHTML = properties.escapeHTML
 
-		// Assign class if is set
-		if (classNames)
-			element.setAttribute(
-				'class',
-				classNames.join(' ').replace(/\./g, '')
-			)
-
-		// Don't escape HTML content
-		if (sugarString.match(/&$/g))
-			unescaped = true
-
-		// Return DOM element
 		return element
-	}
-
-	function replacer (key, value) {
-
-		if (value === null || value === false || value === undefined)
-			return
-
-		if (typeof value !== 'string' && typeof value !== 'object')
-			return String(value)
-
-		return value
 	}
 
 
@@ -99,12 +67,12 @@ module.exports = function dom (array, namespace, returnObject) {
 		}
 
 		// If is string has to be content so set it
-		else if (typeof array[i] === 'string' || typeof array[i] === 'number')
-			if (unescaped)
-				array[0].innerHTML = array[i]
-
+		else if (typeof array[i] === 'string' || typeof array[i] === 'number') {
+			if (escapeHTML)
+				array[0].appendChild(document.createTextNode(array[i]))
 			else
-				array[0].appendChild(doc.createTextNode(array[i]))
+				array[0].innerHTML = array[i]
+		}
 
 		// If is array has to be child element
 		else if (Array.isArray(array[i])) {
@@ -123,8 +91,9 @@ module.exports = function dom (array, namespace, returnObject) {
 			dom(array[i], namespace, returnObject)
 
 			// Append the element to its parent element
-			if (array[i][0])
+			if (array[i][0]) {
 				array[0].appendChild(array[i][0])
+			}
 		}
 
 		else if (typeof array[i] === 'function')
@@ -137,35 +106,30 @@ module.exports = function dom (array, namespace, returnObject) {
 		// Else must be an object with attributes
 		else if (typeof array[i] === 'object') {
 			// For each attribute
-			for (attributeKey in array[i])
-				if (array[i].hasOwnProperty(attributeKey)) {
+			for (let attributeKey in array[i]) {
+				const attributeValue = array[i][attributeKey]
 
-					if (array[i][attributeKey] !== null &&
-						array[i][attributeKey] !== false)
-						if (array[i][attributeKey] === undefined)
-							array[0].setAttribute(attributeKey, '')
+				if (array[i].hasOwnProperty(attributeKey) &&
+					attributeValue !== null &&
+					attributeValue !== false
+				) {
+					if (attributeValue === undefined)
+						array[0].setAttribute(attributeKey, '')
 
-						else {
-							if (attributeKey === 'style' &&
-								typeof array[i][attributeKey] === 'object')
-
-								array[0].setAttribute(
-									attributeKey,
-									JSON
-										.stringify(array[i][attributeKey], replacer)
-										.slice(2, -2)
-										.replace(/","/g, ';')
-										.replace(/":"/g, ':')
-										.replace(/\\"/g, '\'')
-								)
-
-							else
-								array[0].setAttribute(
-									attributeKey,
-									array[i][attributeKey]
-								)
+					else {
+						if (attributeKey === 'style' &&
+							typeof attributeValue === 'object'
+						) {
+							array[0].setAttribute(
+								'style',
+								stringifyStyleObject(attributeValue)
+							)
 						}
+						else
+							array[0].setAttribute(attributeKey, attributeValue)
+					}
 				}
+			}
 		}
 		else
 			throw new TypeError('"' + array[i] + '" is not allowed as a value.')
