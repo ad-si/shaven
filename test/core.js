@@ -69,9 +69,9 @@ it('is possible to set properties', (test) => {
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
-
 		const expectedElement = document.getElementById('foo')
 
+		test.is(actual.outerHTML, expectedElement.outerHTML)
 		test.true(
 			actual.isEqualNode(expectedElement),
 			'\n' + actual.outerHTML +
@@ -254,12 +254,8 @@ it('understands multiple classes and ids', (test) => {
 		test.is(element, expectedString)
 	}
 	else {
-		document
-			.getElementById('test')
-			.innerHTML = expectedString
-
-		const expectedElement = document
-			.getElementById('foo')
+		document.getElementById('test').innerHTML = expectedString
+		const expectedElement = document.getElementById('foo')
 
 		test.true(
 			element.isEqualNode(expectedElement),
@@ -500,7 +496,7 @@ it('works with SVGs', (test) => {
 			style: 'fill:green'
 		}]
 	]
-	const svgElement = shaven(array, 'http://www.w3.org/2000/svg').rootElement
+	const svgElement = shaven(array).rootElement
 
 	if (typeof svgElement === 'string') {
 		test.is(svgElement, expectedString)
@@ -519,13 +515,73 @@ it('works with SVGs', (test) => {
 	}
 })
 
+it('works with multiple SVGs', (test) => {
+	const expectedString = '<div id="container">' +
+		'<svg id="svg1" width="10" height="10">' +
+			'<rect class="top" width="5" height="5" style="fill:red"></rect>' +
+		'</svg>' +
+		'<svg id="svg2" width="20" height="20">' +
+			'<circle cx="8" cy="8" r="4" style="fill:green"></circle>' +
+		'</svg>' +
+	'</div>'
+
+	const array = ['div#container',
+		['svg#svg1', {width: 10, height: 10},
+			['rect.top', {width: 5, height: 5, style: 'fill:red'}]
+		],
+		['svg#svg2', {width: 20, height: 20},
+			['circle', {cx: 8, cy: 8, r: 4, style: 'fill:green'}]
+		]
+	]
+	const element = shaven(array).rootElement
+
+	if (typeof element === 'string') {
+		test.is(element, expectedString)
+	}
+	else {
+		document.getElementById('test').innerHTML = expectedString
+		const expectedElement = document.getElementById('container')
+
+		test.is(element.outerHTML, expectedElement.outerHTML)
+		test.true(element.isEqualNode(expectedElement))
+	}
+})
+
+it('works with SVG followed by HTML', (test) => {
+	const expectedString = '<div id="container">' +
+		'<svg id="svg1" width="10" height="10">' +
+			'<rect class="top" width="5" height="5" style="fill:red"></rect>' +
+		'</svg>' +
+		'<p>Test Sentence</p>' +
+	'</div>'
+
+	const array = ['div#container',
+		['svg#svg1', {width: 10, height: 10},
+			['rect.top', {width: 5, height: 5, style: 'fill:red'}]
+		],
+		['p', 'Test Sentence']
+	]
+	const element = shaven(array).rootElement
+
+	if (typeof element === 'string') {
+		test.is(element, expectedString)
+	}
+	else {
+		document.getElementById('test').innerHTML = expectedString
+		const expectedElement = document.getElementById('container')
+
+		test.is(element.outerHTML, expectedElement.outerHTML)
+		test.true(element.isEqualNode(expectedElement))
+	}
+})
+
 
 it('escapes text in SVGs', (test) => {
 	const array = ['svg#svg',
 		['text', '<circle>']
 	]
 	const expectedString = '<svg id="svg"><text>&lt;circle&gt;</text></svg>'
-	const svgElement = shaven(array, 'http://www.w3.org/2000/svg').rootElement
+	const svgElement = shaven(array).rootElement
 
 	if (typeof svgElement === 'string') {
 		test.is(svgElement, expectedString)
@@ -534,14 +590,10 @@ it('escapes text in SVGs', (test) => {
 		document.getElementById('test').innerHTML = expectedString
 		const expectedElement = document.getElementById('svg')
 
-		test.true(
-			svgElement.isEqualNode(expectedElement),
-			'\n' + svgElement.outerHTML + '\nshould equal\n' +
-			expectedElement.outerHTML
-		)
+		test.is(svgElement.outerHTML, expectedElement.outerHTML)
+		test.true(svgElement.isEqualNode(expectedElement))
 	}
 })
-
 
 
 it('returns an empty element for missing content value', (test) => {
@@ -591,4 +643,19 @@ it('omit end-tag for self-closing elements', (test) => {
 		element = element.outerHTML
 
 	test.is(element, '<div><input type="text"></div>')
+})
+
+
+it('can change defaults', (test) => {
+	let escaped = shaven(['div', '<p>Test</p>']).rootElement
+
+	shaven.setDefaults({escapeHTML: false})
+
+	let unescaped = shaven(['div', '<p>Test</p>']).rootElement
+
+	if (typeof escaped !== 'string') escaped = escaped.outerHTML
+	if (typeof unescaped !== 'string') unescaped = unescaped.outerHTML
+
+	test.is(escaped, '<div>&lt;p&gt;Test&lt;/p&gt;</div>')
+	test.is(unescaped, '<div><p>Test</p></div>')
 })
