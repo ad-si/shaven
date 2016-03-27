@@ -1,7 +1,6 @@
 'use strict'
 
 import it from 'ava'
-import assert from 'assert'
 import shaven from '..'
 
 let document = document || null
@@ -19,29 +18,29 @@ if (document) {
 }
 
 
-it('sets a string as textContent', (done) => {
+it('sets a string as textContent', (test) => {
 	const expected = '<p>test</p>'
 	let element = shaven(['p', 'test'])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, expected)
+	test.is(element, expected)
 })
 
 
-it('sets a number as textContent', (done) => {
+it('sets a number as textContent', (test) => {
 	const expected = '<p>1234</p>'
 	let element = shaven(['p', 1234])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, expected)
+	test.is(element, expected)
 })
 
 
-it('builds elements recursively', (done) => {
+it('builds elements recursively', (test) => {
 	const expected = '<div><p>foo<em>bar</em></p></div>'
 	let actual = shaven(
 		['div',
@@ -54,11 +53,11 @@ it('builds elements recursively', (done) => {
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('is possible to set properties', (done) => {
+it('is possible to set properties', (test) => {
 	const expectedString = '<p id="foo" ' +
 		'class="bar" data-info="baz"></p>'
 	let actual = shaven(
@@ -70,14 +69,14 @@ it('is possible to set properties', (done) => {
 	)[0]
 
 	if (typeof actual === 'string') {
-		assert.strictEqual(actual, expectedString)
+		test.is(actual, expectedString)
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
 
 		const expectedElement = document.getElementById('foo')
 
-		assert(
+		test.true(
 			actual.isEqualNode(expectedElement),
 			'\n' + actual.outerHTML +
 			'\nshould equal\n' + expectedElement.outerHTML
@@ -86,7 +85,7 @@ it('is possible to set properties', (done) => {
 })
 
 
-it('does not set falsy properties', (done) => {
+it('does not set falsy properties', (test) => {
 	const expectedString = '<p title="foo" ' +
 		'tabindex="3" data-info=""></p>'
 	let actual = shaven(
@@ -101,14 +100,14 @@ it('does not set falsy properties', (done) => {
 
 
 	if (typeof actual === 'string') {
-		assert.strictEqual(actual, expectedString)
+		test.is(actual, expectedString)
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
 
 		const expectedElement = document.getElementsByTagName('p')[0]
 
-		assert(
+		test.true(
 			actual.isEqualNode(expectedElement),
 			'\n' + actual.outerHTML + '\nshould equal\n' +
 				expectedElement.outerHTML
@@ -117,7 +116,7 @@ it('does not set falsy properties', (done) => {
 })
 
 
-it('builds a string from a style object', (done) => {
+it('builds a string from a style object', (test) => {
 	const expected = '<p ' +
 		'style="color:rgb(255,0,0);font-size:10;' +
 			'font-family:Arial, \'Helvetica Neue\', ' +
@@ -135,11 +134,11 @@ it('builds a string from a style object', (done) => {
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('does not include falsy values in style string', (done) => {
+it('does not include falsy values in style string', (test) => {
 	const expected = '<p style="color:red"></p>'
 	let actual = shaven(
 		['p', {
@@ -155,68 +154,68 @@ it('does not include falsy values in style string', (done) => {
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('does ignore "true" values', (done) => {
+it('does ignore "true" values', (test) => {
 	const expected = '<p>test</p>'
 	let actual = shaven(['p', 'test', true])[0]
 
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
 
-it('uses div as default tag', (done) => {
+it('uses div as default tag', (test) => {
 	const expected = '<div id="foo"></div>'
 	let actual = shaven(['#foo'])[0]
 
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('sets the id', (done) => {
+it('sets the id', (test) => {
 	const expected = '<p id="foo-1"></p>'
 	let actual = shaven(['p#foo-1'])[0]
 
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('sets the class', (done) => {
+it('sets the class', (test) => {
 	const expected = '<p class="foo"></p>'
 	let actual = shaven(['p.foo'])[0]
 
 	if (typeof actual !== 'string')
 		actual = actual.outerHTML
 
-	assert.strictEqual(actual, expected)
+	test.is(actual, expected)
 })
 
 
-it('works with both class and id', (done) => {
+it('works with both class and id', (test) => {
 	const expectedString = '<p id="b" class="new"></p>'
 	let element = shaven(['p#b.new'])[0]
 
 	if (typeof element === 'string') {
-		assert.strictEqual(element, expectedString)
+		test.is(element, expectedString)
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
 
 		const expectedElement = document.getElementById('b')
 
-		assert(
+		test.true(
 			element.isEqualNode(expectedElement),
 			element.outerHTML +
 			'\nshould be equal to\n' +
@@ -226,12 +225,12 @@ it('works with both class and id', (done) => {
 })
 
 
-it('works with class and id reversed', (done) => {
+it('works with class and id reversed', (test) => {
 	const expectedString = '<p id="c" class="new"></p>'
 	let element = shaven(['p.new#c'])[0]
 
 	if (typeof element === 'string') {
-		assert.strictEqual(element, expectedString)
+		test.is(element, expectedString)
 	}
 	else {
 		document
@@ -241,7 +240,7 @@ it('works with class and id reversed', (done) => {
 		const expectedElement = document
 			.getElementById('c')
 
-		assert(
+		test.true(
 			element.isEqualNode(expectedElement),
 			element.outerHTML +
 			'\nshould to be equal to\n' +
@@ -251,12 +250,12 @@ it('works with class and id reversed', (done) => {
 })
 
 
-it('understands multiple classes and ids', (done) => {
+it('understands multiple classes and ids', (test) => {
 	const expectedString = '<p id="foo" class="bar baz"></p>'
 	let element = shaven(['p.bar#foo.baz'])[0]
 
 	if (typeof element === 'string') {
-		assert.strictEqual(element, expectedString)
+		test.is(element, expectedString)
 	}
 	else {
 		document
@@ -266,7 +265,7 @@ it('understands multiple classes and ids', (done) => {
 		const expectedElement = document
 			.getElementById('foo')
 
-		assert(
+		test.true(
 			element.isEqualNode(expectedElement),
 			element.outerHTML +
 			'\nshould to be equal to\n' +
@@ -276,7 +275,7 @@ it('understands multiple classes and ids', (done) => {
 })
 
 
-it('calls the provided callback function', (done) => {
+it('calls the provided callback function', (test) => {
 	let called = false
 	let element = false
 
@@ -287,27 +286,27 @@ it('calls the provided callback function', (done) => {
 
 	const shavenObject = shaven(['p#bar', foo])
 
-	assert(called)
-	assert.strictEqual(element, shavenObject[0])
+	test.true(called)
+	test.is(element, shavenObject[0])
 })
 
 
-it('returns a shaven object and not an html element/string', (done) => {
+it('returns a shaven object and not an html element/string', (test) => {
 	const shavenObject = shaven(['p'])
 
-	assert(typeof shavenObject === 'object')
-	assert.notStrictEqual(shavenObject.nodeType, 1)
+	test.is(typeof shavenObject, 'object')
+	test.not(shavenObject.nodeType, 1)
 })
 
 
-it('returns the root html element by referencing [0]', (done) => {
+it('returns the root html element by referencing [0]', (test) => {
 	const shavenObject = shaven(['p'])
 	const element = shavenObject[0]
 
 	if (typeof element === 'string')
-		assert.strictEqual('<p></p>', element)
+		test.is('<p></p>', element)
 	else
-		assert.strictEqual(element.nodeType, 1)
+		test.is(element.nodeType, 1)
 })
 
 
@@ -329,7 +328,7 @@ it('returns the HTML of the root element when converted to string', (test) => {
 })
 
 
-it('escapes html strings in tags', (done) => {
+it('escapes html strings in tags', (test) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
 	const escapedHtml = '&lt;p&gt;Some ' +
 		'&lt;strong&gt;HTML&lt;/strong&gt;' +
@@ -337,24 +336,24 @@ it('escapes html strings in tags', (done) => {
 	let element = shaven(['div', html])[0]
 
 	if (typeof element === 'string')
-		assert.strictEqual(element, '<div>' + escapedHtml + '</div>')
+		test.is(element, '<div>' + escapedHtml + '</div>')
 	else
-		assert.strictEqual(element.innerHTML, escapedHtml)
+		test.is(element.innerHTML, escapedHtml)
 })
 
 
-it('sets attribute to 0', (done) => {
+it('sets attribute to 0', (test) => {
 	const html = '<p title="0">Test</p>'
 	let element = shaven(['p', 'Test', {title: 0}])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, html)
+	test.is(element, html)
 })
 
 
-it('escapes html strings in attributes', (done) => {
+it('escapes html strings in attributes', (test) => {
 	const escapedHtml =
 		'<p ' +
 		'title="&quot; &amp;" ' +
@@ -372,22 +371,22 @@ it('escapes html strings in attributes', (done) => {
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, escapedHtml)
+	test.is(element, escapedHtml)
 })
 
 
-it('builds html from strings', (done) => {
+it('builds html from strings', (test) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
 	let element = shaven(['div&', html])[0]
 
 	if (typeof element === 'string')
-		assert.strictEqual(element, '<div>' + html + '</div>')
+		test.is(element, '<div>' + html + '</div>')
 	else
-		assert.strictEqual(element.innerHTML, html)
+		test.is(element.innerHTML, html)
 })
 
 
-it('accepts an array of elements', (done) => {
+it('accepts an array of elements', (test) => {
 	const html = '<p>Numbers: ' +
 		'<span>1</span>' +
 		'<span>2</span>' +
@@ -410,11 +409,11 @@ it('accepts an array of elements', (done) => {
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, html)
+	test.is(element, html)
 })
 
 
-it('accepts an array of elements at index 0', (done) => {
+it('accepts an array of elements at index 0', (test) => {
 	const html = '<p>Numbers: ' +
 		'<span>1</span>' +
 		'<span>2</span>' +
@@ -431,22 +430,22 @@ it('accepts an array of elements at index 0', (done) => {
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, html)
+	test.is(element, html)
 })
 
 
-it('throws an error for an invalid array', (done) => {
+it('throws an error for an invalid array', (test) => {
 	const regexString = '.*first ' +
 		'element.*must be.*string.*array.*'
 
-	assert.throws(
+	test.throws(
 		() => {
 			shaven([{key: 'value'}])
 		},
 		new RegExp(regexString, 'gi')
 	)
 
-	assert.throws(
+	test.throws(
 		() => {
 			shaven([144, 'span', 'text'])
 		},
@@ -455,7 +454,7 @@ it('throws an error for an invalid array', (done) => {
 })
 
 
-it('works with SVGs', (done) => {
+it('works with SVGs', (test) => {
 	const expectedString = '' +
 		'<svg id="svg" height="10" width="10">' +
 			'<circle class="top" cx="5" cy="5" r="5" ' +
@@ -478,7 +477,7 @@ it('works with SVGs', (done) => {
 
 
 	if (typeof element === 'string') {
-		assert.strictEqual(element, expectedString)
+		test.is(element, expectedString)
 	}
 	else {
 		const svgElement = shaven(array, 'http://www.w3.org/2000/svg')[0]
@@ -487,7 +486,7 @@ it('works with SVGs', (done) => {
 
 		const expectedElement = document.getElementById('svg')
 
-		assert(
+		test.true(
 			svgElement.isEqualNode(expectedElement),
 			'\n' + svgElement.outerHTML +
 			'\nshould equal\n' +
@@ -504,14 +503,14 @@ it('escapes text in SVGs', (test) => {
 	const element = shaven(array, 'http://www.w3.org/2000/svg')[0]
 
 	if (typeof element === 'string') {
-		assert.strictEqual(element, expectedString)
+		test.is(element, expectedString)
 	}
 	else {
 		document.getElementById('test').innerHTML = expectedString
 		const expectedElement = document.getElementById('svg')
 		const svgElement = shaven(array, 'http://www.w3.org/2000/svg')[0]
 
-		test.assert(
+		test.true(
 			svgElement.isEqualNode(expectedElement),
 			'\n' + svgElement.outerHTML + '\nshould equal\n' +
 			expectedElement.outerHTML
@@ -521,41 +520,41 @@ it('escapes text in SVGs', (test) => {
 
 
 
-it('returns an empty element for missing content value', (done) => {
+it('returns an empty element for missing content value', (test) => {
 	let element = shaven(['div'])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, '<div></div>')
+	test.is(element, '<div></div>')
 })
 
 
-it('returns an empty element for undefined content value', (done) => {
+it('returns an empty element for undefined content value', (test) => {
 	let element = shaven(['div', undefined])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, '<div></div>')
+	test.is(element, '<div></div>')
 })
 
 
-it('returns no element if content value is "false"', (done) => {
+it('returns no element if content value is "false"', (test) => {
 	let element = shaven(['div', ['p', false]])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, '<div></div>')
+	test.is(element, '<div></div>')
 })
 
 
-it('returns no element if content value is "null"', (done) => {
+it('returns no element if content value is "null"', (test) => {
 	let element = shaven(['div', ['p', null]])[0]
 
 	if (typeof element !== 'string')
 		element = element.outerHTML
 
-	assert.strictEqual(element, '<div></div>')
+	test.is(element, '<div></div>')
 })

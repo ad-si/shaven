@@ -1,7 +1,6 @@
 'use strict'
 
 import it from 'ava'
-import assert from 'assert'
 import shaven from '../source/library/browser.js'
 
 it.beforeEach(() => {
@@ -15,26 +14,26 @@ it.afterEach(() => {
 })
 
 
-it('attaches to elements', () => {
+it('attaches to elements', (test) => {
 	const container = document.getElementById('test')
 	const expected = '<div id="test"><p></p></div>'
 	const actual = shaven([container, ['p']])[0].outerHTML
 
-	assert.strictEqual(actual, expected, actual)
+	test.is(actual, expected, actual)
 })
 
 
-it('appends html elements', () => {
+it('appends html elements', (test) => {
 	const container = document.getElementById('test')
 	const expected = '<div id="test"><p></p></div>'
 	const element = shaven(['p'])[0]
 	const actual = shaven([container, element])[0].outerHTML
 
-	assert.strictEqual(actual, expected, actual)
+	test.is(actual, expected, actual)
 })
 
 
-it('supports hyphens in html tags', () => {
+it('supports hyphens in html tags', (test) => {
 	const container = document.getElementById('test')
 	const expected = '<div id="test">' +
 		'<foo-bar></foo-bar>' +
@@ -42,11 +41,11 @@ it('supports hyphens in html tags', () => {
 	const element = shaven(['foo-bar'])[0]
 	const actual = shaven([container, element])[0].outerHTML
 
-	assert.strictEqual(actual, expected, actual)
+	test.is(actual, expected, actual)
 })
 
 
-it('returns a shaven object with element-ids as keys', () => {
+it('returns a shaven object with element-ids as keys', (test) => {
 	const container = document.getElementById('test')
 	const shavenObject = shaven(
 		[container,
@@ -55,12 +54,12 @@ it('returns a shaven object with element-ids as keys', () => {
 		]
 	)
 
-	assert.strictEqual(shavenObject.foo, document.getElementById('foo'))
-	assert.strictEqual(shavenObject.bar, document.getElementById('bar'))
+	test.is(shavenObject.foo, document.getElementById('foo'))
+	test.is(shavenObject.bar, document.getElementById('bar'))
 })
 
 
-it('returns marked elements ', () => {
+it('returns marked elements ', (test) => {
 	const container = document.getElementById('test')
 	const shavenObject = shaven(
 		[container,
@@ -69,18 +68,18 @@ it('returns marked elements ', () => {
 		]
 	)
 
-	assert.strictEqual(
+	test.is(
 		shavenObject.foo,
 		document.getElementsByTagName('a')[0]
 	)
-	assert.strictEqual(
+	test.is(
 		shavenObject.bar,
 		document.getElementsByTagName('p')[0]
 	)
 })
 
 
-it('does not work with SVGs without a namespace', () => {
+it('does not work with SVGs without a namespace', (test) => {
 	const container = document.getElementById('test')
 	const expectedString = '' +
 		'<svg id="svg" height="10" width="10">' +
@@ -107,9 +106,9 @@ it('does not work with SVGs without a namespace', () => {
 	const expectedElement = document.getElementById('svg')
 	const areEqual = svgElement.isEqualNode(expectedElement)
 
-	assert(
-		(svgElement.outerHTML === expectedElement.outerHTML) &&
-		!areEqual,
+	test.is(svgElement.outerHTML, expectedElement.outerHTML)
+	test.false(
+		areEqual,
 		'Although the elements have the same outerHTML, ' +
 		'they should not be equal nodes.\n' +
 		'svgElement:\t\t' + svgElement.outerHTML +
