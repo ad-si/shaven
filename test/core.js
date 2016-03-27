@@ -478,6 +478,29 @@ it('works with SVGs', (done) => {
 	}
 })
 
+it('escapes text in SVGs', (test) => {
+	const array = ['svg#svg',
+		['text', '<circle>']
+	]
+	const expectedString = '<svg id="svg"><text>&lt;circle&gt;</text></svg>'
+	const element = shaven(array, 'http://www.w3.org/2000/svg')[0]
+
+	if (typeof element === 'string') {
+		assert.strictEqual(element, expectedString)
+	}
+	else {
+		document.getElementById('test').innerHTML = expectedString
+		const expectedElement = document.getElementById('svg')
+		const svgElement = shaven(array, 'http://www.w3.org/2000/svg')[0]
+
+		test.assert(
+			svgElement.isEqualNode(expectedElement),
+			'\n' + svgElement.outerHTML + '\nshould equal\n' +
+			expectedElement.outerHTML
+		)
+	}
+})
+
 
 
 it('returns an empty element for missing content value', (done) => {
