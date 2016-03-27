@@ -10,6 +10,25 @@ module.exports = function shaven (array, namespace, returnObject) {
 	let i = 1
 	let escapeHTML = false
 	let callback
+	const selfClosingHTMLTags = [
+		'area',
+		'base',
+		'br',
+		'col',
+		'command',
+		'embed',
+		'hr',
+		'img',
+		'input',
+		'keygen',
+		'link',
+		'menuitem',
+		'meta',
+		'param',
+		'source',
+		'track',
+		'wbr'
+	]
 
 
 	returnObject = returnObject || {
@@ -145,11 +164,11 @@ module.exports = function shaven (array, namespace, returnObject) {
 
 		HTMLString += '>'
 
-		array[0].children.forEach(function (child) {
-			HTMLString += child
-		})
+		if (!selfClosingHTMLTags.includes(array[0].tag)) {
+			array[0].children.forEach(child => HTMLString += child)
 
-		HTMLString += '</' + array[0].tag + '>'
+			HTMLString += '</' + array[0].tag + '>'
+		}
 
 		array[0] = HTMLString
 	}

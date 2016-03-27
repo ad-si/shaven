@@ -561,3 +561,13 @@ it('returns no element if content value is "null"', (test) => {
 
 	test.is(element, '<div></div>')
 })
+
+
+it('omit end-tag for self-closing elements', (test) => {
+	let element = shaven(['div', ['input', {type: 'text'}]]).rootElement
+
+	if (typeof element !== 'string')
+		element = element.outerHTML
+
+	test.is(element, '<div><input type="text"></div>')
+})
