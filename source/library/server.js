@@ -162,10 +162,21 @@ export default function shaven (array) {
 		if (array[0] !== false) {
 			let HTMLString = '<' + array[0].tag
 
-			for (const key in array[0].attr)
-				if (array[0].attr.hasOwnProperty(key))
-					HTMLString += ' ' + key + '="' +
-						escape.attribute(array[0].attr[key]) + '"'
+			for (const key in array[0].attr) {
+				if (array[0].attr.hasOwnProperty(key)) {
+					let attributeValue = escape.attribute(array[0].attr[key])
+					let value = attributeValue
+
+					if (defaults.quoteAttributes ||
+						/[ "'=<>]/.test(attributeValue)
+					) {
+						value = defaults.quotationMark +
+							attributeValue + defaults.quotationMark
+					}
+
+					HTMLString += ` ${key}=${value}`
+				}
+			}
 
 			HTMLString += '>'
 

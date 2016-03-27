@@ -378,6 +378,29 @@ it('escapes html strings in attributes', (test) => {
 })
 
 
+it('supports unquoted element attributes', (test) => {
+	shaven.setDefaults({quoteAttributes: false})
+	let element = shaven(
+		['p', {
+			lang: 'de',
+			'data-info': 'baz',
+			title: 'With space',
+			'data-special': 'Special characters: "\'=><`',
+		}]
+	).rootElement
+
+	shaven.setDefaults({quoteAttributes: true})
+
+	if (typeof element === 'string') {
+		test.is(
+			element,
+			'<p lang=de data-info=baz title="With space" ' +
+			'data-special="Special characters: &quot;\'=><`"></p>'
+		)
+	}
+})
+
+
 it('builds html from strings', (test) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
 	let element = shaven(['div&', html])[0]
