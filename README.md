@@ -1,3 +1,5 @@
+![Logo](./source/images/screenshot.png)
+
 # Shaven
 
 [![Build Status](https://travis-ci.org/adius/shaven.svg)](https://travis-ci.org/adius/shaven)
@@ -7,34 +9,43 @@ A **DOM building utility** and **Template engine** build upon **JsonML** with sy
 Checkout [adriansieber.com/shaven](http://adriansieber.com/shaven) for an extensive documentation.
 
 
+## Example
+
 ```javascript
-	shaven(
-		[document.body,
-			['h1#logo', 'Static Example', {style:'color:blue'}],
-			['p','some example text'],
-			['ul#list.bullets',
-				['li', 'item1'],
-				['li.active', 'item2'],
-				['li',
-					['a', 'item3', {href: '#'}]
-				]
+shaven(
+	[document.body,
+		['h1#logo', 'Static Example'],
+		['p','Some example text'],
+		['ul#list.bullets',
+			['li', 'item1'],
+			['li.active', 'item2'],
+			['li',
+				['a', 'item3', {href: '#'}]
 			]
-		]
-	)
+		],
+		['em', 'Important', {
+			style: {
+				color: 'red',
+				'font-size': '2em',
+			},
+		}]
+	]
+)
 ```
 
 compiles to
 
 ```html
-	<body>
-		<h1 id="logo" style="color:blue">Static Example</h1>
-		<p>some example text</p>
-		<ul id="list" class="bullets">
-			<li>item1</li>
-			<li class="active">item2</li>
-			<li><a href="#">item3</a></li>
-		</ul>
-	</body>
+<body>
+	<h1 id="logo">Static Example</h1>
+	<p>Some example text</p>
+	<ul id="list" class="bullets">
+		<li>item1</li>
+		<li class="active">item2</li>
+		<li><a href="#">item3</a></li>
+	</ul>
+	<em style="color:red;font-size:2em">Important</em>
+</body>
 ```
 
 
