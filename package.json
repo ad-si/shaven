@@ -17,19 +17,19 @@
     "email": "mail@adriansieber.com",
     "url": "http://adriansieber.com"
   },
-  "main": "source/library/server",
-  "browser": "source/library/browser",
+  "main": "build/server",
+  "browser": "build/browser",
   "repository": {
     "type": "git",
     "url": "https://github.com/adius/shaven.git"
   },
   "scripts": {
-    "buildBundle": "webpack",
-    "buildHTML": "mustache ./package.json source/templates/index.mustache > build/index.html",
-    "build": "rm -rf build && npm run buildBundle && npm run buildHTML",
+    "buildHTML": "mustache ./package.json source/templates/index.mustache > site/index.html",
+    "buildSite": "webpack && npm run buildHTML",
+    "build": "babel source/library --out-dir build",
     "test": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
     "stylecheck": "jscs source",
-    "prepublish": "npm test && npm run stylecheck"
+    "prepublish": "npm test && npm run stylecheck && npm run build"
   },
   "ava": {
     "babel": "inherit"
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "ava": "^0.13.0",
-    "babel": "^6.5.2",
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-array-includes": "^2.0.3",
@@ -47,6 +47,7 @@
     "babel-register": "^6.7.2",
     "brace": "^0.7.0",
     "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
     "jscs": "^2.8.0",
     "jsdom": "^8.1.0",
     "jshint": "^2.9.1",
