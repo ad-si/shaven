@@ -5,11 +5,32 @@ import namespaceToURL from './namespaceToURL'
 import mapAttributeValue from './mapAttributeValue'
 
 
-export default function shaven (array) {
+export default function shaven (arrayOrObject) {
 
-	const config = Object.assign(
+	if (!arrayOrObject || typeof arrayOrObject !== 'object') {
+		throw new Error(
+			'Argument must be either an array or an object ' +
+			'and not ' + arrayOrObject
+		)
+	}
+
+	let config = {}
+	let array
+
+	if (Array.isArray(arrayOrObject)) {
+		array = arrayOrObject
+	}
+	else {
+		array = arrayOrObject.elementArray
+		delete arrayOrObject.elementArray
+		Object.assign(config, arrayOrObject)
+	}
+
+
+	config = Object.assign(
 		{},
 		defaults,
+		config,
 		{
 			nsStack: [defaults.namespace],	// Stack with current namespaces
 			returnObject: {					// Shaven object to return at last
@@ -63,7 +84,9 @@ export default function shaven (array) {
 			config.returnObject.references[properties.reference] = element
 		}
 
-		config.escapeHTML = properties.escapeHTML && defaults.escapeHTML
+		if (properties.escapeHTML != null) {
+			config.escapeHTML = properties.escapeHTML
+		}
 
 		return element
 	}
@@ -97,13 +120,15 @@ export default function shaven (array) {
 				break
 			}
 
-			// Continue with next array value if current value is undefined or true
+			// Continue with next array value if current is undefined or true
 			else if (array[i] === undefined || array[i] === true) {
 				continue
 			}
 
 			// If is string has to be content so set it
-			else if (typeof array[i] === 'string' || typeof array[i] === 'number') {
+			else if (typeof array[i] === 'string' ||
+				typeof array[i] === 'number'
+			) {
 				if (config.escapeHTML)
 					array[0].appendChild(document.createTextNode(array[i]))
 				else

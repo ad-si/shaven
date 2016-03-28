@@ -431,14 +431,14 @@ it('supports unquoted element attributes', (test) => {
 })
 
 
-it('builds html from strings', (test) => {
+it('supports unescaped element content', (test) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
 	let element = shaven(['div&', html])[0]
 
-	if (typeof element === 'string')
-		test.is(element, '<div>' + html + '</div>')
-	else
-		test.is(element.innerHTML, html)
+	if (typeof element !== 'string')
+		element = element.outerHTML
+
+	test.is(element, `<div>${html}</div>`)
 })
 
 
@@ -696,6 +696,34 @@ it('omit end-tag for self-closing elements', (test) => {
 		element = element.outerHTML
 
 	test.is(element, '<div><input type="text"></div>')
+})
+
+
+it('can be configured to use different quotation mark', (test) => {
+	let elementWithCustomMark = shaven({
+		quotationMark: '%',
+		elementArray: [
+			'div',
+			['p#wtf', 'Test'],
+		],
+	}).rootElement
+
+	if (typeof elementWithCustomMark === 'string') {
+		test.is(elementWithCustomMark, '<div><p id=%wtf%>Test</p></div>')
+	}
+})
+
+
+it('can be configured to not escape HTML', (test) => {
+	let unescapedElement = shaven({
+		escapeHTML: false,
+		elementArray: ['div', '<p>Test</p>'],
+	}).rootElement
+
+	if (typeof unescapedElement !== 'string')
+		unescapedElement = unescapedElement.outerHTML
+
+	test.is(unescapedElement, '<div><p>Test</p></div>')
 })
 
 

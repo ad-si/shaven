@@ -4,11 +4,31 @@ import defaults from './defaults'
 import mapAttributeValue from './mapAttributeValue'
 
 
-export default function shaven (array) {
+export default function shaven (arrayOrObject) {
 
-	const config = Object.assign(
+	if (!arrayOrObject || typeof arrayOrObject !== 'object') {
+		throw new Error(
+			'Argument must be either an array or an object ' +
+			'and not ' + arrayOrObject
+		)
+	}
+
+	let config = {}
+	let array
+
+	if (Array.isArray(arrayOrObject)) {
+		array = arrayOrObject
+	}
+	else {
+		array = arrayOrObject.elementArray
+		delete arrayOrObject.elementArray
+		Object.assign(config, arrayOrObject)
+	}
+
+	config = Object.assign(
 		{},
 		defaults,
+		config,
 		{
 			returnObject: { // Shaven object to return at last
 				ids: {},
@@ -46,7 +66,9 @@ export default function shaven (array) {
 			config.returnObject.references[properties.reference] = element
 		}
 
-		config.escapeHTML = properties.escapeHTML && defaults.escapeHTML
+		if (properties.escapeHTML != null) {
+			config.escapeHTML = properties.escapeHTML
+		}
 
 		return element
 	}
@@ -164,11 +186,11 @@ export default function shaven (array) {
 					let attributeValue = escape.attribute(array[0].attr[key])
 					let value = attributeValue
 
-					if (defaults.quoteAttributes ||
+					if (config.quoteAttributes ||
 						/[ "'=<>]/.test(attributeValue)
 					) {
-						value = defaults.quotationMark +
-							attributeValue + defaults.quotationMark
+						value = config.quotationMark +
+							attributeValue + config.quotationMark
 					}
 
 					HTMLString += ` ${key}=${value}`

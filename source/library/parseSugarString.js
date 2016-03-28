@@ -2,8 +2,6 @@ export default (sugarString) => {
 	const tags = sugarString.match(/^[\w-]+/)
 	const properties = {
 		tag: tags ? tags[0] : 'div',
-		// Don't escape HTML content if string ends with &
-		escapeHTML: !sugarString.endsWith('&'),
 	}
 	const ids = sugarString.match(/#([\w-]+)/)
 	const classes = sugarString.match(/\.[\w-]+/g)
@@ -17,6 +15,9 @@ export default (sugarString) => {
 
 	if (references)
 		properties.reference = references[1]
+
+	if (sugarString.endsWith('&'))
+		properties.escapeHTML = false
 
 	return properties
 }
