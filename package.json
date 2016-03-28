@@ -1,6 +1,6 @@
 {
   "name": "shaven",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "description": "Shaven is a simple DOM building utility and template engine based upon JsonML",
   "homepage": "http://adriansieber.com/shaven",
   "keywords": [
