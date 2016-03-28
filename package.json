@@ -29,7 +29,8 @@
     "buildHTML": "mustache ./package.json source/templates/index.mustache > build/index.html",
     "build": "rm -rf build && npm run buildBundle && npm run buildImages && npm run buildHTML",
     "test": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
-    "prepublish": "npm test && jscs source"
+    "stylecheck": "jscs source",
+    "prepublish": "npm test && npm run stylecheck"
   },
   "ava": {
     "babel": "inherit"
@@ -81,6 +82,10 @@
     "requireSpacesInFunctionExpression": {
       "beforeOpeningRoundBrace": true,
       "beforeOpeningCurlyBrace": true
+    },
+    "requireTrailingComma": {
+      "ignoreSingleValue": true,
+      "ignoreSingleLine": true
     },
     "disallowMultipleVarDecl": true,
     "requireBlocksOnNewline": true,
@@ -176,7 +181,6 @@
     "validateQuoteMarks": "'",
     "disallowMixedSpacesAndTabs": "smart",
     "disallowTrailingWhitespace": true,
-    "disallowTrailingComma": true,
     "requireKeywordsOnNewLine": [
       "else"
     ],

@@ -153,6 +153,7 @@ it('does not include falsy values in style string', (test) => {
 	test.is(actual, expected)
 })
 
+
 it('builds a transform string from a list of transform objects', (test) => {
 	const expected = '<svg width="50" height="50">' +
 		'<circle r="5" transform="translate(4,5) skewX(6)"></circle>' +

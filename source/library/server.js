@@ -73,7 +73,7 @@ export default function shaven (array) {
 			'param',
 			'source',
 			'track',
-			'wbr'
+			'wbr',
 		]
 
 
