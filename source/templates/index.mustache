@@ -55,9 +55,9 @@
 					['li', 'item1'],
 					['li.active', 'item2'],
 					['li',
-						['a', 'item3', {href: '#'}]
-					]
-				]
+						['a', 'item3', {href: '#'}],
+					],
+				],
 			]
 		</textarea>
 
@@ -113,6 +113,7 @@
 		<p>In the browser load the browser version of shaven.
 			You can get it from
 			<a href=https://github.com/adius/shaven>Github</a>
+		</p>
 
 		<textarea id=codeLoad class=code rows=1 data-lang=html readonly>
 			<script src="shaven.js"></script>
@@ -142,7 +143,7 @@
 				[document.body,
 					['div#demo',
 						…
-					]
+					],
 				]
 			)
 		</textarea>
@@ -156,7 +157,7 @@
 			<code>.rootElement</code>.</p>
 
 		<textarea id=codeAppend class=code rows=7 data-lang=javascript readonly>
-			var shavenObject = shaven(
+			const shavenObject = shaven(
 				['#demo',
 					…
 				]
@@ -251,9 +252,9 @@
 			Therefore it can get easily referenced later on.</p>
 
 		<textarea id=codeIdReference rows=7 data-lang=javascript readonly>
-			var shavenObject = shaven(
+			const shavenObject = shaven(
 				[document.body,
-					['div#test', 'some text']
+					['div#test', 'some text'],
 				]
 			)
 
@@ -265,9 +266,9 @@
 			to assign it a reference-name.</p>
 
 		<textarea id=codeDollarReference rows=7 data-lang=javascript readonly>
-			var shavenObject = shaven(
+			const shavenObject = shaven(
 				[document.body,
-					['div$test', 'some text']
+					['div$test', 'some text'],
 				]
 			)
 
@@ -333,14 +334,15 @@
 		</p>
 
 		<textarea id=transformString rows=9 data-lang=javascript>
-			['svg', {width: 50, height: 50},
+			['svg',
+				{width: 50, height: 50},
 				['circle', {
 					r: 5,
 					transform: [
 						{type: 'translate', x: 4, y: 5},
-						{type: 'skewX', x: 6}
-					]
-				}]
+						{type: 'skewX', x: 6},
+					],
+				}],
 			]
 		</textarea>
 
@@ -455,7 +457,7 @@
 			to build the DOM with the contacts.</p>
 
 		<textarea id=codeTemplate rows=20 data-lang=javascript readonly>
-			function contactTemplate(data) {
+			function contactTemplate (data) {
 				return ['div.contact',
 					['h1', data.name],
 					['dl',
@@ -464,17 +466,17 @@
 						['dt', 'Mobile:'],
 						['dd', data.mobile],
 						['dt', 'Email:'],
-						['dd', data.email]
+						['dd', data.email],
 					]
 				]
 			}
 
-			contacts.forEach(function(contact){
+			contacts.forEach(contact =>
 				shaven([
 					document.body,
-					contactTemplate(contact)
+					contactTemplate(contact),
 				])
-			})
+			)
 		</textarea>
 
 	</section>
@@ -489,13 +491,13 @@
 			This functionality is especially suited to add event-listeners.</p>
 
 		<textarea id=codeCallback rows=9 data-lang=javascript readonly>
-			function doSomething(element) {
+			function doSomething (element) {
 				alert(element + ' was created')
 			}
 
 			shaven(
 				[document.body,
-					['div', doSomething]
+					['div', doSomething],
 				]
 			)
 		</textarea>
@@ -551,7 +553,7 @@
 		<textarea id="configuration" rows="4" data-lang=javascript readonly>
 			shaven({
 				quoteAttributes: false,
-				elementArray: ['p', 'Example text', {title: example}]
+				elementArray: ['p', 'Example text', {title: example}],
 			})
 		</textarea>
 
@@ -577,7 +579,7 @@
 			shaven({
 				namespace: 'http://www.mozilla.org/xbl',
 				elementArray: ['page',
-					['vbox', {flex: 1}]
+					['vbox', {flex: 1}],
 				],
 			})
 		</textarea>

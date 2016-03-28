@@ -31,12 +31,25 @@ module.exports = [
 	{
 		entry: './source/library/browser.js',
 		output: {
-			path: __dirname + '/build',
+			path: __dirname,
 			filename: 'shaven.js',
 		},
 		module: {
 			loaders: [babelLoader],
 		},
+	},
+	{
+		entry: './source/library/browser.js',
+		output: {
+			path: __dirname,
+			filename: 'shaven.min.js',
+		},
+		module: {
+			loaders: [babelLoader],
+		},
+		plugins: [
+			new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+		],
 	},
 	{
 		entry: './test/bundle/main.js',
