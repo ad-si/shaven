@@ -2,18 +2,23 @@ import parseSugarString from './parseSugarString'
 import stringifyStyleObject from './stringifyStyleObject'
 import defaults from './defaults'
 import namespaceToURL from './namespaceToURL'
+import mapAttributeValue from './mapAttributeValue'
 
 
 export default function shaven (array) {
 
-	const config = {
-		nsStack: [defaults.namespace],	// Stack with current namespaces
-		returnObject: {					// Shaven object to return at last
-			ids: {},
-			references: {},
-		},
-		escapeHTML: defaults.escapeHTML,
-	}
+	const config = Object.assign(
+		{},
+		defaults,
+		{
+			nsStack: [defaults.namespace],	// Stack with current namespaces
+			returnObject: {					// Shaven object to return at last
+				ids: {},
+				references: {},
+			},
+		}
+	)
+
 
 
 	function createElement (sugarString) {
@@ -144,21 +149,14 @@ export default function shaven (array) {
 						attributeValue !== null &&
 						attributeValue !== false
 					) {
-						if (attributeValue === undefined)
-							array[0].setAttribute(attributeKey, '')
-
-						else {
-							if (attributeKey === 'style' &&
-								typeof attributeValue === 'object'
-							) {
-								array[0].setAttribute(
-									'style',
-									stringifyStyleObject(attributeValue)
-								)
-							}
-							else
-								array[0].setAttribute(attributeKey, attributeValue)
-						}
+						array[0].setAttribute(
+							attributeKey,
+							mapAttributeValue(
+								attributeKey,
+								attributeValue,
+								config
+							)
+						)
 					}
 				}
 			}
@@ -166,6 +164,8 @@ export default function shaven (array) {
 				throw new TypeError(`"${array[i]}" is not allowed as a value`)
 			}
 		}
+
+
 
 		config.nsStack.pop()
 

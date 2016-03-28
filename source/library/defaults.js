@@ -4,4 +4,5 @@ export default {
 	escapeHTML: true,
 	quotationMark: '"',
 	quoteAttributes: true,
+	convertTransformArray: true,
 }

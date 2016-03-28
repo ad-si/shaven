@@ -1,18 +1,21 @@
 import parseSugarString from './parseSugarString'
-import stringifyStyleObject from './stringifyStyleObject'
 import * as escape from './escape'
 import defaults from './defaults'
+import mapAttributeValue from './mapAttributeValue'
 
 
 export default function shaven (array) {
 
-	const config = {
-		returnObject: { // Shaven object to return at last
-			ids: {},
-			references: {},
-		},
-		escapeHTML: defaults.escapeHTML,
-	}
+	const config = Object.assign(
+		{},
+		defaults,
+		{
+			returnObject: { // Shaven object to return at last
+				ids: {},
+				references: {},
+			},
+		}
+	)
 
 
 	function createElement (sugarString) {
@@ -141,16 +144,10 @@ export default function shaven (array) {
 					if (array[i].hasOwnProperty(attributeKey) &&
 						attributeValue !== null &&
 						attributeValue !== false
-					)
-						if (attributeKey === 'style' &&
-							typeof attributeValue === 'object'
-						) {
-							array[0].attr[attributeKey] =
-								stringifyStyleObject(attributeValue)
-						}
-						else {
-							array[0].attr[attributeKey] = array[i][attributeKey]
-						}
+					) {
+						array[0].attr[attributeKey] =
+							mapAttributeValue(attributeKey, attributeValue)
+					}
 				}
 			}
 			else {
