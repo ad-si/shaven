@@ -495,6 +495,67 @@
 		</textarea>
 	</section>
 
+	<section>
+		<h1>Configuration</h1>
+
+		<p>Shaven can be configured at module scope and settings can be
+			overwritte at each invocation.
+
+			Available settings are:
+		</p>
+
+		<textarea rows="8" data-lang=javascript readonly>
+			{
+				// Wrap all attribute values in quotes
+				quoteAttributes: true,
+
+				// Character used as quotation mark
+				quotationMark: '"',
+
+				// Escape HTML in text if not explicitly defined otherwise
+				escapeHTML: true,
+
+				// Convert array of transform objects to transform-string
+				convertTransformArray: true,
+
+				// Default namespace
+				namespace: 'xhtml',
+
+				// Automatically identify namespace
+				autoNamespacing: true,
+			}
+		</textarea>
+
+		<p>To overwrite the default settings use <code>setDefaults()</code>.
+			This will be set at the module scope for every invocation of shaven.
+		</p>
+
+		<textarea rows="5" data-lang=javascript readonly>
+			import shaven from 'shaven'
+
+			shaven.setDefaults({
+				quoteAttributes: false,
+			})
+		</textarea>
+
+		<p>To overwrite the settings for only one element use the object
+			invocation mode of shaven:
+		</p>
+
+		<textarea id="configuration" rows="4" data-lang=javascript readonly>
+			shaven({
+				quoteAttributes: false,
+				elementArray: ['p', 'Example text', {title: example}]
+			})
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea id="configurationOut" rows="4" data-lang=html readonly>
+			<p title=example>Example text</p>
+		</textarea>
+	</section>
+
 
 	<section>
 		<h1>Namespaces</h1>
