@@ -365,29 +365,27 @@
 	<section>
 		<h1>Namespaces</h1>
 
-		<p>Shaven supports different namespaces and makes it therefore possible
-			to
-			create SVGs, MathML and various other XML-based languages.</p>
+		<p>Shaven automatically uses the correct namespaces to create HTML, SVG,
+			and MathML.
+			It is, however, also possible to use a custom namespace
+			to create documents in various other XML-based languages
+			or to overwrite the defaults.
+		</p>
 
-		<textarea id=codeSvg rows=11 data-lang=javascript readonly>
-			shaven(
-				['svg', {height: 10, width: 10},
-					['circle', {
-						cx: 5,
-						cy: 5,
-						r: 5,
-						style: 'fill:green'
-					}]
+		<textarea id=codeSvg rows=6 data-lang=javascript readonly>
+			shaven({
+				namespace: 'http://www.mozilla.org/xbl',
+				elementArray: ['page',
+					['vbox', {flex: 1}]
 				],
-				'http://www.w3.org/2000/svg'
-			)
+			})
 		</textarea>
 
 		<p>compiles to</p>
 
 		<textarea id=codeSvgOut rows=3 data-lang=html readonly>
-			<svg height="10" width="10">
-				<circle cx="5" cy="5" r="5" style="fill:green"></circle>
+			<page>
+				<vbox flex="1"></vbox>
 			</svg>
 		</textarea>
 

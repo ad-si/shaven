@@ -32,14 +32,14 @@ export default function shaven (arrayOrObject) {
 		defaults,
 		config,
 		{
-			nsStack: [defaults.namespace],	// Stack with current namespaces
-			returnObject: {					// Shaven object to return at last
+			returnObject: { // Shaven object to return at last
 				ids: {},
 				references: {},
 			},
 		}
 	)
 
+	config.nsStack = [config.namespace] // Stack with current namespaces
 
 
 	function createElement (sugarString) {
@@ -59,8 +59,9 @@ export default function shaven (arrayOrObject) {
 			config.nsStack.push(currentNs)
 		}
 
+		const namespace = config.nsStack[config.nsStack.length - 1]
 		const element = document.createElementNS(
-			namespaceToURL[config.nsStack[config.nsStack.length - 1]],
+			(namespaceToURL[namespace] ? namespaceToURL[namespace] : namespace),
 			properties.tag
 		)
 

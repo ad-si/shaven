@@ -15,6 +15,5 @@ shaven(
 			['circle', {r: 5, cx: 10, cy: 10, fill: 'red'}],
 			['text', {y: 20}, '<circle>']
 		]
-	],
-	'http://www.w3.org/2000/svg'
+	]
 )

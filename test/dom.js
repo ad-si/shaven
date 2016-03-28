@@ -76,3 +76,26 @@ it('returns marked elements ', (test) => {
 		document.getElementsByTagName('p')[0]
 	)
 })
+
+
+it('uses specified namespace', (test) => {
+	const circle = shaven({
+		namespace: 'svg',
+		elementArray: ['circle', {r: 5}],
+	})
+	let svgElement = shaven(['svg',
+		['rect', {width: 5, height: 5}],
+		circle.rootElement
+	]).rootElement
+
+	if (typeof svgElement !== 'string')
+		svgElement = svgElement.outerHTML
+
+	test.is(
+		svgElement,
+		'<svg>' +
+			'<rect width="5" height="5"></rect>' +
+			'<circle r="5"></circle>' +
+		'</svg>'
+	)
+})
