@@ -253,6 +253,10 @@
 			If an entry is <code>null</code> or <code>false</code> the attribute
 			will not
 			be created at all.</p>
+	</section>
+
+	<section>
+		<h1>Style Attribute</h1>
 
 		<p>If the style entry is an object it will automatically get compiled
 			to a string. This is especially useful for working with svgs, where
@@ -274,11 +278,52 @@
 
 		<p>compiles to</p>
 
-		<textarea id=codePropertiesOut rows=3 data-input=codeProperties
-		          data-lang=html readonly>
+		<textarea
+			id=codePropertiesOut
+			rows=3
+			data-input=codeProperties
+			data-lang=html
+			readonly
+		>
 			<p class="new focus" data-lang="de" style="color:red;display:block">
 				Hello
 			</p>
+		</textarea>
+	</section>
+
+	<section>
+		<h1>Transform Attribute</h1>
+
+		<p>If a transform attribute is an an array of objects
+			it will get compiled to an SVG
+			<a href="http://devdocs.io/svg/attribute/transform">transform
+			string</a>.
+		</p>
+
+		<textarea id=transformString rows=9 data-lang=javascript>
+			['svg', {width: 50, height: 50},
+				['circle', {
+					r: 5,
+					transform: [
+						{type: 'translate', x: 4, y: 5},
+						{type: 'skewX', x: 6}
+					]
+				}]
+			]
+		</textarea>
+
+		<p>compiles to</p>
+
+		<textarea
+			id=transformStringOut
+			rows=3
+			data-input=transformString
+			data-lang=html
+			readonly
+		>
+			<svg width="50" height="50">
+				<circle r="5" transform="translate(4,5) skewX(6)"></circle>
+			</svg>
 		</textarea>
 
 	</section>
