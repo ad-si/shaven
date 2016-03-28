@@ -130,10 +130,11 @@
 	<section>
 		<h1>Insert Methods</h1>
 
-		<p>There are two different methods to insert a DOM-fragment into the
-			DOM.</p>
+		<p>There are three different methods to add a DOM-fragment
+			to a document.
+		</p>
 
-		<p>Firstly you can inject it straight into the DOM:</p>
+		<h2>1. Inject it straight into the DOM:</h2>
 
 		<textarea id=codeStraightInsert class=code rows=7
 			data-lang=javascript readonly>
@@ -146,8 +147,10 @@
 			)
 		</textarea>
 
-		<p>Secondly you can assign the Shaven-object to a variable and append
-			the fragment later.</p>
+
+		<h2>2. Assign the Shaven-object to a variable and append
+			the fragment later.
+		</h2>
 
 		<p>To get the HTML-fragment from the Shaven-object reference it with
 			<code>.rootElement</code>.</p>
@@ -172,16 +175,19 @@
 			</body>
 		</textarea>
 
-		<br>
-		
-		<p>To get the HTML string of an shaven-object simply call the
+
+		<h2>3. Set the <code>innerHTML</code> of an element.</h2>
+
+		<p>To get the HTML string of a Shaven-object simply call the
 			<code>toString()</code> method, convert the object to a String
 			with <code>String(shavenObject)</code> or the easiest way -
-			add it to another string:
+			add it to another string.
 		</p>
 
-		<textarea rows=1 data-lang=javascript>
+		<textarea rows=3 data-lang=javascript>
 			console.log('The HTML for the object is ' + shavenObject)
+
+			document.body.innerHTML = shavenObject.toString()
 		</textarea>
 
 	</section>
