@@ -25,9 +25,8 @@
   },
   "scripts": {
     "buildBundle": "webpack",
-    "buildImages": "cp -r source/images build/images",
     "buildHTML": "mustache ./package.json source/templates/index.mustache > build/index.html",
-    "build": "rm -rf build && npm run buildBundle && npm run buildImages && npm run buildHTML",
+    "build": "rm -rf build && npm run buildBundle && npm run buildHTML",
     "test": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
     "stylecheck": "jscs source",
     "prepublish": "npm test && npm run stylecheck"
@@ -55,6 +54,7 @@
     "mustache": "^2.2.1",
     "style-loader": "^0.13.1",
     "stylus-loader": "^1.5.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
   },
   "engines": {

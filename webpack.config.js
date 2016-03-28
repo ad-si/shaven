@@ -20,6 +20,7 @@ module.exports = [
 			loaders: [
 				{ test: /\.js$/, loader: 'babel', query: {presets: ['es2015']}},
 				{ test: /\.json$/, loader: 'json' },
+				{ test: /\.png$/, loader: 'url' },
 				{ test: /\.css$/, loaders: ['style', 'css'] },
 				{ test: /\.styl$/, loaders: ['style', 'css', 'stylus'] },
 			]
