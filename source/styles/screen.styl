@@ -37,6 +37,9 @@ pre
 	margin-right -2rem
 	margin-bottom 1em
 
+.ace_editor
+	font-size 0.75em !important
+
 textarea
 	background-color rgb(29, 31, 33)
 	color rgb(197, 200, 198)
@@ -69,27 +72,37 @@ code
 
 #wrapcontent
 	margin auto
-	padding 4em 1em 0 1em
+	padding 10em 1em 0 1em
 	background-image url(/images/mustache.png)
 	background-repeat no-repeat
-	background-position 240px 40px
-	background-size 12em
+	background-position 50% 1em
+	background-size 14em
 
 header
-	h1
-		font-size 90px
-		font-family "Grand Hotel", sans-serif
+	h1, h2, small
 		color white
+
+	h1
+		display inline-block
+		font-size 6em
+		font-family "Grand Hotel", sans-serif
 		text-shadow 2px 2px 1px rgba(0, 0, 0, 0.4)
-		margin-bottom 20px
+		margin-bottom 1.5rem
+		margin-right 2rem
+
 	h2
 		font-size 19px
 		font-family "Trebuchet MS", sans-serif
 		font-weight 500
-		color white
 		text-shadow 1px 1px 1px rgba(0, 0, 0, 0.4)
 		text-align center
 		margin-bottom 40px
+
+	small
+		vertical-align: middle
+		font-size 2em
+		text-shadow 1px 1px 1px rgba(0, 0, 0, 0.4)
+
 
 section
 	background-color white
@@ -143,6 +156,9 @@ footer
 
 	#wrapcontent
 		width width
+		padding 4em 1em 0 1em
+		background-position 24em 2em
+		background-size 12em
 
 	footer
 		text-align left
