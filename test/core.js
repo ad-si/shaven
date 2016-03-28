@@ -433,12 +433,16 @@ it('supports unquoted element attributes', (test) => {
 
 it('supports unescaped element content', (test) => {
 	const html = '<p>Some <strong>HTML</strong></p>'
-	let element = shaven(['div&', html])[0]
+	let element = shaven(['div!', html])[0]
+	let elementAmpersand = shaven(['div&', html])[0]
 
-	if (typeof element !== 'string')
+	if (typeof element !== 'string') {
 		element = element.outerHTML
+		elementAmpersand = elementAmpersand.outerHTML
+	}
 
 	test.is(element, `<div>${html}</div>`)
+	test.is(elementAmpersand, element)
 })
 
 

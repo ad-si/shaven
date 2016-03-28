@@ -16,7 +16,7 @@ export default (sugarString) => {
 	if (references)
 		properties.reference = references[1]
 
-	if (sugarString.endsWith('&'))
+	if (sugarString.endsWith('&') || sugarString.endsWith('!'))
 		properties.escapeHTML = false
 
 	return properties
