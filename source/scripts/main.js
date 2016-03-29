@@ -3,7 +3,6 @@ require('brace/mode/javascript')
 require('brace/mode/html')
 require('brace/theme/tomorrow_night')
 
-require('./piwik')
 require('../styles/screen.styl')
 // TODO: Load fonts with webpack
 // require('https://fonts.googleapis.com/css?family=Grand+Hotel')
