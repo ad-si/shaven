@@ -48,6 +48,9 @@ compiles to
 </body>
 ```
 
+In order to convert HTML fragments to shaven arrays
+[html2shaven](https://github.com/adius/html2shaven) can be used.
+
 
 ## Features
 
