@@ -12,16 +12,12 @@
     "url": "https://github.com/adius/shaven/issues"
   },
   "license": "ISC",
-  "author": {
-    "name": "Adrian Sieber",
-    "email": "mail@adriansieber.com",
-    "url": "http://adriansieber.com"
-  },
+  "author": "Adrian Sieber <mail@adriansieber.com> (http://adriansieber.com)",
   "main": "build/server",
   "browser": "build/browser",
   "repository": {
     "type": "git",
-    "url": "https://github.com/adius/shaven.git"
+    "url": "git+https://github.com/adius/shaven.git"
   },
   "scripts": {
     "buildHTML": "mustache ./package.json source/templates/index.mustache > site/index.html",
@@ -190,5 +186,9 @@
     "requireCapitalizedConstructors": true,
     "requireDotNotation": true,
     "disallowYodaConditions": true
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
   }
 }
