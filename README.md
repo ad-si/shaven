@@ -62,9 +62,9 @@ In order to convert HTML fragments to shaven arrays
 
 ## Advantages
 
-- Leverage the full power of Javascript in your templates.
+- Leverage the full power of JavaScript in your templates.
 	=> No need to learn a new language!
-- Directly integratable into Javascript files
+- Directly integrable into JavaScript files
 - Works in front- and backend environment
 - Templates normally tend to get more complicated with the number of variables
 	as they need to get escaped in some way.
