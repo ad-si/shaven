@@ -23,9 +23,10 @@
     "buildHTML": "mustache ./package.json source/templates/index.mustache > site/index.html",
     "buildSite": "webpack && npm run buildHTML",
     "build": "babel source/library --out-dir build",
-    "test": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
-    "stylecheck": "jscs source",
-    "prepublish": "npm test && npm run stylecheck && npm run build"
+    "unit-tests": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "test": "npm run lint && npm run unit-tests",
+    "prepdublish": "npm test && npm run stylecheck && npm run build"
   },
   "ava": {
     "babel": "inherit"
@@ -34,161 +35,37 @@
     "escape-html": "~1.0.1"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
+    "ava": "^0.15.2",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-array-includes": "^2.0.3",
     "babel-preset-es2015": "^6.6.0",
     "babel-register": "^6.7.2",
-    "brace": "^0.7.0",
+    "brace": "^0.8.0",
     "css-loader": "^0.23.1",
+    "eslint": "~2.11.0",
     "file-loader": "^0.8.5",
-    "jscs": "^2.8.0",
-    "jsdom": "^8.1.0",
-    "jshint": "^2.9.1",
+    "javascript-styleguide": "^0.2.2",
+    "jscs": "^3.0.4",
+    "jsdom": "^9.2.1",
     "json-loader": "^0.5.4",
     "mustache": "^2.2.1",
     "style-loader": "^0.13.1",
-    "stylus-loader": "^1.5.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.1.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
   },
   "engines": {
     "node": "~0.12.2"
   },
-  "jscsConfig": {
-    "excludeFiles": [
-      "node_modules/**",
-      "bower_components/**",
-      "*.min.js"
-    ],
-    "requireCurlyBraces": [],
-    "requireSpaceAfterKeywords": [
-      "if",
-      "else",
-      "for",
-      "while",
-      "do",
-      "switch",
-      "return",
-      "try",
-      "catch"
-    ],
-    "requireSpaceBeforeBlockStatements": true,
-    "requireSpacesInFunctionExpression": {
-      "beforeOpeningRoundBrace": true,
-      "beforeOpeningCurlyBrace": true
-    },
-    "requireTrailingComma": {
-      "ignoreSingleValue": true,
-      "ignoreSingleLine": true
-    },
-    "disallowMultipleVarDecl": true,
-    "requireBlocksOnNewline": true,
-    "disallowEmptyBlocks": true,
-    "disallowSpacesInsideArrayBrackets": true,
-    "disallowSpacesInsideObjectBrackets": true,
-    "disallowSpacesInsideParentheses": true,
-    "disallowQuotedKeysInObjects": true,
-    "disallowDanglingUnderscores": true,
-    "disallowSpaceAfterObjectKeys": true,
-    "requireCommaBeforeLineBreak": true,
-    "requireOperatorBeforeLineBreak": [
-      "?",
-      "+",
-      "/",
-      "*",
-      {
-        "null": null
-      },
-      "=",
-      "==",
-      "===",
-      "!=",
-      "!==",
-      ">",
-      ">=",
-      "<",
-      "<="
-    ],
-    "disallowSpaceAfterBinaryOperators": [
-      "!"
-    ],
-    "disallowSpaceBeforeBinaryOperators": [
-      ","
-    ],
-    "disallowSpaceAfterPrefixUnaryOperators": [
-      "++",
-      "--",
-      "+",
-      "-",
-      null,
-      "!"
-    ],
-    "disallowSpaceBeforePostfixUnaryOperators": [
-      "++",
-      "--"
-    ],
-    "requireSpaceBeforeBinaryOperators": [
-      "?",
-      "+",
-      "-",
-      "/",
-      "*",
-      "=",
-      "==",
-      "===",
-      "!=",
-      "!==",
-      ">",
-      ">=",
-      "<",
-      "<="
-    ],
-    "requireSpaceAfterBinaryOperators": [
-      ",",
-      ":",
-      "?",
-      "+",
-      "-",
-      "/",
-      "*",
-      "=",
-      "==",
-      "===",
-      "!=",
-      "!==",
-      ">",
-      ">=",
-      "<",
-      "<="
-    ],
-    "disallowImplicitTypeConversion": [
-      "numeric",
-      "boolean",
-      "binary"
-    ],
-    "requireCamelCaseOrUpperCaseIdentifiers": true,
-    "disallowKeywords": [
-      "with"
-    ],
-    "disallowMultipleLineStrings": true,
-    "validateLineBreaks": "LF",
-    "validateQuoteMarks": "'",
-    "disallowMixedSpacesAndTabs": "smart",
-    "disallowTrailingWhitespace": true,
-    "requireKeywordsOnNewLine": [
-      "else"
-    ],
-    "requireLineFeedAtFileEnd": true,
-    "maximumLineLength": 100,
-    "requireCapitalizedConstructors": true,
-    "requireDotNotation": true,
-    "disallowYodaConditions": true
-  },
   "directories": {
-    "example": "examples",
-    "test": "test"
+     "example": "examples",
+     "test": "test"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "./node_modules/javascript-styleguide/.eslintrc.yaml"
   }
 }
