@@ -26,7 +26,9 @@
     "unit-tests": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
     "lint": "eslint --ignore-path .gitignore .",
     "test": "npm run lint && npm run unit-tests",
-    "prepdublish": "npm test && npm run stylecheck && npm run build"
+    "prepublish": "npm test && npm run build",
+    "precommit": "npm run prepublish",
+    "prepush": "npm run prepublish"
   },
   "ava": {
     "babel": "inherit"
@@ -46,6 +48,7 @@
     "css-loader": "^0.23.1",
     "eslint": "~2.11.0",
     "file-loader": "^0.8.5",
+    "husky": "^0.11.4",
     "javascript-styleguide": "^0.2.2",
     "jscs": "^3.0.4",
     "jsdom": "^9.2.1",
