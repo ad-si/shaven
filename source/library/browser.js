@@ -75,7 +75,7 @@ export default function shaven (arrayOrObject) {
       config.returnObject.ids[properties.id] = element
     }
     if (properties.class) {
-      element.className = properties.class
+      element.classList.add(...properties.class.split(' '))
     }
     if (properties.reference) {
       console.assert(

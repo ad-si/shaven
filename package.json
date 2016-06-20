@@ -20,9 +20,9 @@
     "url": "git+https://github.com/adius/shaven.git"
   },
   "scripts": {
+    "transpile": "babel source/library --out-dir build",
     "buildHTML": "mustache ./package.json source/templates/index.mustache > site/index.html",
-    "buildSite": "webpack && npm run buildHTML",
-    "build": "babel source/library --out-dir build",
+    "build": "npm run transpile && webpack && npm run buildHTML",
     "unit-tests": "ava --require babel-register --fail-fast test/node.js test/jsdom.js",
     "lint": "eslint --ignore-path .gitignore .",
     "test": "npm run lint && npm run unit-tests",
@@ -46,7 +46,7 @@
     "babel-register": "^6.7.2",
     "brace": "^0.8.0",
     "css-loader": "^0.23.1",
-    "eslint": "~2.11.0",
+    "eslint": "^2.13.1",
     "file-loader": "^0.8.5",
     "husky": "^0.11.4",
     "javascript-styleguide": "^0.2.2",

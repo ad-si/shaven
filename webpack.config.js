@@ -32,6 +32,7 @@ module.exports = [
     output: {
       path: __dirname,
       filename: 'shaven.js',
+      library: 'shaven',
     },
     module: {
       loaders: [babelLoader],
@@ -42,6 +43,7 @@ module.exports = [
     output: {
       path: __dirname,
       filename: 'shaven.min.js',
+      library: 'shaven',
     },
     module: {
       loaders: [babelLoader],

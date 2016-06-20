@@ -676,6 +676,31 @@ it('escapes text in SVGs', (test) => {
   }
 })
 
+// Should fail when implemented with element.className = '…',
+// but doesn't. (See https://github.com/tmpvar/jsdom/issues/1528)
+it('sets class of SVG element', (test) => {
+  const elementArray = ['svg#svg',
+    ['circle.test',
+      {cx: 5, cy: 5, r: 2}, // eslint-disable-line id-length
+    ],
+  ]
+  const expectedString = `<svg id="svg">
+    <circle class="test" cx="5" cy="5" r="2"></circle>
+    </svg>`.replace(/\n\s+/g, '')
+  const svgElement = shaven(elementArray).rootElement
+
+  if (typeof svgElement === 'string') {
+    test.is(svgElement, expectedString)
+  }
+  else {
+    document.getElementById('test').innerHTML = expectedString
+    const expectedElement = document.getElementById('svg')
+
+    test.is(svgElement.outerHTML, expectedElement.outerHTML)
+    test.true(svgElement.isEqualNode(expectedElement))
+  }
+})
+
 
 it('returns an empty element for missing content value', (test) => {
   let element = shaven(['div'])[0]
