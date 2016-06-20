@@ -76,7 +76,12 @@ In order to convert HTML fragments to shaven arrays
 
 ## Installation
 
-Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a detailed description of how to install shaven.
+```shell
+npm install --save shaven
+```
+
+Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a
+detailed description of how to install shaven in other environments.
 
 
 ## Browser Support
@@ -95,12 +100,11 @@ under normal circumstances.
 
 ## Development
 
-All code changes must be made in the server and browser version of shaven
-(`source/index.js` and `source/shaven.js`)
+Check if code changes must be made in the [server](./source/library/server.js)
+and [browser](./source/library/browser.js) version of shaven
 
 - Tests: `$ npm test`
 - Build: `$ npm run build`
-- Execute `$ npm run prepublish` before each commit
 - Bump version
 	1. Change version number in package file ([semver](http://semver.org))
 	2. Execute `npm run prepublish`
