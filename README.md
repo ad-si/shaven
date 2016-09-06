@@ -69,7 +69,7 @@ In order to convert HTML fragments to shaven arrays
 - Templates normally tend to get more complicated with the number of variables
 	as they need to get escaped in some way.
 	With Shaven it's exactly the opposite. As variables are native to Shaven
-	the templates get simpler with a increasing number of variables.
+	the templates get simpler with an increasing number of variables.
 - Shaven templates can be easily build with every major programming language
 	and their existing JSON/YAML tools.
 
