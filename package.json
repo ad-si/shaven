@@ -17,7 +17,7 @@
   "browser": "build/browser",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adius/shaven.git"
+    "url": "https://github.com/adius/shaven"
   },
   "scripts": {
     "transpile": "babel source/library --out-dir build",
