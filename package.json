@@ -26,9 +26,7 @@
     "unit-tests": "ava --fail-fast test/node.js test/jsdom.js",
     "lint": "eslint --ignore-path .gitignore .",
     "test": "npm run lint && npm run unit-tests",
-    "prepublish": "npm test && npm run build",
-    "precommit": "npm run prepublish",
-    "prepush": "npm run prepublish"
+    "prepublish-only": "npm test && npm run build"
   },
   "ava": {
     "babel": "inherit",
@@ -51,7 +49,6 @@
     "css-loader": "^0.28.9",
     "eslint": "^4.16.0",
     "file-loader": "^1.1.6",
-    "husky": "^0.14.3",
     "javascript-styleguide": "^1.0.0",
     "jscs": "^3.0.7",
     "jsdom": "^11.6.0",
