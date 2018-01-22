@@ -1,4 +1,4 @@
-/* globals shaven*/
+/* globals shaven */
 
 import it from 'ava'
 
@@ -41,6 +41,20 @@ it('supports hyphens in html tags', (test) => {
   const actual = shaven([container, element])[0].outerHTML
 
   test.is(actual, expected, actual)
+})
+
+
+// TODO: Find out why it doesn't work in JSDOM and fix it
+it.skip('escapes html strings in tags', (test) => {
+  const container = document.getElementById('test')
+  const html = '<p>Some <strong>HTML</strong></p>'
+  const escapedHtml = '&lt;p&gt;Some ' +
+    '&lt;strong&gt;HTML&lt;/strong&gt;' +
+    '&lt;/p&gt;'
+  const actual = shaven([container, html])[0].outerHTML
+  const expected = `<div id="test">${escapedHtml}</div>`
+
+  test.is(actual, expected)
 })
 
 

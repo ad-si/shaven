@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const babelLoader = {
   test: /\.js$/,
-  loader: 'babel',
+  loader: 'babel-loader',
   query: {
     presets: ['es2015'],
   },
@@ -16,11 +16,15 @@ module.exports = [
     },
     module: {
       loaders: [
-        { test: /\.js$/, loader: 'babel', query: {presets: ['es2015']}},
-        { test: /\.json$/, loader: 'json' },
-        { test: /\.png$/, loader: 'url' },
-        { test: /\.css$/, loaders: ['style', 'css'] },
-        { test: /\.styl$/, loaders: ['style', 'css', 'stylus'] },
+        { test: /\.js$/, loader: 'babel-loader', query: {presets: ['es2015']}},
+        { test: /\.json$/, loader: 'json-loader' },
+        { test: /\.png$/, loader: 'url-loader' },
+        { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
+        { test: /\.styl$/, loaders: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader',
+        ] },
       ],
     },
     plugins: [

@@ -333,8 +333,13 @@ it('links ids and references', (test) => {
     ['li#first', 'First'],
     ['li$second', 'Second'],
   ])
+  const element = shavenObject.rootElement
 
-  if (typeof shavenObject.rootElement !== 'string') {
+  if (typeof element === 'string') {
+    test.is(shavenObject.ids.first.tag, 'li')
+    test.is(shavenObject.references.second.tag, 'li')
+  }
+  else {
     test.is(shavenObject.ids.first.outerHTML, '<li id="first">First</li>')
     test.is(shavenObject.references.second.outerHTML, '<li>Second</li>')
   }
@@ -378,14 +383,13 @@ it('escapes html strings in tags', (test) => {
   const escapedHtml = '&lt;p&gt;Some ' +
     '&lt;strong&gt;HTML&lt;/strong&gt;' +
     '&lt;/p&gt;'
-  const element = shaven(['div', html])[0]
+  let element = shaven(['div', html])[0]
 
-  if (typeof element === 'string') {
-    test.is(element, '<div>' + escapedHtml + '</div>')
+  if (typeof element !== 'string') {
+    element = element.outerHTML
   }
-  else {
-    test.is(element.innerHTML, escapedHtml)
-  }
+
+  test.is(element, `<div>${escapedHtml}</div>`)
 })
 
 
@@ -424,7 +428,7 @@ it('escapes html strings in attributes', (test) => {
 })
 
 
-it('supports unquoted element attributes', (test) => {
+it('supports unquoted element attributes on server', (test) => {
   shaven.setDefaults({quoteAttributes: false})
   const element = shaven(
     ['p', {
@@ -435,15 +439,18 @@ it('supports unquoted element attributes', (test) => {
     }]
   ).rootElement
 
-  shaven.setDefaults({quoteAttributes: true})
-
-  if (typeof element === 'string') {
+  if (typeof element !== 'string') {
+    test.pass()
+  }
+  else {
     test.is(
       element,
       '<p lang=de data-info=baz title="With space" ' +
       'data-special="Special characters: &quot;\'=><`"></p>'
     )
   }
+
+  shaven.setDefaults({quoteAttributes: true})
 })
 
 
@@ -757,7 +764,7 @@ it('omit end-tag for self-closing elements', (test) => {
 })
 
 
-it('can be configured to use different quotation mark', (test) => {
+it('can be configured to use different quotation mark on server', (test) => {
   const elementWithCustomMark = shaven({
     quotationMark: '%',
     elementArray: [
@@ -768,6 +775,9 @@ it('can be configured to use different quotation mark', (test) => {
 
   if (typeof elementWithCustomMark === 'string') {
     test.is(elementWithCustomMark, '<div><p id=%wtf%>Test</p></div>')
+  }
+  else {
+    test.pass()
   }
 })
 

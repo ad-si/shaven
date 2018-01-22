@@ -81,14 +81,14 @@ export default function shaven (arrayOrObject) {
       console.assert(
         !config.returnObject.ids.hasOwnProperty(properties.reference),
         `References must be unique and "${properties.id
-          }" is already assigned`
+        }" is already assigned`
       )
       config.returnObject.references[properties.reference] = element
     }
 
-    if (properties.escapeHTML != null) {
-      config.escapeHTML = properties.escapeHTML
-    }
+    config.escapeHTML = properties.escapeHTML != null
+      ? properties.escapeHTML
+      : config.escapeHTML
 
     return element
   }

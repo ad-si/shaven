@@ -4,6 +4,8 @@ import shaven from '../..'
 shaven([document.getElementById('test'),
   ['h1', 'Test'],
   ['p.sentence', 'Test sentence'],
+  ['p.sentence', 'Sentence with escaped <em>HTML</em>'],
+  ['p.sentence!', 'Sentence with unescaped <em>HTML</em>'],
   ['ul#list',
     ['li', 12],
     ['li', 'foo'],
