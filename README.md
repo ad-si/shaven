@@ -111,3 +111,11 @@ and [browser](./source/library/browser.js) version of shaven
 	3. Commit
 	4. Tag commit (`v<version>`)
 - Publish to npm `$ npm publish`
+- Release new version of website:
+	```sh
+	git checkout gh-pages
+	rm -rf index.html scripts
+	mv site/* .
+	git commit
+	git push
+	```
