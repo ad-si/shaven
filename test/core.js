@@ -83,8 +83,7 @@ it('is possible to set properties', (test) => {
 
 
 it('does not set falsy properties', (test) => {
-  const expectedString = '<p title="foo" ' +
-    'tabindex="3" data-info=""></p>'
+  const expectedString = '<p title="foo" tabindex="3" data-info=""></p>'
   const actual = shaven(
     ['p', {
       title: 'foo',
@@ -808,4 +807,22 @@ it('can change defaults', (test) => {
 
   test.is(escaped, '<div>&lt;p&gt;Test&lt;/p&gt;</div>')
   test.is(unescaped, '<div><p>Test</p></div>')
+})
+
+
+it('does not mutate the array', (test) => {
+  const array = ['div.important', ['p', {lang: 'en'}, 'text']]
+  let element1 = shaven(array).rootElement
+  let element2 = shaven(array).rootElement
+  const expected = '<div class="important"><p lang="en">text</p></div>'
+
+  if (typeof element1 !== 'string') {
+    element1 = element1.outerHTML
+  }
+  if (typeof element2 !== 'string') {
+    element2 = element2.outerHTML
+  }
+
+  test.is(element1, expected)
+  test.is(element2, expected)
 })
