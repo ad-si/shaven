@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/adius/shaven.svg)](https://travis-ci.org/adius/shaven)
 
-A **DOM building utility** and **Template engine** build upon **JsonML** with syntax sugar.
+A **DOM building utility** and **Template engine** based on **JsonML** with syntax sugar.
 
 Checkout [adriansieber.com/shaven](http://adriansieber.com/shaven) for an extensive documentation.
 
