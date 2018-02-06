@@ -15,15 +15,15 @@ export default function shaven (arrayOrObject) {
   }
 
   let config = {}
-  let elementArray
+  let elementArray = []
 
   if (Array.isArray(arrayOrObject)) {
-    elementArray = arrayOrObject
+    elementArray = arrayOrObject.slice(0)
   }
   else {
-    elementArray = arrayOrObject.elementArray
-    delete arrayOrObject.elementArray
-    Object.assign(config, arrayOrObject)
+    elementArray = arrayOrObject.elementArray.slice(0)
+    config = Object.assign(config, arrayOrObject)
+    delete config.elementArray
   }
 
   config = Object.assign(
@@ -75,8 +75,7 @@ export default function shaven (arrayOrObject) {
   }
 
 
-  function buildDom (array) {
-
+  function buildDom (elemArray) {
     let index = 1
     let createdCallback
     const selfClosingHTMLTags = [
@@ -98,6 +97,8 @@ export default function shaven (arrayOrObject) {
       'track',
       'wbr',
     ]
+    // Clone to avoid mutation problems
+    const array = elemArray.slice(0)
 
 
     if (typeof array[0] === 'string') {
@@ -154,7 +155,7 @@ export default function shaven (arrayOrObject) {
           index++
         }
 
-        buildDom(array[index])
+        array[index] = buildDom(array[index])
 
         if (array[index][0]) {
           array[0].children.push(array[index][0])
@@ -223,12 +224,11 @@ export default function shaven (arrayOrObject) {
     config.returnObject.toString = () => array[0]
 
     if (createdCallback) createdCallback(array[0])
+
+    return config.returnObject
   }
 
-
-  buildDom(elementArray)
-
-  return config.returnObject
+  return buildDom(elementArray)
 }
 
 shaven.setDefaults = (object) => {

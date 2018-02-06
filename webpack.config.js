@@ -57,6 +57,20 @@ module.exports = [
     ],
   },
   {
+    entry: './source/library/server.js',
+    output: {
+      path: __dirname,
+      filename: 'shaven-server.min.js',
+      library: 'shaven',
+    },
+    module: {
+      loaders: [babelLoader],
+    },
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    ],
+  },
+  {
     entry: './test/bundle/main.js',
     output: {
       path: __dirname + '/test/bundle',
