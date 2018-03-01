@@ -6,12 +6,19 @@ import assert from 'assert'
 
 
 export default function shaven (arrayOrObject) {
+  const isArray = Array.isArray(arrayOrObject)
+  const objType = typeof arrayOrObject
 
-  if (!arrayOrObject || typeof arrayOrObject !== 'object') {
+  if (!isArray && objType !== 'object') {
     throw new Error(
       'Argument must be either an array or an object ' +
-      'and not ' + arrayOrObject
+      'and not ' + JSON.stringify(arrayOrObject)
     )
+  }
+
+  if (isArray && arrayOrObject.length === 0) {
+    // Ignore empty arrays
+    return {}
   }
 
   let config = {}
@@ -76,6 +83,11 @@ export default function shaven (arrayOrObject) {
 
 
   function buildDom (elemArray) {
+    if (Array.isArray(elemArray) && elemArray.length === 0) {
+      // Ignore empty arrays
+      return {}
+    }
+
     let index = 1
     let createdCallback
     const selfClosingHTMLTags = [

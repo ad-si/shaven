@@ -540,7 +540,28 @@ it('accepts an array of elements at index 0', (test) => {
 })
 
 
+it('ignores an empty array', (test) => {
+  test.plan(1)
+
+  const emptyElem = shaven([])
+  test.deepEqual(emptyElem, {})
+})
+
+
+it('ignores an empty subarray', (test) => {
+  test.plan(1)
+  let element = shaven(['p', 'Test', []]).rootElement
+
+  if (typeof element !== 'string') {
+    element = element.outerHTML
+  }
+
+  test.is(element, '<p>Test</p>')
+})
+
+
 it('throws an error for an invalid array', (test) => {
+  test.plan(2)
   const regexString = '.*first ' +
     'element.*must be.*string.*array.*'
 
