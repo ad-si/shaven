@@ -19,15 +19,7 @@
     "type": "git",
     "url": "https://github.com/adius/shaven"
   },
-  "scripts": {
-    "transpile": "babel source/library --out-dir build",
-    "buildHTML": "mustache ./package.json source/templates/index.mustache > site/index.html",
-    "build": "npm run transpile && webpack && npm run buildHTML",
-    "unit-tests": "ava --fail-fast test/node.js test/jsdom.js",
-    "lint": "eslint --max-warnings=0 --ignore-path=.gitignore .",
-    "test": "npm run lint && npm run unit-tests",
-    "prepublish-only": "npm test && npm run build"
-  },
+  "scripts": {},
   "ava": {
     "babel": "inherit",
     "require": [
