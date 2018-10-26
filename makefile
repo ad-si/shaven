@@ -2,7 +2,8 @@ all: test build site/index.html
 
 
 build: source/library
-	yarn babel $< --out-dir $@
+	yarn babel $< \
+		--out-dir $@
 
 
 site/index.html: source/templates/index.mustache package.json site/scripts/bundle.js
@@ -26,6 +27,12 @@ lint:
 		--max-warnings 0 \
 		--ignore-path .gitignore \
 		.
+
+
+# Deploy website to surge.sh
+.PHONY: deploy
+deploy: site/index.html
+	surge site shaven.ad-si.com
 
 
 .PHONY: clean

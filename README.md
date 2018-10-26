@@ -1,12 +1,17 @@
 ![Logo](./source/images/screenshot.png)
 
+
 # Shaven
 
-[![Build Status](https://travis-ci.org/adius/shaven.svg)](https://travis-ci.org/adius/shaven)
+[![Build Status][build-status]](https://travis-ci.org/adius/shaven)
 
-A **DOM building utility** and **Template engine** based on **JsonML** with syntax sugar.
+A **DOM building utility** and **Template engine**
+based on **JsonML** with syntax sugar.
 
-Checkout [shaven.ad-si.com](http://shaven.ad-si.com) for an extensive documentation.
+Checkout [shaven.ad-si.com] for extensive documentation.
+
+[build-status]: https://travis-ci.org/adius/shaven.svg
+[shaven.ad-si.com]: http://shaven.ad-si.com
 
 
 ## Example
@@ -80,7 +85,7 @@ In order to convert HTML fragments to shaven arrays
 npm install --save shaven
 ```
 
-Check out [adriansieber.com/shaven](http://adriansieber.com/shaven) for a
+Check out [shaven.ad-si.com] for a
 detailed description of how to install shaven in other environments.
 
 
@@ -101,21 +106,13 @@ under normal circumstances.
 ## Development
 
 Check if code changes must be made in the [server](./source/library/server.js)
-and [browser](./source/library/browser.js) version of shaven
+and [browser](./source/library/browser.js) version of shaven.
 
-- Tests: `$ npm test`
-- Build: `$ npm run build`
+- Build website `make`
 - Bump version
 	1. Change version number in package file ([semver](http://semver.org))
 	2. Execute `npm run prepublish`
 	3. Commit
 	4. Tag commit (`v<version>`)
-- Publish to npm `$ npm publish`
-- Release new version of website:
-	```sh
-	git checkout gh-pages
-	rm -rf index.html scripts
-	mv site/* .
-	git commit
-	git push
-	```
+- Publish to npm `npm publish`
+- Release new version of website: `make deploy`
