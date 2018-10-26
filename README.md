@@ -19,21 +19,21 @@ Checkout [shaven.ad-si.com] for extensive documentation.
 ```javascript
 shaven(
   [document.body,
-  ['h1#logo', 'Static Example'],
-  ['p','Some example text'],
-  ['ul#list.bullets',
-  ['li', 'item1'],
-  ['li.active', 'item2'],
-  ['li',
-  ['a', 'item3', {href: '#'}]
-  ]
-  ],
-  ['em', 'Important', {
-  style: {
-  color: 'red',
-  'font-size': '2em',
-  },
-  }]
+    ['h1#logo', 'Static Example'],
+    ['p','Some example text'],
+    ['ul#list.bullets',
+      ['li', 'item1'],
+      ['li.active', 'item2'],
+      ['li',
+        ['a', 'item3', {href: '#'}]
+      ]
+    ],
+    ['em', 'Important', {
+      style: {
+        color: 'red',
+        'font-size': '2em',
+      },
+    }]
   ]
 )
 ```
@@ -45,9 +45,9 @@ compiles to
   <h1 id="logo">Static Example</h1>
   <p>Some example text</p>
   <ul id="list" class="bullets">
-  <li>item1</li>
-  <li class="active">item2</li>
-  <li><a href="#">item3</a></li>
+    <li>item1</li>
+    <li class="active">item2</li>
+    <li><a href="#">item3</a></li>
   </ul>
   <em style="color:red;font-size:2em">Important</em>
 </body>
