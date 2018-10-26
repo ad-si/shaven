@@ -18,23 +18,23 @@ Checkout [shaven.ad-si.com] for extensive documentation.
 
 ```javascript
 shaven(
-	[document.body,
-		['h1#logo', 'Static Example'],
-		['p','Some example text'],
-		['ul#list.bullets',
-			['li', 'item1'],
-			['li.active', 'item2'],
-			['li',
-				['a', 'item3', {href: '#'}]
-			]
-		],
-		['em', 'Important', {
-			style: {
-				color: 'red',
-				'font-size': '2em',
-			},
-		}]
-	]
+  [document.body,
+  ['h1#logo', 'Static Example'],
+  ['p','Some example text'],
+  ['ul#list.bullets',
+  ['li', 'item1'],
+  ['li.active', 'item2'],
+  ['li',
+  ['a', 'item3', {href: '#'}]
+  ]
+  ],
+  ['em', 'Important', {
+  style: {
+  color: 'red',
+  'font-size': '2em',
+  },
+  }]
+  ]
 )
 ```
 
@@ -42,14 +42,14 @@ compiles to
 
 ```html
 <body>
-	<h1 id="logo">Static Example</h1>
-	<p>Some example text</p>
-	<ul id="list" class="bullets">
-		<li>item1</li>
-		<li class="active">item2</li>
-		<li><a href="#">item3</a></li>
-	</ul>
-	<em style="color:red;font-size:2em">Important</em>
+  <h1 id="logo">Static Example</h1>
+  <p>Some example text</p>
+  <ul id="list" class="bullets">
+  <li>item1</li>
+  <li class="active">item2</li>
+  <li><a href="#">item3</a></li>
+  </ul>
+  <em style="color:red;font-size:2em">Important</em>
 </body>
 ```
 
@@ -68,15 +68,15 @@ In order to convert HTML fragments to shaven arrays
 ## Advantages
 
 - Leverage the full power of JavaScript in your templates.
-	=> No need to learn a new language!
+  => No need to learn a new language!
 - Directly integrable into JavaScript files
 - Works in front- and backend environment
 - Templates normally tend to get more complicated with the number of variables
-	as they need to get escaped in some way.
-	With Shaven it's exactly the opposite. As variables are native to Shaven
-	the templates get simpler with an increasing number of variables.
+  as they need to get escaped in some way.
+  With Shaven it's exactly the opposite. As variables are native to Shaven
+  the templates get simpler with an increasing number of variables.
 - Shaven templates can be easily build with every major programming language
-	and their existing JSON/YAML tools.
+  and their existing JSON/YAML tools.
 
 
 ## Installation
@@ -110,9 +110,9 @@ and [browser](./source/library/browser.js) version of shaven.
 
 - Build website `make`
 - Bump version
-	1. Change version number in package file ([semver](http://semver.org))
-	2. Execute `npm run prepublish`
-	3. Commit
-	4. Tag commit (`v<version>`)
+  1. Change version number in package file ([semver](http://semver.org))
+  2. Execute `npm run prepublish`
+  3. Commit
+  4. Tag commit (`v<version>`)
 - Publish to npm `npm publish`
 - Release new version of website: `make deploy`
