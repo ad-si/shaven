@@ -6,7 +6,7 @@
 
 A **DOM building utility** and **Template engine** build upon **JsonML** with syntax sugar.
 
-Checkout [adriansieber.com/shaven](http://adriansieber.com/shaven) for an extensive documentation.
+Checkout [shaven.ad-si.com](http://shaven.ad-si.com) for an extensive documentation.
 
 
 ## Example
