@@ -1,7 +1,7 @@
-import parseSugarString from './parseSugarString'
-import * as escape from './escape'
-import defaults from './defaults'
-import mapAttributeValue from './mapAttributeValue'
+import parseSugarString from './parseSugarString.js'
+import * as escape from './escape.js'
+import defaults from './defaults.js'
+import mapAttributeValue from './mapAttributeValue.js'
 import assert from 'assert'
 
 
@@ -12,7 +12,7 @@ export default function shaven (arrayOrObject) {
   if (!isArray && objType !== 'object') {
     throw new Error(
       'Argument must be either an array or an object ' +
-      'and not ' + JSON.stringify(arrayOrObject)
+      'and not ' + JSON.stringify(arrayOrObject),
     )
   }
 
@@ -42,7 +42,7 @@ export default function shaven (arrayOrObject) {
         ids: {},
         references: {},
       },
-    }
+    },
   )
 
 
@@ -57,8 +57,9 @@ export default function shaven (arrayOrObject) {
     if (properties.id) {
       element.attr.id = properties.id
       assert(
-        !config.returnObject.ids.hasOwnProperty(properties.id),
-        `Ids must be unique and "${properties.id}" is already assigned`
+        !Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.id),
+        `Ids must be unique and "${properties.id}" is already assigned`,
       )
       config.returnObject.ids[properties.id] = element
     }
@@ -67,9 +68,10 @@ export default function shaven (arrayOrObject) {
     }
     if (properties.reference) {
       assert(
-        !config.returnObject.ids.hasOwnProperty(properties.reference),
+        !Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.reference),
         `References must be unique and "${properties.id
-        }" is already assigned`
+        }" is already assigned`,
       )
       config.returnObject.references[properties.reference] = element
     }
@@ -122,7 +124,7 @@ export default function shaven (arrayOrObject) {
     else {
       throw new Error(
         'First element of array must be a string, ' +
-        'or an array and not ' + JSON.stringify(array[0])
+        'or an array and not ' + JSON.stringify(array[0]),
       )
     }
 
@@ -180,11 +182,16 @@ export default function shaven (arrayOrObject) {
 
       else if (typeof array[index] === 'object') {
         for (const attributeKey in array[index]) {
-          if (!array[index].hasOwnProperty(attributeKey)) continue
+          if (
+            Object.prototype.hasOwnProperty
+              .call(!array[index], attributeKey)
+          ) continue
 
           const attributeValue = array[index][attributeKey]
 
-          if (array[index].hasOwnProperty(attributeKey) &&
+          if (
+            Object.prototype.hasOwnProperty
+              .call(array[index], attributeKey) &&
             attributeValue !== null &&
             attributeValue !== false
           ) {
@@ -203,7 +210,7 @@ export default function shaven (arrayOrObject) {
       let HTMLString = '<' + array[0].tag
 
       for (const key in array[0].attr) {
-        if (array[0].attr.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(array[0].attr, key)) {
           const attributeValue = escape.attribute(array[0].attr[key])
           let value = attributeValue
 

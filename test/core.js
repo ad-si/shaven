@@ -1,17 +1,7 @@
-/* globals shaven*/
+/* globals shaven */
+
 import it from 'ava'
-
-if (global.document) {
-  it.beforeEach(() => {
-    const container = document.createElement('div')
-    container.id = 'test'
-    document.body.appendChild(container)
-  })
-
-  it.afterEach(() => {
-    document.getElementById('test').outerHTML = ''
-  })
-}
+import { createId } from './utils.js'
 
 
 it('sets a string as textContent', (test) => {
@@ -45,7 +35,7 @@ it('builds elements recursively', (test) => {
       ['p', 'foo',
         ['em', 'bar'],
       ],
-    ]
+    ],
   )[0]
 
   if (typeof actual !== 'string') {
@@ -62,36 +52,42 @@ it('is possible to set properties', (test) => {
       id: 'foo',
       class: 'bar',  // class is restricted word
       'data-info': 'baz', // attribute with dash
-    }]
+    }],
   ).rootElement
 
   if (typeof actual === 'string') {
     test.is(actual, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
+
     const expectedElement = document.getElementById('foo')
 
     test.is(actual.outerHTML, expectedElement.outerHTML)
     test.true(
       actual.isEqualNode(expectedElement),
       '\n' + actual.outerHTML +
-      '\nshould equal\n' + expectedElement.outerHTML
+      '\nshould equal\n' + expectedElement.outerHTML,
     )
   }
 })
 
 
 it('does not set falsy properties', (test) => {
-  const expectedString = '<p title="foo" tabindex="3" data-info=""></p>'
+  const id = createId()
+  const expectedString =
+    `<p id="${id}" title="foo" tabindex="3" data-info=""></p>`
   const actual = shaven(
     ['p', {
+      id,
       title: 'foo',
       tabindex: 3,
       lang: false,
       'data-test': null,
       'data-info': undefined,
-    }]
+    }],
   )[0]
 
 
@@ -99,14 +95,17 @@ it('does not set falsy properties', (test) => {
     test.is(actual, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
 
-    const expectedElement = document.getElementsByTagName('p')[0]
+    const expectedElement = document.getElementById(id)
 
     test.true(
       actual.isEqualNode(expectedElement),
-      '\n' + actual.outerHTML + '\nshould equal\n' +
-        expectedElement.outerHTML
+      '\n' + actual.outerHTML +
+      '\nshould equal\n' +
+      expectedElement.outerHTML,
     )
   }
 })
@@ -124,7 +123,7 @@ it('builds a string from a style object', (test) => {
         'font-size': 10,
         'font-family': 'Arial, "Helvetica Neue", sans-serif',
       },
-    }]
+    }],
   )[0]
 
   if (typeof actual !== 'string') {
@@ -145,7 +144,7 @@ it('does not include falsy values in style string', (test) => {
         'background-color': null,
         visibility: undefined,
       },
-    }]
+    }],
   )[0]
 
   if (typeof actual !== 'string') {
@@ -176,7 +175,7 @@ it('builds a transform string from a list of transform objects', (test) => {
           },
         ],
       }],
-    ]
+    ],
   ).rootElement
 
   if (typeof actual !== 'string') {
@@ -244,7 +243,9 @@ it('works with both class and id', (test) => {
     test.is(element, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
 
     const expectedElement = document.getElementById('b')
 
@@ -252,7 +253,7 @@ it('works with both class and id', (test) => {
       element.isEqualNode(expectedElement),
       element.outerHTML +
       '\nshould be equal to\n' +
-      expectedElement.outerHTML
+      expectedElement.outerHTML,
     )
   }
 })
@@ -266,9 +267,9 @@ it('works with class and id reversed', (test) => {
     test.is(element, expectedString)
   }
   else {
-    document
-      .getElementById('test')
-      .innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
 
     const expectedElement = document
       .getElementById('c')
@@ -277,28 +278,31 @@ it('works with class and id reversed', (test) => {
       element.isEqualNode(expectedElement),
       element.outerHTML +
       '\nshould to be equal to\n' +
-      expectedElement.outerHTML
+      expectedElement.outerHTML,
     )
   }
 })
 
 
 it('understands multiple classes and ids', (test) => {
-  const expectedString = '<p id="foo" class="bar baz"></p>'
-  const element = shaven(['p.bar#foo.baz'])[0]
+  const id = createId()
+  const expectedString = `<p id="${id}" class="bar baz"></p>`
+  const element = shaven([`p.bar#${id}.baz`])[0]
 
   if (typeof element === 'string') {
     test.is(element, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
-    const expectedElement = document.getElementById('foo')
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
+    const expectedElement = document.getElementById(id)
 
     test.true(
       element.isEqualNode(expectedElement),
       element.outerHTML +
       '\nshould to be equal to\n' +
-      expectedElement.outerHTML
+      expectedElement.outerHTML,
     )
   }
 })
@@ -416,7 +420,7 @@ it('escapes html strings in attributes', (test) => {
     ['p', 'Test', {
       title: '" &',
       lang: '\' < >',
-    }]
+    }],
   )[0]
 
   if (typeof element !== 'string') {
@@ -435,8 +439,10 @@ it('supports unquoted element attributes on server', (test) => {
       'data-info': 'baz',
       title: 'With space',
       'data-special': 'Special characters: "\'=><`',
-    }]
+    }],
   ).rootElement
+
+  shaven.setDefaults({quoteAttributes: true})
 
   if (typeof element !== 'string') {
     test.pass()
@@ -445,11 +451,10 @@ it('supports unquoted element attributes on server', (test) => {
     test.is(
       element,
       '<p lang=de data-info=baz title="With space" ' +
-      'data-special="Special characters: &quot;\'=><`"></p>'
+      'data-special="Special characters: &quot;\'=><`"></p>',
     )
   }
 
-  shaven.setDefaults({quoteAttributes: true})
 })
 
 
@@ -483,7 +488,7 @@ it('accepts an array of elements', (test) => {
         ['span', '3'],
         ['span', '4'],
       ],
-    ]]
+    ]],
   )[0]
 
   if (typeof element !== 'string') {
@@ -507,7 +512,7 @@ it('ignores "undefined" in subarrays', (test) => {
         undefined,
         ['span', '2'],
       ],
-    ]
+    ],
   ).rootElement
 
   if (typeof element !== 'string') {
@@ -569,14 +574,14 @@ it('throws an error for an invalid array', (test) => {
     () => {
       shaven([{key: 'value'}])
     },
-    new RegExp(regexString, 'gi')
+    {message: new RegExp(regexString, 'gi')},
   )
 
   test.throws(
     () => {
       shaven([144, 'span', 'text'])
     },
-    new RegExp(regexString, 'gi')
+    {message: new RegExp(regexString, 'gi')},
   )
 })
 
@@ -605,7 +610,9 @@ it('works with SVGs', (test) => {
     test.is(svgElement, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
 
     const expectedElement = document.getElementById('svg')
 
@@ -613,7 +620,7 @@ it('works with SVGs', (test) => {
       svgElement.isEqualNode(expectedElement),
       '\n' + svgElement.outerHTML +
       '\nshould equal\n' +
-      expectedElement.outerHTML
+      expectedElement.outerHTML,
     )
   }
 })
@@ -647,7 +654,9 @@ it('works with multiple SVGs', (test) => {
     test.is(element, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
     const expectedElement = document.getElementById('container')
 
     test.is(element.outerHTML, expectedElement.outerHTML)
@@ -656,27 +665,33 @@ it('works with multiple SVGs', (test) => {
 })
 
 it('works with SVG followed by HTML', (test) => {
-  const expectedString = '<div id="container">' +
-    '<svg id="svg1" width="10" height="10">' +
-      '<rect class="top" width="5" height="5" style="fill:red"></rect>' +
-    '</svg>' +
-    '<p>Test Sentence</p>' +
-  '</div>'
+  const containerId = createId()
+  const svgId = createId()
+  const expectedString =
+    `<div id="${containerId}">` +
+      `<svg id="${svgId}" width="10" height="10">` +
+        '<rect class="top" width="5" height="5" style="fill:red"></rect>' +
+      '</svg>' +
+      '<p>Test Sentence</p>' +
+    '</div>'
 
-  const array = ['div#container',
-    ['svg#svg1', {width: 10, height: 10},
-      ['rect.top', {width: 5, height: 5, style: 'fill:red'}],
-    ],
-    ['p', 'Test Sentence'],
-  ]
+  const array =
+    [`div#${containerId}`,
+      [`svg#${svgId}`, {width: 10, height: 10},
+        ['rect.top', {width: 5, height: 5, style: 'fill:red'}],
+      ],
+      ['p', 'Test Sentence'],
+    ]
   const element = shaven(array).rootElement
 
   if (typeof element === 'string') {
     test.is(element, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
-    const expectedElement = document.getElementById('container')
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
+    const expectedElement = document.getElementById(containerId)
 
     test.is(element.outerHTML, expectedElement.outerHTML)
     test.true(element.isEqualNode(expectedElement))
@@ -685,18 +700,21 @@ it('works with SVG followed by HTML', (test) => {
 
 
 it('escapes text in SVGs', (test) => {
-  const array = ['svg#svg',
+  const id = createId()
+  const array = [`svg#${id}`,
     ['text', '<circle>'],
   ]
-  const expectedString = '<svg id="svg"><text>&lt;circle&gt;</text></svg>'
+  const expectedString = `<svg id="${id}"><text>&lt;circle&gt;</text></svg>`
   const svgElement = shaven(array).rootElement
 
   if (typeof svgElement === 'string') {
     test.is(svgElement, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
-    const expectedElement = document.getElementById('svg')
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
+    const expectedElement = document.getElementById(id)
 
     test.is(svgElement.outerHTML, expectedElement.outerHTML)
     test.true(svgElement.isEqualNode(expectedElement))
@@ -706,12 +724,14 @@ it('escapes text in SVGs', (test) => {
 // Should fail when implemented with element.className = '…',
 // but doesn't. (See https://github.com/tmpvar/jsdom/issues/1528)
 it('sets class of SVG element', (test) => {
-  const elementArray = ['svg#svg',
+  const id = createId()
+  const elementArray = [`svg#${id}`,
     ['circle.test',
       {cx: 5, cy: 5, r: 2}, // eslint-disable-line id-length
     ],
   ]
-  const expectedString = `<svg id="svg">
+  const expectedString =
+    `<svg id="${id}">
     <circle class="test" cx="5" cy="5" r="2"></circle>
     </svg>`.replace(/\n\s+/g, '')
   const svgElement = shaven(elementArray).rootElement
@@ -720,8 +740,10 @@ it('sets class of SVG element', (test) => {
     test.is(svgElement, expectedString)
   }
   else {
-    document.getElementById('test').innerHTML = expectedString
-    const expectedElement = document.getElementById('svg')
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    container.innerHTML = expectedString
+    const expectedElement = document.getElementById(id)
 
     test.is(svgElement.outerHTML, expectedElement.outerHTML)
     test.true(svgElement.isEqualNode(expectedElement))

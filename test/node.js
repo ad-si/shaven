@@ -1,6 +1,6 @@
-import shaven from '../source/library/server'
+import shaven from '../source/library/server.js'
 
 global.shaven = shaven
 
-import './core'
-import './large'
+import './core.js'
+import './large.js'

@@ -9,5 +9,5 @@ global.window = document.defaultView
 global.navigator = window.navigator
 global.Element = window.Element
 
-import './core'
-import './dom'
+import './core.js'
+import './dom.js'

@@ -1,5 +1,5 @@
-import buildTransformString from './buildTransformString'
-import stringifyStyleObject from './stringifyStyleObject'
+import buildTransformString from './buildTransformString.js'
+import stringifyStyleObject from './stringifyStyleObject.js'
 
 export default (key, value) => {
   if (value === undefined) {

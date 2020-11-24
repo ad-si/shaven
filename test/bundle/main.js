@@ -26,18 +26,18 @@ const svg = shaven(
         {y: 20}, // eslint-disable-line id-length
       ],
     ],
-  ]
+  ],
 )
 
 assert(
   svg.references.test instanceof Element,
-  'Circle is instanceof Element'
+  'Circle is instanceof Element',
 )
 assert(
   svg.references.test.classList.contains('important'),
-  'Circle classList contains "important"'
+  'Circle classList contains "important"',
 )
 assert(
   svg.references.test.classList.contains('small'),
-  'Circle classList contains "small"'
+  'Circle classList contains "small"',
 )

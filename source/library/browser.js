@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 
-import parseSugarString from './parseSugarString'
-import defaults from './defaults'
-import namespaceToURL from './namespaceToURL'
-import mapAttributeValue from './mapAttributeValue'
+import parseSugarString from './parseSugarString.js'
+import defaults from './defaults.js'
+import namespaceToURL from './namespaceToURL.js'
+import mapAttributeValue from './mapAttributeValue.js'
 
 
 export default function shaven (arrayOrObject) {
@@ -13,7 +13,7 @@ export default function shaven (arrayOrObject) {
   if (!isArray && objType !== 'object') {
     throw new Error(
       'Argument must be either an array or an object ' +
-      'and not ' + JSON.stringify(arrayOrObject)
+      'and not ' + JSON.stringify(arrayOrObject),
     )
   }
 
@@ -44,7 +44,7 @@ export default function shaven (arrayOrObject) {
         ids: {},
         references: {},
       },
-    }
+    },
   )
 
   config.nsStack = [config.namespace] // Stack with current namespaces
@@ -70,14 +70,15 @@ export default function shaven (arrayOrObject) {
     const namespace = config.nsStack[config.nsStack.length - 1]
     const element = document.createElementNS(
       namespaceToURL[namespace] ? namespaceToURL[namespace] : namespace,
-      properties.tag
+      properties.tag,
     )
 
     if (properties.id) {
       element.id = properties.id
       console.assert(
-        !config.returnObject.ids.hasOwnProperty(properties.id),
-        `Ids must be unique and "${properties.id}" is already assigned`
+        !Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.id),
+        `Ids must be unique and "${properties.id}" is already assigned`,
       )
       config.returnObject.ids[properties.id] = element
     }
@@ -86,9 +87,10 @@ export default function shaven (arrayOrObject) {
     }
     if (properties.reference) {
       console.assert(
-        !config.returnObject.ids.hasOwnProperty(properties.reference),
+        !Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.reference),
         `References must be unique and "${properties.id
-        }" is already assigned`
+        }" is already assigned`,
       )
       config.returnObject.references[properties.reference] = element
     }
@@ -119,7 +121,7 @@ export default function shaven (arrayOrObject) {
     else if (!(array[0] instanceof Element)) {
       throw new Error(
         'First element of array must be either a string, ' +
-        'an array or a DOM element and not ' + JSON.stringify(array[0])
+        'an array or a DOM element and not ' + JSON.stringify(array[0]),
       )
     }
 
@@ -186,11 +188,16 @@ export default function shaven (arrayOrObject) {
       else if (typeof array[index] === 'object') {
         // For each attribute
         for (const attributeKey in array[index]) {
-          if (!array[index].hasOwnProperty(attributeKey)) continue
+          if (
+            Object.prototype.hasOwnProperty
+              .call(!array[index], attributeKey)
+          ) continue
 
           const attributeValue = array[index][attributeKey]
 
-          if (array[index].hasOwnProperty(attributeKey) &&
+          if (
+            Object.prototype.hasOwnProperty
+              .call(array[index], attributeKey) &&
             attributeValue !== null &&
             attributeValue !== false
           ) {
@@ -199,8 +206,8 @@ export default function shaven (arrayOrObject) {
               mapAttributeValue(
                 attributeKey,
                 attributeValue,
-                config
-              )
+                config,
+              ),
             )
           }
         }
