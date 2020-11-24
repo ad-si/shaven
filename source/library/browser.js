@@ -145,6 +145,9 @@ export default function shaven (arrayOrObject) {
         typeof array[index] === 'number'
       ) {
         if (config.escapeHTML) {
+          while (array[0].firstChild) {
+            array[0].removeChild(array[0].firstChild)
+          }
           array[0].appendChild(document.createTextNode(array[index]))
         }
         else {

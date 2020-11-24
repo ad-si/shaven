@@ -855,10 +855,11 @@ it('can change defaults', (test) => {
 })
 
 
-it('does not mutate the array', (test) => {
+it('does not mutate the array and the created element', (test) => {
   const array = ['div.important', ['p', {lang: 'en'}, 'text']]
   let element1 = shaven(array).rootElement
   let element2 = shaven(array).rootElement
+
   const expected = '<div class="important"><p lang="en">text</p></div>'
 
   if (typeof element1 !== 'string') {
