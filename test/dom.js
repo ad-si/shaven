@@ -46,8 +46,7 @@ it('supports hyphens in html tags', (test) => {
 })
 
 
-// TODO: Find out why it doesn't work in JSDOM and fix it
-it.skip('escapes html strings in tags', (test) => {
+it('escapes HTML strings in tags in JSDOM', (test) => {
   const id = createId()
   const container = createContainer(id)
   const html = '<p>Some <strong>HTML</strong></p>'

@@ -848,6 +848,8 @@ it('can change defaults', (test) => {
   if (typeof escaped !== 'string') escaped = escaped.outerHTML
   if (typeof unescaped !== 'string') unescaped = unescaped.outerHTML
 
+  shaven.setDefaults({escapeHTML: true})
+
   test.is(escaped, '<div>&lt;p&gt;Test&lt;/p&gt;</div>')
   test.is(unescaped, '<div><p>Test</p></div>')
 })
