@@ -1,6 +1,6 @@
 // Removes leading tabs and the last newline character from string
 
-module.exports = (string) => {
+export default function (string) {
   const sortedString = string
     .split('\n')
     .sort()

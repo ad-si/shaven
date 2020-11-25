@@ -2,28 +2,34 @@ all: test build site/index.html
 
 
 build: source/library
-	yarn babel $< \
+	npx babel $< \
 		--out-dir $@
 
 
-site/index.html: source/templates/index.mustache package.json site/scripts/bundle.js
-	yarn --silent mustache package.json $< \
-		> $@
+site/index.html: source/templates/index.mustache \
+	package.json site/scripts/bundle.js site/images
+		npx --silent mustache package.json $< \
+			> $@
+
+
+site/images: source/images
+	rm -rf $@
+	cp -R $< $@
 
 
 site/scripts/bundle.js shaven.js \
 shaven.min.js shaven-server.min.js: source/library
-	yarn webpack
+	npx webpack
 
 
 .PHONY: test
 test: lint
-	yarn ava --fail-fast ./test/node.js ./test/jsdom.js
+	npx ava --fail-fast ./test/node.js ./test/jsdom.js
 
 
 .PHONY: lint
 lint:
-	yarn eslint \
+	npx eslint \
 		--max-warnings 0 \
 		--ignore-path .gitignore \
 		.
@@ -37,7 +43,8 @@ deploy: site/index.html
 
 .PHONY: clean
 clean:
-	-rm -r ./site
 	-rm -r ./build
+	-rm -r ./node_modules
+	-rm -r ./site
 	-rm -r ./test/bundle/bundle.js
 	-rm -r shaven*.js

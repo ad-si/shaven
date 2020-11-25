@@ -1,13 +1,14 @@
-const ace = require('brace')
-require('brace/mode/javascript')
-require('brace/mode/html')
-require('brace/theme/tomorrow_night')
+import * as ace from 'brace'
+import 'brace/mode/javascript.js'
+import 'brace/mode/html.js'
+import 'brace/theme/tomorrow_night.js'
 
-require('../styles/screen.styl')
+import '../styles/screen.styl'
+
 // TODO: Load fonts with webpack
 // require('https://fonts.googleapis.com/css?family=Grand+Hotel')
 
-const fixIndentation = require('./fixIndentation.js')
+import fixIndentation from './fixIndentation.js'
 
 Array
   .from(document.getElementsByTagName('textarea'))

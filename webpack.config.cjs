@@ -2,36 +2,34 @@ const webpack = require('webpack')
 const babelLoader = {
   test: /\.js$/,
   loader: 'babel-loader',
-  query: {
-    presets: ['es2015'],
-  },
 }
+
 
 module.exports = [
   {
+    target: 'web',
     entry: './source/scripts/main.js',
     output: {
       path: __dirname + '/site/scripts',
       filename: 'bundle.js',
     },
     module: {
-      loaders: [
-        { test: /\.js$/, loader: 'babel-loader', query: {presets: ['es2015']}},
-        { test: /\.json$/, loader: 'json-loader' },
-        { test: /\.png$/, loader: 'url-loader' },
-        { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
-        { test: /\.styl$/, loaders: [
+      rules: [
+        babelLoader,
+        { test: /\.json$/, use: 'json-loader' },
+        { test: /\.png$/, use: 'url-loader' },
+        { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+        { test: /\.styl$/, use: [
           'style-loader',
           'css-loader',
           'stylus-loader',
         ] },
       ],
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
-    ],
+    mode: 'production',
   },
   {
+    target: 'web',
     entry: './source/library/browser.js',
     output: {
       path: __dirname,
@@ -39,10 +37,11 @@ module.exports = [
       library: 'shaven',
     },
     module: {
-      loaders: [babelLoader],
+      rules: [babelLoader],
     },
   },
   {
+    target: 'web',
     entry: './source/library/browser.js',
     output: {
       path: __dirname,
@@ -50,13 +49,12 @@ module.exports = [
       library: 'shaven',
     },
     module: {
-      loaders: [babelLoader],
+      rules: [babelLoader],
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
-    ],
+    mode: 'production',
   },
   {
+    target: 'web',
     entry: './source/library/server.js',
     output: {
       path: __dirname,
@@ -64,11 +62,14 @@ module.exports = [
       library: 'shaven',
     },
     module: {
-      loaders: [babelLoader],
+      rules: [babelLoader],
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
-    ],
+    mode: 'production',
+    resolve: {
+      fallback: {
+        assert: false,
+      },
+    },
   },
   {
     entry: './test/bundle/main.js',
@@ -77,7 +78,8 @@ module.exports = [
       filename: 'bundle.js',
     },
     module: {
-      loaders: [babelLoader],
+      rules: [babelLoader],
     },
+    mode: 'production',
   },
 ]

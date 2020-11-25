@@ -3,14 +3,14 @@
 
 # Shaven
 
-[![Build Status][build-status]](https://travis-ci.org/adius/shaven)
+[![Build Status][build-status]](https://travis-ci.org/ad-si/shaven)
 
 A **DOM building utility** and **Template engine**
 based on **JsonML** with syntax sugar.
 
 Checkout [shaven.ad-si.com] for extensive documentation.
 
-[build-status]: https://travis-ci.org/adius/shaven.svg
+[build-status]: https://travis-ci.org/ad-si/shaven.svg
 [shaven.ad-si.com]: http://shaven.ad-si.com
 
 
@@ -54,7 +54,7 @@ compiles to
 ```
 
 In order to convert HTML fragments to shaven arrays
-[html2shaven](https://github.com/adius/html2shaven) can be used.
+[html2shaven](https://github.com/ad-si/html2shaven) can be used.
 
 
 ## Features
