@@ -1,14 +1,15 @@
 all: test build site/index.html
 
 
-build: source/library
-	npx babel $< \
+build: source/library node_modules
+	# Tries to install wrong version if called with npx
+	./node_modules/.bin/babel $< \
 		--out-dir $@
 
 
 site/index.html: source/templates/index.mustache \
-	package.json site/scripts/bundle.js site/images
-		npx --silent mustache package.json $< \
+	package.json site/scripts/bundle.js site/images node_modules
+		npx --no-install --silent mustache package.json $< \
 			> $@
 
 
@@ -18,18 +19,22 @@ site/images: source/images
 
 
 site/scripts/bundle.js shaven.js \
-shaven.min.js shaven-server.min.js: source/library
-	npx webpack
+shaven.min.js shaven-server.min.js: source/library node_modules
+	npx --no-install webpack
+
+
+node_modules: package.json package-lock.json
+	npm install
 
 
 .PHONY: test
-test: lint
-	npx ava --fail-fast ./test/node.js ./test/jsdom.js
+test: lint node_modules
+	npx --no-install ava --fail-fast ./test/node.js ./test/jsdom.js
 
 
 .PHONY: lint
-lint:
-	npx eslint \
+lint: node_modules
+	npx --no-install eslint \
 		--max-warnings 0 \
 		--ignore-path .gitignore \
 		.
