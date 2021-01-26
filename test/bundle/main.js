@@ -1,4 +1,7 @@
+import assert from 'assert'
+
 import shaven from '../../source/library/browser.js'
+
 
 shaven([document.getElementById('test'),
   ['h1', 'Test'],
@@ -28,15 +31,15 @@ const svg = shaven(
   ],
 )
 
-console.assert(
+assert.ok(
   svg.references.test instanceof Element,
   'Circle is instanceof Element',
 )
-console.assert(
+assert.ok(
   svg.references.test.classList.contains('important'),
   'Circle classList contains "important"',
 )
-console.assert(
+assert.ok(
   svg.references.test.classList.contains('small'),
   'Circle classList contains "small"',
 )
