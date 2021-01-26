@@ -1,5 +1,3 @@
-import assert from 'assert'
-
 import shaven from '../../source/library/browser.js'
 
 
@@ -31,15 +29,15 @@ const svg = shaven(
   ],
 )
 
-assert.ok(
+console.assert(  // eslint-disable-line no-console
   svg.references.test instanceof Element,
   'Circle is instanceof Element',
 )
-assert.ok(
+console.assert(  // eslint-disable-line no-console
   svg.references.test.classList.contains('important'),
   'Circle classList contains "important"',
 )
-assert.ok(
+console.assert(  // eslint-disable-line no-console
   svg.references.test.classList.contains('small'),
   'Circle classList contains "small"',
 )
