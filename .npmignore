@@ -1,7 +1,5 @@
-/examples
-/site
-/source
-/test
-/CONTRIBUTING.md
-/webpack.config.js
-/makefile
+*
+!/build/*
+!/shaven-server.min.js
+!/shaven.js
+!/shaven.min.js
