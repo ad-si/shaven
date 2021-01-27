@@ -2,7 +2,6 @@ import parseSugarString from './parseSugarString.js'
 import * as escape from './escape.js'
 import defaults from './defaults.js'
 import mapAttributeValue from './mapAttributeValue.js'
-import assert from 'assert'
 
 
 export default function shaven (arrayOrObject) {
@@ -56,23 +55,32 @@ export default function shaven (arrayOrObject) {
 
     if (properties.id) {
       element.attr.id = properties.id
-      assert(
-        !Object.prototype.hasOwnProperty
-          .call(config.returnObject.ids, properties.id),
-        `Ids must be unique and "${properties.id}" is already assigned`,
-      )
+      if (
+        Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.id)
+      ) {
+        throw new Error(
+          `Ids must be unique and "${
+            properties.id}" is already assigned`,
+        )
+      }
+
       config.returnObject.ids[properties.id] = element
     }
     if (properties.class) {
       element.attr.class = properties.class
     }
     if (properties.reference) {
-      assert(
-        !Object.prototype.hasOwnProperty
-          .call(config.returnObject.ids, properties.reference),
-        `References must be unique and "${properties.id
-        }" is already assigned`,
-      )
+      if (
+        Object.prototype.hasOwnProperty
+          .call(config.returnObject.ids, properties.reference)
+      ) {
+        throw new Error(
+          `References must be unique and "${
+            properties.id}" is already assigned`,
+        )
+      }
+
       config.returnObject.references[properties.reference] = element
     }
 
