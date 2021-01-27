@@ -29,6 +29,17 @@
     "test": "npm run lint && npm run unit-tests",
     "prepublish-only": "npm test && npm run build"
   },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-javascript",
+    "parserOptions": {
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    }
+  },
   "dependencies": {
     "escape-html": "~1.0.3"
   },
@@ -54,12 +65,5 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.17.0",
     "webpack-cli": "^4.4.0"
-  },
-  "directories": {
-    "example": "examples",
-    "test": "test"
-  },
-  "eslintConfig": {
-    "extends": "eslint-config-javascript"
   }
 }
