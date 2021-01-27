@@ -14,8 +14,8 @@
   },
   "license": "ISC",
   "author": "Adrian Sieber <mail@adriansieber.com> (https://adriansieber.com)",
-  "main": "build/server",
-  "browser": "build/browser",
+  "main": "source/library/server.js",
+  "browser": "build/browser.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ad-si/shaven"

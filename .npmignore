@@ -1,5 +1,3 @@
 *
 !/build/*
-!/shaven-server.min.js
-!/shaven.js
-!/shaven.min.js
+!/source/library

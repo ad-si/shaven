@@ -1,16 +1,16 @@
-const webpack = require('webpack')
+const path = require('path')
+
 const babelLoader = {
   test: /\.js$/,
   loader: 'babel-loader',
 }
-
 
 module.exports = [
   {
     target: 'web',
     entry: './source/scripts/main.js',
     output: {
-      path: __dirname + '/site/scripts',
+      path: path.join(__dirname, '/site/scripts'),
       filename: 'bundle.js',
     },
     module: {
@@ -32,20 +32,8 @@ module.exports = [
     target: 'web',
     entry: './source/library/browser.js',
     output: {
-      path: __dirname,
-      filename: 'shaven.js',
-      library: 'shaven',
-    },
-    module: {
-      rules: [babelLoader],
-    },
-  },
-  {
-    target: 'web',
-    entry: './source/library/browser.js',
-    output: {
-      path: __dirname,
-      filename: 'shaven.min.js',
+      path: path.join(__dirname, 'build'),
+      filename: 'browser.js',
       library: 'shaven',
     },
     module: {
@@ -55,31 +43,14 @@ module.exports = [
   },
   {
     target: 'web',
-    entry: './source/library/server.js',
-    output: {
-      path: __dirname,
-      filename: 'shaven-server.min.js',
-      library: 'shaven',
-    },
-    module: {
-      rules: [babelLoader],
-    },
-    mode: 'production',
-    resolve: {
-      fallback: {
-        assert: false,
-      },
-    },
-  },
-  {
     entry: './test/bundle/main.js',
     output: {
-      path: __dirname + '/test/bundle',
+      path: path.join(__dirname, 'test/bundle'),
       filename: 'bundle.js',
     },
     module: {
       rules: [babelLoader],
     },
-    mode: 'production',
+    mode: 'development',
   },
 ]

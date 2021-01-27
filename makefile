@@ -1,10 +1,4 @@
-all: test build site/index.html
-
-
-build: source/library node_modules
-	# Tries to install wrong version if called with npx
-	./node_modules/.bin/babel $< \
-		--out-dir $@
+all: test site/index.html
 
 
 site/index.html: source/templates/index.mustache \
@@ -52,4 +46,3 @@ clean:
 	-rm -r ./node_modules
 	-rm -r ./site
 	-rm -r ./test/bundle/bundle.js
-	-rm -r shaven*.js
