@@ -186,6 +186,49 @@ it('builds a transform string from a list of transform objects', (test) => {
 })
 
 
+it('correctly handles 0 values in transform objects', (test) => {
+  const expected = '<svg>' +
+      '<circle r="5" transform="translate(0,5) rotate(0) ' +
+        'rotate(45) rotate(60,3,6)">' +
+      '</circle>' +
+    '</svg>'
+  let actual = shaven(
+    ['svg',
+      ['circle', {
+        r: 5, // eslint-disable-line id-length
+        transform: [
+          {
+            type: 'translate',
+            x: 0, // eslint-disable-line id-length
+            y: 5, // eslint-disable-line id-length
+          },
+          {
+            type: 'rotate',
+            degrees: 0, // eslint-disable-line id-length
+          },
+          {
+            type: 'rotate',
+            degrees: 45, // eslint-disable-line id-length
+          },
+          {
+            type: 'rotate',
+            degrees: 60, // eslint-disable-line id-length
+            x: 3, // eslint-disable-line id-length
+            y: 6, // eslint-disable-line id-length
+          },
+        ],
+      }],
+    ],
+  ).rootElement
+
+  if (typeof actual !== 'string') {
+    actual = actual.outerHTML
+  }
+
+  test.is(actual, expected)
+})
+
+
 it('does ignore "true" values', (test) => {
   const expected = '<p>test</p>'
   let actual = shaven(['p', 'test', true])[0]

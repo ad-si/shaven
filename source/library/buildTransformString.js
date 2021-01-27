@@ -6,11 +6,15 @@ export default (transformObjects) => {
     .map(transformation => {
       const values = []
 
-      if (transformation.type === 'rotate' && transformation.degrees) {
+      if (
+        transformation.type === 'rotate' &&
+        Number.isFinite(transformation.degrees)
+      ) {
         values.push(transformation.degrees)
       }
-      if (transformation.x) values.push(transformation.x)
-      if (transformation.y) values.push(transformation.y)
+
+      if (Number.isFinite(transformation.x)) values.push(transformation.x)
+      if (Number.isFinite(transformation.y)) values.push(transformation.y)
 
       return `${transformation.type}(${values})`
     })
