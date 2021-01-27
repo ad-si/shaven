@@ -11,7 +11,7 @@ based on **JsonML** with syntax sugar.
 Checkout [shaven.ad-si.com] for extensive documentation.
 
 [build-status]: https://travis-ci.org/ad-si/shaven.svg
-[shaven.ad-si.com]: http://shaven.ad-si.com
+[shaven.ad-si.com]: https://shaven.ad-si.com
 
 
 ## Example

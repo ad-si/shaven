@@ -34,12 +34,6 @@ lint: node_modules
 		.
 
 
-# Deploy website to surge.sh
-.PHONY: deploy
-deploy: site/index.html
-	surge site shaven.ad-si.com
-
-
 .PHONY: clean
 clean:
 	-rm -r ./build
