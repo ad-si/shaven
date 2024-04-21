@@ -18,7 +18,7 @@
   "browser": "build/browser.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ad-si/shaven"
+    "url": "git+https://github.com/ad-si/shaven.git"
   },
   "scripts": {
     "transpile": "babel source/library --out-dir build",

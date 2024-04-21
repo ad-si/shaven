@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Convert HTML documents to shaven arrays",
   "main": "source/index.js",
-  "bin": "source/cli.js",
+  "bin": {
+    "html2shaven": "source/cli.js"
+  },
   "scripts": {
     "test": "node test/index.js"
   },
@@ -12,6 +14,10 @@
   ],
   "author": "Adrian Sieber",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ad-si/shaven.git"
+  },
   "dependencies": {
     "html-minifier": "^1.0.0",
     "parse5": "^1.5.0"

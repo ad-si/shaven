@@ -53,8 +53,8 @@ compiles to
 </body>
 ```
 
-In order to convert HTML fragments to shaven arrays
-[html2shaven](https://github.com/ad-si/html2shaven) can be used.
+In order to convert HTML fragments to shaven arrays, the included
+[`html2shaven`](https://www.npmjs.com/package/html2shaven) CLI tool can be used.
 
 
 ## Features
