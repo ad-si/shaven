@@ -1,3 +1,4 @@
+.direnv
 /build
 /node_modules
 /site
