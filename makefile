@@ -1,4 +1,10 @@
-all: test site/index.html
+.PHONY: help
+help: makefile
+	@tail -n +4 makefile | grep ".PHONY"
+
+
+.PHONY: build
+build: site/index.html
 
 
 site/index.html: source/templates/index.mustache \
@@ -18,7 +24,7 @@ shaven.min.js shaven-server.min.js: source/library node_modules
 
 
 node_modules: package.json package-lock.json
-	npm install
+	if test ! -d $@; then npm install --force; fi
 
 
 .PHONY: test
@@ -30,6 +36,14 @@ test: lint node_modules
 lint: node_modules
 	npx --no-install eslint \
 		--max-warnings 0 \
+		--ignore-path .gitignore \
+		.
+
+
+.PHONY: format
+format: node_modules
+	npx --no-install eslint \
+		--fix \
 		--ignore-path .gitignore \
 		.
 
