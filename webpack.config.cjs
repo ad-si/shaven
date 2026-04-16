@@ -1,4 +1,5 @@
 const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const babelLoader = {
   test: /\.js$/,
@@ -17,15 +18,18 @@ module.exports = [
       rules: [
         babelLoader,
         { test: /\.json$/, use: 'json-loader' },
-        { test: /\.png$/, use: 'url-loader' },
-        { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+        { test: /\.png$/, type: 'asset/inline' },
+        { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
         { test: /\.styl$/, use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'stylus-loader',
         ] },
       ],
     },
+    plugins: [
+      new MiniCssExtractPlugin({filename: 'bundle.css'}),
+    ],
     mode: 'production',
   },
   {
