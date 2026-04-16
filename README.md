@@ -115,4 +115,5 @@ and [browser](./source/library/browser.js) version of shaven.
   3. Commit
   4. Tag commit (`v<version>`)
 - Publish to npm `npm publish`
-- Release new version of website: `make deploy`
+- The website is deployed automatically by Netlify
+  when changes are pushed to `main`.
