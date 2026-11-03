@@ -109,8 +109,8 @@ function shaven (
     if (properties.reference) {
       console.assert(
         !Object.prototype.hasOwnProperty
-          .call(returnObject.ids, properties.reference),
-        `References must be unique and "${properties.id
+          .call(returnObject.references, properties.reference),
+        `References must be unique and "${properties.reference
         }" is already assigned`,
       )
       returnObject.references[properties.reference] = element
@@ -250,9 +250,10 @@ function shaven (
     returnObject[0] = rootElement
     returnObject.rootElement = rootElement
 
-    returnObject.toString = () => (rootElement as Element).outerHTML
+    returnObject.toString = () => rootElement ? rootElement.outerHTML : ''
 
-    if (createdCallback) createdCallback(rootElement as Element)
+    // Elements which are not rendered are not passed to the callback
+    if (createdCallback && rootElement) createdCallback(rootElement)
   }
 
 

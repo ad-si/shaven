@@ -113,11 +113,11 @@ function shaven (
     if (properties.reference) {
       if (
         Object.prototype.hasOwnProperty
-          .call(returnObject.ids, properties.reference)
+          .call(returnObject.references, properties.reference)
       ) {
         throw new Error(
           `References must be unique and "${
-            properties.id}" is already assigned`,
+            properties.reference}" is already assigned`,
         )
       }
 
@@ -276,10 +276,12 @@ function shaven (
     returnObject[0] = rootElement
     returnObject.rootElement = rootElement
 
-    // Returns `false` if the root element must not be rendered
-    returnObject.toString = () => rootElement as string
+    returnObject.toString = () => rootElement || ''
 
-    if (createdCallback) createdCallback(rootElement as string)
+    // Elements which are not rendered are not passed to the callback
+    if (createdCallback && rootElement !== false) {
+      createdCallback(rootElement)
+    }
 
     return returnObject
   }

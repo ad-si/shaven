@@ -366,6 +366,30 @@ it('calls the provided callback function', (test) => {
 })
 
 
+it('does not call the callback function for unrendered elements', (test) => {
+  let called = false
+
+  shaven(['div', ['p', () => called = true, null]])
+  shaven(['p', () => called = true, false])
+
+  test.false(called)
+})
+
+
+it('stringifies an unrendered root element to an empty string', (test) => {
+  test.is(String(shaven(['p', null])), '')
+})
+
+
+it('allows a reference with the same name as an id', (test) => {
+  const shavenObject = shaven(['div#foo', ['p$foo']])
+
+  test.truthy(shavenObject.ids.foo)
+  test.truthy(shavenObject.references.foo)
+  test.not(shavenObject.ids.foo, shavenObject.references.foo)
+})
+
+
 it('returns a shaven object and not an html element/string', (test) => {
   const shavenObject = shaven(['p'])
 

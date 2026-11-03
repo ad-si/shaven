@@ -117,3 +117,27 @@ it('uses specified namespace', (test) => {
     '</svg>',
   )
 })
+
+
+// oxlint-disable no-console -- Stubs console.assert
+it('asserts that references are unique', (test) => {
+  const originalAssert = console.assert
+  const failedAssertions: unknown[] = []
+
+  console.assert = (condition?: boolean, ...data: unknown[]) => {
+    if (!condition) failedAssertions.push(data[0])
+  }
+
+  try {
+    shaven(['div', ['p$foo'], ['p$foo']])
+  }
+  finally {
+    console.assert = originalAssert
+  }
+
+  test.deepEqual(
+    failedAssertions,
+    ['References must be unique and "foo" is already assigned'],
+  )
+})
+// oxlint-enable no-console
