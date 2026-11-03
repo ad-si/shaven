@@ -8,7 +8,7 @@ import '../styles/screen.styl'
 // TODO: Load fonts with webpack
 // require('https://fonts.googleapis.com/css?family=Grand+Hotel')
 
-import fixIndentation from './fixIndentation.js'
+import fixIndentation from './fixIndentation.ts'
 
 Array
   .from(document.getElementsByTagName('textarea'))

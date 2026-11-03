@@ -1,10 +1,9 @@
-/* globals shaven */
 
 import it from 'ava'
 
 
 it('works with large arrays', (test) => {
-  const array = [
+  const array: TestArray = [
     'section.file',
     '',
     [

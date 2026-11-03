@@ -1,10 +1,9 @@
-/* globals shaven */
 
 import it from 'ava'
-import { createId } from './utils.js'
+import { createId } from './utils.ts'
 
 
-function createContainer (id) {
+function createContainer (id: string): HTMLElement {
   const container = document.createElement('div')
   container.id = id
   document.body.appendChild(container)

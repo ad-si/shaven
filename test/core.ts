@@ -1,7 +1,6 @@
-/* globals shaven */
 
 import it from 'ava'
-import { createId } from './utils.js'
+import { createId } from './utils.ts'
 
 
 it('sets a string as textContent', (test) => {
@@ -63,7 +62,7 @@ it('is possible to set properties', (test) => {
     document.body.appendChild(container)
     container.innerHTML = expectedString
 
-    const expectedElement = document.getElementById('foo')
+    const expectedElement = document.getElementById('foo')!
 
     test.is(actual.outerHTML, expectedElement.outerHTML)
     test.true(
@@ -99,7 +98,7 @@ it('does not set falsy properties', (test) => {
     document.body.appendChild(container)
     container.innerHTML = expectedString
 
-    const expectedElement = document.getElementById(id)
+    const expectedElement = document.getElementById(id)!
 
     test.true(
       actual.isEqualNode(expectedElement),
@@ -290,7 +289,7 @@ it('works with both class and id', (test) => {
     document.body.appendChild(container)
     container.innerHTML = expectedString
 
-    const expectedElement = document.getElementById('b')
+    const expectedElement = document.getElementById('b')!
 
     test.true(
       element.isEqualNode(expectedElement),
@@ -315,7 +314,7 @@ it('works with class and id reversed', (test) => {
     container.innerHTML = expectedString
 
     const expectedElement = document
-      .getElementById('c')
+      .getElementById('c')!
 
     test.true(
       element.isEqualNode(expectedElement),
@@ -339,7 +338,7 @@ it('understands multiple classes and ids', (test) => {
     const container = document.createElement('div')
     document.body.appendChild(container)
     container.innerHTML = expectedString
-    const expectedElement = document.getElementById(id)
+    const expectedElement = document.getElementById(id)!
 
     test.true(
       element.isEqualNode(expectedElement),
@@ -353,9 +352,9 @@ it('understands multiple classes and ids', (test) => {
 
 it('calls the provided callback function', (test) => {
   let called = false
-  let element = false
+  let element: unknown = false
 
-  function foo (el) {
+  function foo (el: unknown) {
     called = true
     element = el
   }
@@ -371,7 +370,7 @@ it('returns a shaven object and not an html element/string', (test) => {
   const shavenObject = shaven(['p'])
 
   test.is(typeof shavenObject, 'object')
-  test.not(shavenObject.nodeType, 1)
+  test.not((shavenObject as {nodeType?: number}).nodeType, 1)
 })
 
 it('links ids and references', (test) => {
@@ -615,6 +614,7 @@ it('throws an error for an invalid array', (test) => {
 
   test.throws(
     () => {
+      // @ts-expect-error Invalid first element
       shaven([{key: 'value'}])
     },
     {message: new RegExp(regexString, 'gi')},
@@ -622,6 +622,7 @@ it('throws an error for an invalid array', (test) => {
 
   test.throws(
     () => {
+      // @ts-expect-error Invalid first element
       shaven([144, 'span', 'text'])
     },
     {message: new RegExp(regexString, 'gi')},
@@ -635,7 +636,7 @@ it('works with SVGs', (test) => {
       '<circle class="top" cx="5" cy="5" r="5" style="fill:green">' +
       '</circle>' +
     '</svg>'
-  const array = ['svg#svg',
+  const array: TestArray = ['svg#svg',
     {
       height: 10,
       width: 10,
@@ -657,7 +658,7 @@ it('works with SVGs', (test) => {
     document.body.appendChild(container)
     container.innerHTML = expectedString
 
-    const expectedElement = document.getElementById('svg')
+    const expectedElement = document.getElementById('svg')!
 
     test.true(
       svgElement.isEqualNode(expectedElement),
@@ -678,7 +679,7 @@ it('works with multiple SVGs', (test) => {
     '</svg>' +
   '</div>'
 
-  const array = ['div#container',
+  const array: TestArray = ['div#container',
     ['svg#svg1', {width: 10, height: 10},
       ['rect.top', {width: 5, height: 5, style: 'fill:red'}],
     ],
@@ -700,7 +701,7 @@ it('works with multiple SVGs', (test) => {
     const container = document.createElement('div')
     document.body.appendChild(container)
     container.innerHTML = expectedString
-    const expectedElement = document.getElementById('container')
+    const expectedElement = document.getElementById('container')!
 
     test.is(element.outerHTML, expectedElement.outerHTML)
     test.true(element.isEqualNode(expectedElement))
@@ -718,7 +719,7 @@ it('works with SVG followed by HTML', (test) => {
       '<p>Test Sentence</p>' +
     '</div>'
 
-  const array =
+  const array: TestArray =
     [`div#${containerId}`,
       [`svg#${svgId}`, {width: 10, height: 10},
         ['rect.top', {width: 5, height: 5, style: 'fill:red'}],
@@ -734,7 +735,7 @@ it('works with SVG followed by HTML', (test) => {
     const container = document.createElement('div')
     document.body.appendChild(container)
     container.innerHTML = expectedString
-    const expectedElement = document.getElementById(containerId)
+    const expectedElement = document.getElementById(containerId)!
 
     test.is(element.outerHTML, expectedElement.outerHTML)
     test.true(element.isEqualNode(expectedElement))
@@ -744,7 +745,7 @@ it('works with SVG followed by HTML', (test) => {
 
 it('escapes text in SVGs', (test) => {
   const id = createId()
-  const array = [`svg#${id}`,
+  const array: TestArray = [`svg#${id}`,
     ['text', '<circle>'],
   ]
   const expectedString = `<svg id="${id}"><text>&lt;circle&gt;</text></svg>`
@@ -757,7 +758,7 @@ it('escapes text in SVGs', (test) => {
     const container = document.createElement('div')
     document.body.appendChild(container)
     container.innerHTML = expectedString
-    const expectedElement = document.getElementById(id)
+    const expectedElement = document.getElementById(id)!
 
     test.is(svgElement.outerHTML, expectedElement.outerHTML)
     test.true(svgElement.isEqualNode(expectedElement))
@@ -768,7 +769,7 @@ it('escapes text in SVGs', (test) => {
 // but doesn't. (See https://github.com/tmpvar/jsdom/issues/1528)
 it('sets class of SVG element', (test) => {
   const id = createId()
-  const elementArray = [`svg#${id}`,
+  const elementArray: TestArray = [`svg#${id}`,
     ['circle.test',
       {cx: 5, cy: 5, r: 2}, // eslint-disable-line id-length
     ],
@@ -786,7 +787,7 @@ it('sets class of SVG element', (test) => {
     const container = document.createElement('div')
     document.body.appendChild(container)
     container.innerHTML = expectedString
-    const expectedElement = document.getElementById(id)
+    const expectedElement = document.getElementById(id)!
 
     test.is(svgElement.outerHTML, expectedElement.outerHTML)
     test.true(svgElement.isEqualNode(expectedElement))
@@ -899,7 +900,7 @@ it('can change defaults', (test) => {
 
 
 it('does not mutate the array and the created element', (test) => {
-  const array = ['div.important', ['p', {lang: 'en'}, 'text']]
+  const array: TestArray = ['div.important', ['p', {lang: 'en'}, 'text']]
   let element1 = shaven(array).rootElement
   let element2 = shaven(array).rootElement
 

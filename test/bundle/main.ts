@@ -1,7 +1,7 @@
-import shaven from '../../source/library/browser.js'
+import shaven from '../../source/library/browser.ts'
 
 
-shaven([document.getElementById('test'),
+shaven([document.getElementById('test')!,
   ['h1', 'Test'],
   ['p.sentence', 'Test sentence'],
   ['p.sentence', 'Sentence with escaped <em>HTML</em>'],
@@ -13,7 +13,7 @@ shaven([document.getElementById('test'),
 ])
 
 const svg = shaven(
-  [document.getElementById('test'),
+  [document.getElementById('test')!,
     ['svg#svg', {width: 100, height: 50},
       ['circle.important.small$test', {
         r: 5, // eslint-disable-line id-length

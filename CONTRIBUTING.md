@@ -1,25 +1,24 @@
 # Contributing
 
-In order to check if your changes did not break anything and is suitable for a
-pull request simply run `$ npm run prepublish`.
-The script consists of following steps:
+Shaven is written in TypeScript and requires Node.js 24 or later.
+Run `make help` to list all available targets.
 
 
 ## Testing
 
-To run tests on server side simply execute `$ npm test`.
-This executes all tests in the mockup DOM environment
-[jsdom](https://github.com/tmpvar/jsdom) and in the nodejs environment.
-To run the tests in a client side environment simply open
-[./test/index.html](./test/index.html) in a browser.
+Run `make test` to type check the code with `tsc`,
+lint it with [oxlint](https://oxc.rs),
+and execute all tests in the Node.js environment
+and in the mockup DOM environment [jsdom](https://github.com/jsdom/jsdom).
+
+The tests are executed directly from the TypeScript sources
+via Node.js's built-in type stripping.
+To run the tests in a browser, run `make build`
+and open [./test/bundle/index.html](./test/bundle/index.html).
 
 
 ## Building
 
-In order to build the final production-ready files from the source files run
-`$ npm run build`.
-
-
-## Style Guidelines
-
-Checkout `package.json` for the JSHint and Jscs configurations.
+Run `make build` to compile the library to `./build`
+(ES modules with type declarations, plus the standalone `build/shaven.js`
+which exposes `shaven` as a global variable) and to build the website.

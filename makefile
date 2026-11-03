@@ -4,7 +4,7 @@ help: makefile
 
 
 .PHONY: build
-build: site/index.html
+build: compile site/index.html
 
 
 site/index.html: source/templates/index.mustache \
@@ -18,9 +18,13 @@ site/images: source/images
 	cp -R $< $@
 
 
-site/scripts/bundle.js shaven.js \
-shaven.min.js shaven-server.min.js: source/library node_modules
+site/scripts/bundle.js build/shaven.js: source node_modules
 	npx --no-install webpack
+
+
+.PHONY: compile
+compile: node_modules
+	npx --no-install tsc -p tsconfig.build.json
 
 
 node_modules: package.json package-lock.json
@@ -28,24 +32,23 @@ node_modules: package.json package-lock.json
 
 
 .PHONY: test
-test: lint node_modules
-	npx --no-install ava --fail-fast ./test/node.js ./test/jsdom.js
+test: typecheck lint node_modules
+	npx --no-install ava --fail-fast ./test/node.ts ./test/jsdom.ts
+
+
+.PHONY: typecheck
+typecheck: node_modules
+	npx --no-install tsc
 
 
 .PHONY: lint
 lint: node_modules
-	npx --no-install eslint \
-		--max-warnings 0 \
-		--ignore-path .gitignore \
-		.
+	npx --no-install oxlint --deny-warnings
 
 
 .PHONY: format
 format: node_modules
-	npx --no-install eslint \
-		--fix \
-		--ignore-path .gitignore \
-		.
+	npx --no-install oxlint --fix
 
 
 .PHONY: clean

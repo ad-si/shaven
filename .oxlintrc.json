@@ -1,0 +1,53 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "ignorePatterns": [
+    "build/**",
+    "site/**",
+    "test/bundle/bundle.js"
+  ],
+  "rules": {
+    "array-callback-return": "warn",
+    "block-scoped-var": "warn",
+    "curly": ["warn", "multi-line", "consistent"],
+    "default-case": "warn",
+    "eqeqeq": ["warn", "always", {"null": "ignore"}],
+    "guard-for-in": "warn",
+    "id-length": ["warn", {"exceptions": ["x", "y"]}],
+    "import/no-unassigned-import": "off",
+    "new-cap": "warn",
+    "no-bitwise": "warn",
+    "no-caller": "warn",
+    "no-cond-assign": ["warn", "except-parens"],
+    "no-console": ["warn", {"allow": ["info", "warn", "error"]}],
+    "no-debugger": "warn",
+    "no-empty": "warn",
+    "no-eval": "warn",
+    "no-extend-native": "warn",
+    "no-iterator": "warn",
+    "no-loop-func": "warn",
+    "no-multi-str": "warn",
+    "no-new": "warn",
+    "no-proto": "warn",
+    "no-script-url": "warn",
+    "no-sequences": "warn",
+    "no-shadow": "warn",
+    "no-unused-vars": "warn",
+    "no-var": "warn",
+    "no-with": "warn",
+    "operator-assignment": ["warn", "always"],
+    "prefer-const": ["warn", {"destructuring": "any"}],
+    "typescript/no-explicit-any": "warn",
+    "valid-typeof": "warn",
+    "yoda": "warn"
+  }
+}

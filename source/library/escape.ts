@@ -1,4 +1,4 @@
-export function attribute (string) {
+export function attribute (string: unknown): string {
   return string || string === 0
     ? String(string)
       .replace(/&/g, '&amp;')
@@ -6,7 +6,7 @@ export function attribute (string) {
     : ''
 }
 
-export function HTML (string) {
+export function HTML (string: unknown): string {
   return String(string)
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')

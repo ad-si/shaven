@@ -1,6 +1,8 @@
-export default (sugarString) => {
+import type {SugarProperties} from './types.ts'
+
+export default (sugarString: string): SugarProperties => {
   const tags = sugarString.match(/^[\w-]+/)
-  const properties = {
+  const properties: SugarProperties = {
     tag: tags ? tags[0] : 'div',
   }
   const ids = sugarString.match(/#([\w-]+)/)

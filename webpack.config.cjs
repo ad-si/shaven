@@ -1,23 +1,35 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const babelLoader = {
-  test: /\.js$/,
+// TypeScript 7 has no JavaScript API for loaders,
+// therefore Babel strips the types and `tsc` only does the type checking.
+const typescriptLoader = {
+  test: /\.ts$/,
   loader: 'babel-loader',
+  options: {
+    presets: [
+      '@babel/preset-env',
+      '@babel/preset-typescript',
+    ],
+  },
+}
+
+const resolve = {
+  extensions: ['.ts', '.js'],
 }
 
 module.exports = [
   {
     target: 'web',
-    entry: './source/scripts/main.js',
+    entry: './source/scripts/main.ts',
     output: {
       path: path.join(__dirname, '/site/scripts'),
       filename: 'bundle.js',
     },
+    resolve,
     module: {
       rules: [
-        babelLoader,
-        { test: /\.json$/, use: 'json-loader' },
+        typescriptLoader,
         { test: /\.png$/, type: 'asset/inline' },
         { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
         { test: /\.styl$/, use: [
@@ -33,27 +45,34 @@ module.exports = [
     mode: 'production',
   },
   {
+    // Standalone bundle which exposes `shaven` as a global variable
     target: 'web',
-    entry: './source/library/browser.js',
+    entry: './source/library/browser.ts',
     output: {
       path: path.join(__dirname, 'build'),
-      filename: 'browser.js',
-      library: 'shaven',
+      filename: 'shaven.js',
+      library: {
+        name: 'shaven',
+        type: 'var',
+        export: 'default',
+      },
     },
+    resolve,
     module: {
-      rules: [babelLoader],
+      rules: [typescriptLoader],
     },
     mode: 'production',
   },
   {
     target: 'web',
-    entry: './test/bundle/main.js',
+    entry: './test/bundle/main.ts',
     output: {
       path: path.join(__dirname, 'test/bundle'),
       filename: 'bundle.js',
     },
+    resolve,
     module: {
-      rules: [babelLoader],
+      rules: [typescriptLoader],
     },
     mode: 'development',
   },
